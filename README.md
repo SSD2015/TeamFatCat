@@ -16,6 +16,6 @@ eXceed vote by @pNagi @iNont @mxyz @vincentvictor @GuroKung
 Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
 - Vision Statement
 - Glossary
-- Informal Use Cases
+- [Informal Use Cases](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Informal-Use-Cases)
 - Supplementary Requirements
 - Compare Java Web Frameworks
