@@ -11,11 +11,9 @@ eXceed vote by @pNagi @iNont @mxyz @vincentvictor @GuroKung
 | 5610546699 | Kittipat Proomdirek | @mxyz |
 
 ## Documentation
-...In progress...
-
 Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
-- Vision Statement
-- Glossary
+- [Vision Statement](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Vision-Statement)
+- [Glossary](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Glossary)
 - [Informal Use Cases](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Informal-Use-Cases)
-- Supplementary Requirements
-- Compare Java Web Frameworks
+- [Supplementary Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Supplementary-Requirements)
+- [Compare Java Web Frameworks](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Compare-Java-Web-Frameworks)
