@@ -11,4 +11,5 @@ eXceed vote by @pNagi @iNont @mxyz @vincentvictor @GuroKung
 | 5610546699 | Kittipat Proomdirek | @mxyz |
 
 ## Documentation
+Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki)
 ..In progress..
