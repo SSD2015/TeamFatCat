@@ -12,6 +12,7 @@ eXceed vote by @pNagi @iNont @mxyz @vincentvictor @GuroKung
 
 ## Documentation
 Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
+- [Requirement](https://github.com/SSD2015/maxininontnachy-gugimiro/requirement)
 - [Vision Statement](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Vision-Statement) (In progress)
 - [Glossary](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Glossary) (In progress)
 - [Informal Use Cases](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Informal-Use-Cases)
