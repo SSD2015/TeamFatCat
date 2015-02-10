@@ -17,4 +17,4 @@ Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
 - [Glossary](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Glossary)
 - [Informal Use Cases](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Informal-Use-Cases)
 - [Supplementary Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Supplementary-Requirements) 
-- [Compare Java Web Frameworks](https://docs.google.com/document/d/1wE9YfZV8S0POgV3MoY_d8RkaUqgGF7FI8-lNCQXZsr4/edit) (In progress)
+- [Compare Java Web Frameworks](https://docs.google.com/document/d/1wE9YfZV8S0POgV3MoY_d8RkaUqgGF7FI8-lNCQXZsr4/edit) 
