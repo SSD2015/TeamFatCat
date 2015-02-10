@@ -12,9 +12,13 @@ eXceed vote by @pNagi @iNont @mxyz @vincentvictor @GuroKung
 
 ## Documentation
 Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
-- [Requirement](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/requirement)
+
+- [Software Requirements Specification](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Software-Requirements-Specification)
+ 1. [Introduction](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Introduction)
+ 2. [Overall Description](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Overall-Description)
+ 3. [System Features](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/System-Features-%28UC%29)
+ 4. [External Interface Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/External-Interface-Requirements)
+ 5. [Other Nonfunctional Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Other-Nonfunctional-Requirements)
+ 6. [Other Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Other-Requirements)
 - [Vision Statement](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Vision-Statement) 
-- [Glossary](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Glossary)
-- [Informal Use Cases](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Informal-Use-Cases)
-- [Supplementary Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Supplementary-Requirements) 
 - [Compare Java Web Frameworks](https://docs.google.com/document/d/1wE9YfZV8S0POgV3MoY_d8RkaUqgGF7FI8-lNCQXZsr4)
