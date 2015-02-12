@@ -20,6 +20,6 @@ Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
  4. [External Interface Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/External-Interface-Requirements)
  5. [Other Nonfunctional Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Other-Nonfunctional-Requirements)
  6. [Other Requirements](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Other-Requirements)
- 7. [Glossary](https://github.com/SSD2015/TeamFatCat/wiki/Appendix-A%3A-Glossary)
+ 7. [Appendix A: Glossary](https://github.com/SSD2015/TeamFatCat/wiki/Appendix-A%3A-Glossary)
 - [Vision Statement](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Vision-Statement) 
 - [Compare Java Web Frameworks](https://docs.google.com/document/d/1wE9YfZV8S0POgV3MoY_d8RkaUqgGF7FI8-lNCQXZsr4)
