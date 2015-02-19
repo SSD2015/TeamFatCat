@@ -17,6 +17,7 @@ Our [Wiki](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki) here
  1. [Vision Statement](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Vision-Statement) 
  2. [Supplementary Specification](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Other-Nonfunctional-Requirements)
  3. [Glossary](https://github.com/SSD2015/TeamFatCat/wiki/Appendix-A%3A-Glossary)
+- [Domain Model](http://github.com/SSD2015/TeamFatCat/wiki/Domain-Model)
 - [Software Requirements Specification](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Software-Requirements-Specification)
  1. [Introduction](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Introduction)
  2. [Overall Description](https://github.com/SSD2015/maxininontnachy-gugimiro/wiki/Overall-Description)
