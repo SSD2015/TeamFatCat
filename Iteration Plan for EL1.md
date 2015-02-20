@@ -19,3 +19,8 @@
 | Web page implement |2 |
 
 ## Unplanned Work
+
+| Objective/Feature/Task | Priority (1=very high, 5=low) |
+|------------------------|:-----------------------------:|
+| Project database (server-side) | 3 |
+| Project page | 3 |
