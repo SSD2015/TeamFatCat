@@ -14,7 +14,7 @@
 |------------------------|:-----------------------------:|
 | Voting system (server-side) | 1 |
 | Voting system | 1 |
-| Login with KU (server-side) | 2 |
+| Login system (server-side) | 2 |
 | Login page | 2 |
 | Web page implement |2 |
 
