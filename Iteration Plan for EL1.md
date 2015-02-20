@@ -17,10 +17,13 @@
 | Login system (server-side) | 2 |
 | Login page | 2 |
 | Web page implement |2 |
+| Project database (server-side) | 3 |
+| Project page | 3 |
 
 ## Unplanned Work
 
 | Objective/Feature/Task | Priority (1=very high, 5=low) |
 |------------------------|:-----------------------------:|
-| Project database (server-side) | 3 |
-| Project page | 3 |
+| Project List (Main menu) | 4 |
+| Edit vote | 4 |
+| Verify | 5 |
