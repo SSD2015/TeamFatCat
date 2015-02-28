@@ -29,7 +29,6 @@ public static class Login {
         if(User.authenticate() == null) {
             return "Invalid user or password";
         }
-
         return null;
     }
 
