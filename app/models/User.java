@@ -1,9 +1,11 @@
 package models;
 
 import play.db.ebean.Model;
-import play.data.*;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import play.data.validation.Constraints;
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+import java.util.List;
 
 @Entity
 public class User extends Model {
@@ -47,9 +49,9 @@ public class User extends Model {
 		user.save();
 	}
 
-	public static void delete(String username) {
-		find.ref(username).delete();
-	}
+//	public static void delete(String username) {
+//		find.ref(username).delete();
+//	}
 
 	public Timestamp getLastUpdate() {  
 		return lastUpdate;  
@@ -59,7 +61,7 @@ public class User extends Model {
 		this.lastUpdate = lastUpdate;  
 	} 
 
-	public static Object authenticate(String username, String password) {
+	public static User authenticate(String username, String password) {
 		return null;
 	}
 }
