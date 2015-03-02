@@ -46,9 +46,7 @@ public class User extends Model {
     	return username;
     }
     
-    public void setUsername(String username){
-    	this.username = username;
-    }
+    
     
     public String getTeamName(){
     	return team;
