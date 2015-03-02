@@ -23,6 +23,7 @@ public class User extends Model {
     public int year;
     public String team;
 
+    
     @Version
     Timestamp lastUpdate;
 
@@ -40,6 +41,22 @@ public class User extends Model {
 //	public static void delete(String username) {
 //		find.ref(username).delete();
 //	}
+    
+    public String getUsername(){
+    	return username;
+    }
+    
+    public void setUsername(String username){
+    	this.username = username;
+    }
+    
+    public String getTeamName(){
+    	return team;
+    }
+    
+    public void setTeamName(String team){
+    	this.team = team;
+    }
 
     public Timestamp getLastUpdate() {
         return lastUpdate;
