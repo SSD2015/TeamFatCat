@@ -3,40 +3,43 @@
 
 # --- !Ups
 
+create table user (
+  username                  varchar(255) primary key,
+  password                  varchar(255),
+  firstname                 varchar(255),
+  lastname                  varchar(255),
+  major                     varchar(255),
+  year                      integer,
+  team                      varchar(255),
+  last_update               timestamp not null)
+;
+
 create table vote (
-  id                        bigint not null,
+  id                        integer primary key AUTOINCREMENT,
   user_id                   varchar(255),
-  category_id               bigint,
-  constraint pk_vote primary key (id))
+  category_id               integer)
 ;
 
 create table vote_category (
-  id                        bigint not null,
+  id                        integer primary key AUTOINCREMENT,
   score                     integer,
-  name                      varchar(255),
-  constraint pk_vote_category primary key (id))
+  name                      varchar(255))
 ;
 
-create sequence vote_seq;
-
-create sequence vote_category_seq;
-
-alter table vote add constraint fk_vote_category_1 foreign key (category_id) references vote_category (id) on delete restrict on update restrict;
+alter table vote add constraint fk_vote_category_1 foreign key (category_id) references vote_category (id);
 create index ix_vote_category_1 on vote (category_id);
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+PRAGMA foreign_keys = OFF;
 
-drop table if exists vote;
+drop table user;
 
-drop table if exists vote_category;
+drop table vote;
 
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table vote_category;
 
-drop sequence if exists vote_seq;
-
-drop sequence if exists vote_category_seq;
+PRAGMA foreign_keys = ON;
 
