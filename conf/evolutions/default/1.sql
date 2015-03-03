@@ -60,4 +60,3 @@ drop table vote;
 drop table vote_category;
 
 SET FOREIGN_KEY_CHECKS=1;
-
