@@ -12,7 +12,7 @@ public class Application extends Controller {
     public static Result index() {
         return ok(views.html.index.render("hello"));
     }
-
+    
     public static Result login() {
         return ok(login.render(Form.form(Login.class)));
     }
@@ -44,5 +44,5 @@ public class Application extends Controller {
         }
 
 
-    }
+    } 
 }

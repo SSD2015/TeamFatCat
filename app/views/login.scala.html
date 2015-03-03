@@ -3,26 +3,35 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Log in</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
 </head>
 <body>
-    <header>
-        @helper.form(routes.Application.authenticate) {
-            <h1>Sign in</h1>
-            @if(form.hasGlobalErrors) {
-                <p class="error">
-                    @form.globalError.message
-                </p>
-            }
-            <p>
-                <input type="username" name="username" placeholder="Username" value="@form("username").value">
-            </p>
-            <p>
-                <input type="password" name="password" placeholder="Password">
-            </p>
-            <p>
-                <button type="submit">Login</button>
-            </p>
-        }
-    </header>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                @helper.form(routes.Application.authenticate) {
+                    <h1>Sign in</h1>
+                    @if(form.hasGlobalErrors) {
+                        <p class="error">
+                        @form.globalError.message
+                        </p>
+                    }
+                    <p>
+                        <input class="form-control" type="username" name="username" placeholder="Username" value="@form("username").value">
+                    </p>
+                    <p>
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                    </p>
+                    <p>
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    </p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class Project extends Model{
     @Id
-    public int ProjectID;
+    public int id;
 
     public String ProjectName;
     public String ProjectDesc;
