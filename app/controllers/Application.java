@@ -2,10 +2,15 @@ package controllers;
 
 import models.User;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.List;
+
 import views.html.*;
+
+import static play.libs.Json.toJson;
 
 public class Application extends Controller {
 
@@ -15,6 +20,21 @@ public class Application extends Controller {
     
     public static Result login() {
         return ok(login.render(Form.form(Login.class)));
+    }
+
+    public static Result user() {
+        return ok(user.render());
+    }
+
+    public static Result addUser() {
+        User user = Form.form(User.class).bindFromRequest().get();
+        user.save();
+        return redirect(routes.Application.user());
+    }
+
+    public static Result getUser() {
+        List<User> users = new Model.Finder(Integer.class, User.class).all();
+        return ok(toJson(users));
     }
 
     public static Result authenticate() {

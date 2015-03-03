@@ -14,8 +14,8 @@ create table user (
   id                        integer auto_increment not null,
   username                  varchar(255),
   password                  varchar(255),
-  firstname                 varchar(255),
-  lastname                  varchar(255),
+  first_name                varchar(255),
+  last_name                 varchar(255),
   major                     varchar(255),
   year                      integer,
   team                      varchar(255),
@@ -60,3 +60,4 @@ drop table vote;
 drop table vote_category;
 
 SET FOREIGN_KEY_CHECKS=1;
+

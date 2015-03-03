@@ -3,12 +3,15 @@
 # ~~~~
 
 # Home page
-GET     /                         controllers.Application.index()
+GET         /                    controllers.Application.index()
 
-GET     /login                      controllers.Application.login()
-POST    /login                      controllers.Application.authenticate()
+GET         /login               controllers.Application.login()
+POST        /login               controllers.Application.authenticate()
 
+GET         /user                controllers.Application.user()
+POST        /user                controllers.Application.addUser()
+GET         /users               controllers.Application.getUser()
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file        controllers.Assets.at(path="/public", file)
 
-GET     /vote                       controllers.VoteController.vote()
+GET         /vote                controllers.VoteController.vote()

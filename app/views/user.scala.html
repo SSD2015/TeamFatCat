@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>User</title>
+</head>
+<body>
+
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type='text/javascript' src="@routes.Assets.at("js/user.js")"></script>
+    <div id="userslist">
+
+    </div>
+
+    <form action="@routes.Application.addUser()" method="post">
+        <p>
+            Username
+            <input type="text" name="username"/>
+                Password
+            <input type="password" name="password"/>
+                First Name
+            <input type="text" name="firstName"/>
+                Last Name
+            <input type="text" name="lastName"/>
+                Major
+            <input type="text" name="major"/>
+                Year
+            <input type="number" name="year"/>
+                Team
+            <input type="text" name="team"/>
+            <button>Add user</button>
+        </p>
+    </form>
+
+</body>
+</html>
