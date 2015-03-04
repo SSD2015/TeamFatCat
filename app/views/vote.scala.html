@@ -1,14 +1,21 @@
+@(user: User, project: Project, voteCat: List[VoteCategory])
 @main("Vote Page") {
-<h1> Welcome to Vote Page</h1>
-Select category  to Vote <br>
 
-1. blah   <button type="submit1">Vote!</button><br>
-Score : <br>
-2. blahblah  <button type="submit2">Vote!</button><br>
-Score : <br>
-3. blahblahblah  <button type="submit3">Vote!</button><br>
-Score : <br><br><br>
+    <h1> Welcome @(user.firstName +"  "+ user.lastName) to @project.ProjectName Vote Page</h1>
+    Select category  to Vote <br>
 
-Total vote score : 
+    <ul>
+    @voteCat.map { cat =>
+        @cat.name:      Score :
+
+        <form action="@routes.VoteController.manageVote()" method="post">
+            <input type="text" score="score" />
+        </form>
+
+        <br><br>
+    }
+        <br>
+        <button type="submit">Make Vote!</button><br>
+    </ul>
 
 }

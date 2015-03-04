@@ -1,32 +1,36 @@
 package controllers;
 
-import models.VoteCategory;
+import models.*;
 import play.*;
 import play.mvc.*;
+import play.data.Form;
 import views.html.*;
+
+import java.util.List;
 
 public class VoteController extends Controller {
 	
 	public static Result manageVote(){
-		/*
-		VoteCategory c1 = new VoteCategory();
-		c1.name = "type1";
-		c1.save();
-		
-		VoteCategory c2 = new VoteCategory();
-		c2.name = "type2";
-		c2.save();
-		
-		VoteCategory c3 = new VoteCategory();
-		c3.name = "type3";
-		c3.save();
-	
-		*/
+        User user = User.find.byId(1);
+        Project project = Project.find.byId(1);
+        //List<VoteCategory> voteCategories = VoteCategory.find.all();
+
+
+        Vote vote = new Vote();
+        //vote.category = voteCat;
+        vote.user = user;
+        vote.project = project;
+        vote.save();
+
 		return vote();			
 	}
 	
     public static Result vote() {
-        return ok(vote.render());
+        User user = User.find.byId(1);
+        Project project = Project.find.byId(1);
+        List<VoteCategory> voteCategories = VoteCategory.find.all();
+
+        return ok(vote.render(user,project,voteCategories));
     }
 	
 }
