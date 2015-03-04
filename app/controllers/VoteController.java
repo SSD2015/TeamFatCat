@@ -13,16 +13,19 @@ public class VoteController extends Controller {
 	public static Result manageVote(){
         User user = User.find.byId(1);
         Project project = Project.find.byId(1);
-        //List<VoteCategory> voteCategories = VoteCategory.find.all();
+        List<VoteCategory> voteCategories = VoteCategory.find.all();
 
 
-        Vote vote = new Vote();
-        //vote.category = voteCat;
-        vote.user = user;
-        vote.project = project;
-        vote.save();
+        Vote vote;
+        for(int i = 0 ; i < voteCategories.size() ; i++) {
+            vote = new Vote();
+            vote.category = voteCategories.get(i);
+            vote.user = user;
+            vote.project = project;
+            vote.save();
+        }
 
-		return vote();			
+		return ok(index.render("Thanks for voting !"));
 	}
 	
     public static Result vote() {

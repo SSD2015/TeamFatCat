@@ -15,4 +15,4 @@ GET         /users               controllers.Application.getUser()
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
 
 GET         /vote                controllers.VoteController.vote()
-POST        /user                controllers.VoteController.manageVote()
+POST        /vote                controllers.VoteController.manageVote()
