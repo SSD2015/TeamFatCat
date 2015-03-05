@@ -1,6 +1,8 @@
 package controllers;
 
+import models.Project;
 import models.User;
+import models.VoteCategory;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
@@ -24,6 +26,10 @@ public class Application extends Controller {
 
     public static Result user() {
         return ok(user.render());
+    }
+
+    public static Result project() {
+        return ok(project.render());
     }
 
     public static Result addUser() {

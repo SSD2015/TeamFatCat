@@ -16,3 +16,5 @@ GET         /assets/*file        controllers.Assets.at(path="/public", file)
 
 GET         /vote                controllers.VoteController.vote()
 POST        /vote                controllers.VoteController.manageVote()
+
+GET         /project            controllers.Application.project()
