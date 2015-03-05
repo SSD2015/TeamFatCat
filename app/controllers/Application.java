@@ -29,7 +29,7 @@ public class Application extends Controller {
     }
 
     public static Result project() {
-        return ok(project.render());
+        return ok(views.html.project.render());
     }
 
     public static Result addUser() {
