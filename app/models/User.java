@@ -23,7 +23,6 @@ public class User extends Model {
     public int year;
     public String team;
 
-    
     @Version
     Timestamp lastUpdate;
 
