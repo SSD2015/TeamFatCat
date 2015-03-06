@@ -23,17 +23,22 @@
             <h1> Welcome user : @(user.firstName +"  "+ user.lastName)</h1>
             <h3>Select category  to Vote </h3>
 
-            <ul>
-                <br>
+            <ul><br>
+            <form action="/vote" method="post">
             @voteCat.map { cat =>
-                @cat.name:      Score : 1
+                @cat.name:      Score : <br>
+                    <label class="radio-inline"><input type="radio" name="optradio"></label>
+                    <label class="radio-inline"><input type="radio" name="optradio"></label>
+                    <label class="radio-inline"><input type="radio" name="optradio"></label>
+                    <label class="radio-inline"><input type="radio" name="optradio"></label>
+                    <label class="radio-inline"><input type="radio" name="optradio"></label>
                 <br><br>
             }
-            <form action="/vote" method="post">
+            <br>
                 <button type="submit" class="btn btn-default">Make Vote!</button><br>
             </form>
             </ul>
-
         </div>
+
     </body>
 </html>
