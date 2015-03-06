@@ -11,7 +11,7 @@ import java.util.List;
 public class VoteController extends Controller {
 	
 	public static Result manageVote(){
-        User user = User.find.byId(1);
+        User user = User.find.byId(2);
         Project project = Project.find.byId(1);
         List<VoteCategory> voteCategories = VoteCategory.find.all();
 
@@ -25,7 +25,7 @@ public class VoteController extends Controller {
             vote.save();
         }
 
-		return ok(index.render("Thanks for voting !"));
+        return ok(views.html.index.render("Thanks for voting !"));
 	}
 	
     public static Result vote() {
