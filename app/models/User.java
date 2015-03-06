@@ -65,6 +65,6 @@ public class User extends Model {
     }
 
     public static User authenticate(String username, String password) {
-        return null;
+        return find.where().eq("username", username).eq("password", password).findUnique();
     }
 }
