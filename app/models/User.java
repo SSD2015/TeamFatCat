@@ -11,16 +11,15 @@ import java.util.List;
 public class User extends Model {
 
     @Id
-    public int id;
+    private Long id;
 
     @Constraints.Required
-    public String username;
+    private String username;
     @Constraints.Required
-    public String password;
+    private String password;
 
-    public String firstName;
-    public String lastName;
-
+    private String firstName;
+    private String lastName;
 
     @Version
     Timestamp lastUpdate;
@@ -39,6 +38,11 @@ public class User extends Model {
 //	public static void delete(String username) {
 //		find.ref(username).delete();
 //	}
+    public Long getId(){ return id; }
+
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
 
     public String getUsername(){
         return username;

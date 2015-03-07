@@ -11,19 +11,23 @@ import javax.persistence.*;
 /**
  * Created by vince_000 on 7/3/2558.
  */
+
+@Entity
 public class Student extends User{
 
     // Id from user is Foreign key in this table
-    public String major;
-    public int year;
-    public String team;
 
-    public String getTeamName(){
+    @OneToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private Long id = getId();
+
+    private String major;
+    private int year;
+    private Team team;
+
+    public Team getTeamName(){
         return team;
     }
 
-    public void setTeamName(String team){
-        this.team = team;
-    }
 
 }

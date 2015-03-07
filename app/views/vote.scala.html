@@ -14,13 +14,13 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div style="color: #f9f2f4;">
-                    <h2>@project.ProjectName Vote Page</h2>
+                    <h2>@project.getProjectName() Vote Page</h2>
                 </div>
             </div>
         </nav>
 
         <div class="text-center" style="padding: 60px;">
-            <h1> Welcome user : @(user.firstName +"  "+ user.lastName)</h1>
+            <h1> Welcome user : @(user.getFirstName() +"  "+ user.getLastName() )</h1>
             <h3>Select category  to Vote </h3>
 
             <ul><br>

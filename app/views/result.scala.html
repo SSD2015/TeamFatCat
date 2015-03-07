@@ -3,7 +3,7 @@
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>User</title>
+        <title>Result</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
     </head>
@@ -37,7 +37,7 @@
                         <tr>
                             <td>@list.id</td>
                             <td>@list.score</td>
-                            <td>@(list.user.firstName+"  "+list.user.lastName)</td>
+                            <td>@(list.user.getFirstName()+"  "+list.user.getLastName())</td>
                             <td>@list.category.name</td>
                             <td>@list.project.getProjectName</td>
                         </tr>
