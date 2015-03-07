@@ -1,39 +1,19 @@
+@(project: Project)
 <!doctype html>
 <html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>ExceedVote - Project</title>
-	<link rel="stylesheet" type="text/css" media="all" href="css/project.css" />
-</head>
-<body>
-	<div class="header">
-		<span id="editProject"><a href="">
-			Edit
-		</a></span>
-	</div>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>ExceedVote - Project</title>
+        <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+    </head>
+    <body>
+        <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
-	<div>Project Name: <b><span id="projectName">
-		projectName
-	</b></span></div>
 
-	<div name="stars">
-		<img src="./img/star/0.png" id="star0" />
-		<img src="./img/star/0.png" id="star1" />
-		<img src="./img/star/0.png" id="star2" />
-		<img src="./img/star/0.png" id="star3" />
-		<img src="./img/star/0.png" id="star4" />
-	</div>
+        <h2>Project Name: @project.getProjectName()</h2>
+        Description: <br />
+        <p>@project.getProjectDesc()</p>
 
-	<div name="screenshots">
-		
-	</div>
-
-	Description:<br />
-	<div id="description">
-		Description
-	</div>
-
-<script src="js/jquery.js"></script>
-<script type="text/javascript" src="js/projectScript.js"></script>
-</body>
+    </body>
 </html>

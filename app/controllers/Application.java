@@ -17,7 +17,7 @@ import static play.libs.Json.toJson;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(views.html.index.render("hello"));
+        return ok(index.render("hello"));
     }
     
     public static Result login() {
@@ -29,7 +29,7 @@ public class Application extends Controller {
     }
 
     public static Result project() {
-        return ok(views.html.project.render());
+        return ok(views.html.project.render( new Project() ));
     }
 
     public static Result addUser() {
