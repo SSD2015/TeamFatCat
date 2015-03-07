@@ -24,7 +24,6 @@ public class Vote extends Model{
     public Project project;
 
     // Finder will help us easily query data from database.
-    public static Finder<Long, Vote> find =
-            new Finder<Long, Vote>(Long.class, Vote.class);
+    public static Finder<Long, Vote> find = new Finder<Long, Vote>(Long.class, Vote.class);
 
 }
