@@ -15,13 +15,12 @@ public class User extends Model {
 
     @Constraints.Required
     public String username;
+    @Constraints.Required
     public String password;
 
     public String firstName;
     public String lastName;
-    public String major;
-    public int year;
-    public String team;
+
 
     @Version
     Timestamp lastUpdate;
@@ -40,19 +39,9 @@ public class User extends Model {
 //	public static void delete(String username) {
 //		find.ref(username).delete();
 //	}
-    
+
     public String getUsername(){
-    	return username;
-    }
-    
-    
-    
-    public String getTeamName(){
-    	return team;
-    }
-    
-    public void setTeamName(String team){
-    	this.team = team;
+        return username;
     }
 
     public Timestamp getLastUpdate() {
