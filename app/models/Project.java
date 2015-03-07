@@ -9,13 +9,13 @@ import java.util.List;
 @Entity
 public class Project extends Model{
     @Id
-    public int id;
+    public long id;
 
-    public String ProjectName;
-    public String ProjectDesc;
+    private String ProjectName;
+    private String ProjectDesc;
 
     // Finder will help us easily query data from database.
-    public static Finder<Integer, Project> find = new Finder<Integer, Project>(Integer.class, Project.class);
+    public static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
 
     //Project Name
     //set
