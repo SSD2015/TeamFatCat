@@ -41,11 +41,7 @@ public class User extends Model {
 //	}
 
     public String getUsername(){
-<<<<<<< HEAD
         return username;
-=======
-    	return username;
->>>>>>> 20b5c14d616579fb23f37c0e4a07c5d23e159ac0
     }
 
     public Timestamp getLastUpdate() {
