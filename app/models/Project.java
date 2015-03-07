@@ -11,8 +11,9 @@ public class Project extends Model{
     @Id
     public long id;
 
-    private String ProjectName;
-    private String ProjectDesc;
+    private String projectName;
+    private String projectDesc;
+    private long teamId;
 
     // Finder will help us easily query data from database.
     public static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
@@ -20,18 +21,21 @@ public class Project extends Model{
     //Project Name
     //set
     public void setProjectName(String projectName) {
-        this.ProjectName = projectName;
+        this.projectName = projectName;
     }
     //get
     public String getProjectName(){
-        return this.ProjectName;
+        return this.projectName;
     }
 
     //Project Desc
     //set
     public void setProjectDesc(String description){
-        this.ProjectDesc = description;
+        this.projectDesc = description;
     }
     //get
-    public String getProjectDesc() { return this.ProjectDesc; }
+    public String getProjectDesc() { return this.projectDesc; }
+
+    public long getTeamId() { return teamId; }
+
 }

@@ -10,16 +10,22 @@ public class Team {
     @Id
     private Long id;
     @OneToOne
-    private Project project;
     private String teamName;
+    private String teamMembers;
 
 
     public String getTeamName(){
         return teamName;
     }
 
-    public Project getProject(){
-        return project;
+    public String getTeamMembers() { return this.teamMembers; }
+
+    public long[] getMembersList() {
+        String[] list = this.teamMembers.split(",");
+        long[] longLists = new long[list.length];
+        for( int i=0;i<longLists.length;i++ )
+            longLists[i] = Long.parseLong(list[i]);
+        return longLists;
     }
 
 

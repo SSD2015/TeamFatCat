@@ -19,15 +19,26 @@ public class Student extends User{
 
     @OneToOne
     @JoinColumn(name="user_id", referencedColumnName = "id")
-    private Long id = getId();
+    private long id = getId();
 
     private String major;
     private int year;
-    private Team team;
+    private long teamId;
+    private long projectId;
 
-    public Team getTeamName(){
-        return team;
+    public String getMajor() {
+        return major;
     }
 
+    public int getYear() {
+        return year;
+    }
 
+    public long getTeamId() {
+        return teamId;
+    }
+
+    public long getProjectId() {
+        return projectId;
+    }
 }

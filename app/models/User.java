@@ -11,7 +11,7 @@ import java.util.List;
 public class User extends Model {
 
     @Id
-    private Long id;
+    private long id;
 
     @Constraints.Required
     private String username;
@@ -38,7 +38,7 @@ public class User extends Model {
 //	public static void delete(String username) {
 //		find.ref(username).delete();
 //	}
-    public Long getId(){ return id; }
+    public long getId(){ return id; }
 
     public String getFirstName() { return firstName; }
 
