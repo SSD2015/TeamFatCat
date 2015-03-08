@@ -28,5 +28,13 @@ public class Team {
         return longLists;
     }
 
+    public void setMembers( long[] list ) {
+        String teamMembers = "";
+        for( int i=0;i<list.length-1;i++ )
+            teamMembers += list[i]+",";
+        teamMembers += list[list.length-1]+"";
+        this.teamMembers = teamMembers;
+    }
+
 
 }

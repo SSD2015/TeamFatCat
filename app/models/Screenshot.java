@@ -9,19 +9,19 @@ import java.util.List;
 @Entity
 public class Screenshot extends Model{
     @Id
-    public Long Screenshot_ID;
+    public long Screenshot_ID;
 
-    private String TeamName;
+    private long projectId;
 
     // Finder will help us easily query data from database.
     public static Finder< Long, Screenshot> find = new Finder< Long, Screenshot>( Long.class, Screenshot.class);
 
-    public void setTeamName(String TeamName){
-        this.TeamName = TeamName;
+    public void setProject( long id ){
+        this.projectId = id;
     }
 
-    public String getTeamName(){
-        return this.TeamName;
+    public long getProjectId(){
+        return this.projectId;
     }
 
 }
