@@ -51,7 +51,7 @@ public class Application extends Controller {
             session().clear();
             session("username", loginForm.get().username);
             return redirect(
-                    routes.Application.index()
+                    routes.VoteController.vote()
             );
         }
     }
