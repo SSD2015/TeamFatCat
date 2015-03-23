@@ -4,6 +4,7 @@ import models.*;
 import play.*;
 import play.mvc.*;
 import play.data.Form;
+import play.data.DynamicForm;
 import views.html.*;
 
 import java.util.List;
@@ -33,17 +34,18 @@ public class VoteController extends Controller {
         Project project = Project.find.byId((long) 1);
         List<VoteCategory> voteCategories = VoteCategory.find.all();
 
-
         Vote vote;
+
         for(int i = 0 ; i < voteCategories.size() ; i++) {
             vote = new Vote();
             vote.category = voteCategories.get(i);
+            vote.score = 1;
             vote.user = user;
             vote.project = project;
             vote.save();
         }
 
-        return ok(views.html.index.render("Thanks for voting !"));
+        return redirect(routes.Application.index());
 
 	}
 	

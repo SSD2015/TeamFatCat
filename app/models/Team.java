@@ -13,7 +13,6 @@ public class Team extends Model {
     @Id
     private Long id;
 
-    @Constraints.Required
     private String teamName;
     private String teamMembers;
 
