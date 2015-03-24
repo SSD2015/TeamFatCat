@@ -21,5 +21,6 @@ GET         /project             controllers.ProjectController.project()
 
 GET         /result              controllers.VoteController.result()
 
-GET         /addproject          controllers.ProjectController.index()
 POST        /addproject          controllers.ProjectController.addProject()
+GET         /addproject              controllers.ProjectController.addProject()
+

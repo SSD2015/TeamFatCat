@@ -1,3 +1,4 @@
+@(projects: List[Project], teams: List[Team])
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -52,26 +53,26 @@
             </div>
         </div>
 
-        @*<div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">*@
-            @*<h2>User Lists</h2>*@
-            @*<table class="table table-hover" id="usersList">*@
-                @*<thead>*@
-                    @*<tr>*@
-                        @*<th>ID</th>*@
-                        @*<th>Username</th>*@
-                        @*<th>Password</th>*@
-                        @*<th>Firstname</th>*@
-                        @*<th>Lastname</th>*@
-                        @*<th>Major</th>*@
-                        @*<th>Year</th>*@
-                        @*<th>Team</th>*@
-                    @*</tr>*@
-                @*</thead>*@
-                @*<tbody>*@
+        <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
+            <h2>Project Lists</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>TeamId</th>
+                </tr>
+                @projects.map { list =>
+                    <tr>
+                        <td>@list.getId()</td>
+                        <td>@list.getProjectName()</td>
+                        <td>@list.getBriefDesc()</td>
+                        <td>@list.getTeamId()</td>
+                    </tr>
+                }
+            </table>
+        </div>
 
-                @*</tbody>*@
-            @*</table>*@
-        @*</div>*@
     </div>
 
 </body>

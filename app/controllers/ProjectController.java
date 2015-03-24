@@ -11,13 +11,20 @@ import java.util.List;
 
 public class ProjectController extends Controller {
 
-    public static Result index(){ return ok(addproject.render()); }
 
     public static Result addProject() {
-        Project project = Form.form(Project.class).bindFromRequest().get();
-        project.save();
-        return redirect(routes.ProjectController.index());
-
+        List<Team> teams = Team.find.all();
+        List<Project> projects = Project.find.all();
+        for( int i=0;i<projects.size();i++ ) {
+            long teamId = projects.get(i).getTeamId();
+            for( int j=0;j<teams.size();j++ ) {
+                if( teams.get(j).getId() == teamId ) {
+                    teams.remove(j);
+                    break;
+                }
+            }
+        }
+        return ok(views.html.addproject.render( projects, teams ));
     }
 
     public static Result project() {
