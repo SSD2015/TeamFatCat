@@ -41,5 +41,6 @@ public class Team extends Model {
         this.teamMembers = teamMembers;
     }
 
+    public static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
 
 }
