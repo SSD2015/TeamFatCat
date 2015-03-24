@@ -23,7 +23,7 @@ public class ProjectController extends Controller {
                 }
             }
         }
-        return ok(views.html.addproject.render( teams ));
+        return ok(views.html.addproject.render( projects, teams ));
     }
 
     public static Result project() {

@@ -37,7 +37,13 @@ public class Project extends Model{
     }
     //get
     public String getProjectDesc() { return this.projectDesc; }
+    public String getBriefDesc() {
+        if( this.projectDesc.length()>20 )
+            return this.projectDesc.substring(0,21)+"..";
+        return this.projectDesc;
+    }
 
+    public long getId() { return id; }
     public long getTeamId() { return team.getId(); }
 
 }
