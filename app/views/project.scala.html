@@ -1,4 +1,4 @@
-@(project: Project, members: List[User])
+@(user: User, project: Project, members: List[User], avg: Double)
 <!doctype html>
 <html lang="en">
     <head>
@@ -25,6 +25,8 @@
             <br /> <br /> <br /> <br /> <br /> <br />
             <h4>Description:</h4> <br />
             <p>@project.getProjectDesc()</p> <br />
+            <h4>Average score you have voted: </h4>
+            <p>@avg</p> <br />
         </div>
 
         <a class="navbar-brand" href="/vote">MAKE VOTE</a>

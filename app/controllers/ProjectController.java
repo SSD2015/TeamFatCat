@@ -37,7 +37,20 @@ public class ProjectController extends Controller {
             User user = User.find.byId( teamMembers[i] );
             members.add( user );
         }
-        return ok(views.html.project.render( pj, members ));
+        User user = User.find.byId( (long) 1 );
+        List<Vote> votes = Vote.find.all();
+        double avg = 0.0;
+        int count = 0;
+        for( int i=0;i<votes.size();i++ ) {
+            if( votes.get(i).user.getId() == user.getId() ) {
+                avg += votes.get(i).score;
+                count++;
+            }
+        }
+        if( count != 0 )
+            avg /= count;
+        avg = Math.round(avg*100)/100.0;
+        return ok(views.html.project.render( user, pj, members, avg ));
     }
 
 }
