@@ -11,10 +11,21 @@
         <script type='text/javascript' src="@routes.Assets.at("js/project.js")"></script>
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
-
-        <h2>Project Name: @project.getProjectName()</h2>
-        Description: <br />
-        <p>@project.getProjectDesc()</p> <br />
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/login">INDEX</a>
+                </div>
+                <div style="color: #f9f2f4;">
+                    <h2>@project.getProjectName()</h2>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <br /> <br /> <br /> <br /> <br /> <br />
+            <h4>Description:</h4> <br />
+            <p>@project.getProjectDesc()</p> <br />
+        </div>
 
         <div class="row" style="background-color: #0; margin-top: 50px; padding: 50px;">
             <h2>Member Lists</h2>
