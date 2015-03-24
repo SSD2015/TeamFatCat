@@ -13,7 +13,7 @@ public class ProjectController extends Controller {
 
     public static Result index(){ return ok(addproject.render()); }
 
-    public Result addProject() {
+    public static Result addProject() {
         //List<Project> projectList = Project.find.all();
         return ok(addproject.render());
     }
