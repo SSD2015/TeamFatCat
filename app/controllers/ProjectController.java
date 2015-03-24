@@ -12,9 +12,12 @@ public class ProjectController extends Controller {
 
     public static Result index(){ return ok(addproject.render()); }
 
-    public Result addProject() {
-        //List<Project> projectList = Project.find.all();
-        return ok(addproject.render());
+    public static Result addProject() {
+        Project project = Form.form(Project.class).bindFromRequest().get();
+        project.save();
+        return redirect(routes.ProjectController.index());
+
     }
+
 
 }
