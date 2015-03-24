@@ -29,7 +29,6 @@ public class Application extends Controller {
         return ok(user.render(userList));
     }
 
-
     public static Result addUser() {
         Form<User> userForm = Form.form(User.class).bindFromRequest();
         if (userForm.hasErrors()) {
@@ -64,7 +63,7 @@ public class Application extends Controller {
         public String password;
 
         public String validate() {
-            if(User.authenticate(username,password) == null) {
+            if(User.authenticate(username, password) == null) {
                 return "Invalid user or password";
             }
             return null;

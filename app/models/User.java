@@ -1,10 +1,13 @@
 package models;
 
-import play.db.ebean.Model;
+import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
-import javax.persistence.*;
-import java.sql.Timestamp;
+import play.db.ebean.Model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Version;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -36,12 +39,16 @@ public class User extends Model {
 //		find.ref(username).delete();
 //	}
 
+    public boolean checkPassword(String candidate) {
+        return BCrypt.checkpw(candidate, this.password);
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());;
     }
 
     public void setFirstName(String firstName) {
@@ -66,12 +73,8 @@ public class User extends Model {
         return username;
     }
 
-    public String getPassword(int pw) {
-        if (pw == 1234) {
-            return this.password;
-        } else {
-            return "no permission";
-        }
+    public String getPassword() {
+        return this.password;
     }
 
     public int getType() {
@@ -87,6 +90,11 @@ public class User extends Model {
     }
 
     public static User authenticate(String username, String password) {
-        return find.where().eq("username", username).eq("password", password).findUnique();
+        User user = find.where().eq("username", username).findUnique();
+        if (user != null && BCrypt.checkpw(password, user.password)) {
+            return user;
+        }
+
+        return null;
     }
 }
