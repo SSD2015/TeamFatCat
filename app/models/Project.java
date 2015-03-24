@@ -13,9 +13,7 @@ public class Project extends Model{
     private String projectName;
     private String projectDesc;
 
-    @ManyToOne
-    @JoinColumn(name="team_id", referencedColumnName="id")
-    public Team team;
+    private long team_id;
 
     // Finder will help us easily query data from database.
     public static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
@@ -37,7 +35,13 @@ public class Project extends Model{
     }
     //get
     public String getProjectDesc() { return this.projectDesc; }
+    public String getBriefDesc() {
+        if( this.projectDesc.length()>20 )
+            return this.projectDesc.substring(0,21)+"..";
+        return this.projectDesc;
+    }
 
-    public long getTeamId() { return team.getId(); }
+    public long getId() { return id; }
+    public long getTeamId() { return team_id; }
 
 }

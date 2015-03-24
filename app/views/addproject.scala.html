@@ -1,3 +1,4 @@
+@(projects: List[Project], teams: List[Team])
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -26,81 +27,52 @@
         <div class="row">
             <div class="" style="width=100%; min-height: 100px;"></div>
             <div class="col-sm-4 col-sm-offset-4 text-center">
-                <form action="@routes.Application.addUser()" method="post" class="form-horizontal" role="form">
+                <form action="@routes.ProjectController.addProject()" method="post" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Username</label>
+
+                        <label class="col-sm-4 control-label">Project name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="username"/>
+                            <input class="form-control" id="focusedInput" type="text" name="project_name"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Password</label>
+                        <label class="col-sm-4 control-label">Project description</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="password" name="password"/>
+                            <input class="form-control" id="focusedInput" type="text" name="project_desc"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">First Name</label>
+                        <label class="col-sm-4 control-label">Team ID</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="firstName"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Last Name</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="lastName"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Major</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="major"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Year</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" id="sel1" type="text" name="year">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Team</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" id="sel1" type="text" name="team">
-                                <option>TeamFatCat</option>
-                                <option>TeamGuro</option>
-                            </select>
+                            <input class="form-control" id="focusedInput" type="text" name="team_id"/>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary">Add user</button>
+                    <button class="btn btn-primary">Add project</button>
                 </form>
             </div>
         </div>
 
-        <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">
-            <h2>User Lists</h2>
-            <table class="table table-hover" id="usersList">
-                <thead>
+        <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
+            <h2>Project Lists</h2>
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>TeamId</th>
+                </tr>
+                @projects.map { list =>
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Major</th>
-                        <th>Year</th>
-                        <th>Team</th>
+                        <td>@list.getId()</td>
+                        <td>@list.getProjectName()</td>
+                        <td>@list.getBriefDesc()</td>
+                        <td>@list.getTeamId()</td>
                     </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
+                }
             </table>
         </div>
+
     </div>
 
 </body>

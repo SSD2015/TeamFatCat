@@ -45,7 +45,7 @@ public class VoteController extends Controller {
             vote.save();
         }
 
-        return redirect(routes.Application.index());
+        return redirect(routes.VoteController.result());
 
 	}
 	

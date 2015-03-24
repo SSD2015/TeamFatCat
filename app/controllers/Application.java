@@ -29,9 +29,6 @@ public class Application extends Controller {
         return ok(user.render(userList));
     }
 
-    public static Result project() {
-        return ok(views.html.project.render( new Project() ));
-    }
 
     public static Result addUser() {
         Form<User> userForm = Form.form(User.class).bindFromRequest();
@@ -56,7 +53,7 @@ public class Application extends Controller {
             session().clear();
             session("username", loginForm.get().username);
             return redirect(
-                    routes.VoteController.vote()
+                    routes.ProjectController.project()
             );
         }
     }
