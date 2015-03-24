@@ -28,9 +28,6 @@ public class Application extends Controller {
         return ok(user.render());
     }
 
-    public static Result project() {
-        return ok(views.html.project.render( new Project() ));
-    }
 
     public static Result addUser() {
         User user = Form.form(User.class).bindFromRequest().get();

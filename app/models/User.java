@@ -24,7 +24,7 @@ public class User extends Model {
     @Version
     Timestamp lastUpdate;
 
-    public static Finder<Integer, User> find = new Finder<Integer, User>(Integer.class, User.class);
+    public static Finder<Long, User> find = new Finder< Long, User>(Long.class, User.class);
 
 
     public static List<User> all() {
