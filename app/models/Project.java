@@ -2,8 +2,7 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -13,7 +12,10 @@ public class Project extends Model{
 
     private String projectName;
     private String projectDesc;
-    private long teamId;
+
+    @ManyToOne
+    @JoinColumn(name="team_id", referencedColumnName="id")
+    public Team team;
 
     // Finder will help us easily query data from database.
     public static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
@@ -36,6 +38,6 @@ public class Project extends Model{
     //get
     public String getProjectDesc() { return this.projectDesc; }
 
-    public long getTeamId() { return teamId; }
+    public long getTeamId() { return team.getId(); }
 
 }

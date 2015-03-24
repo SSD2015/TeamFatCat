@@ -1,15 +1,18 @@
 package models;
 
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
+
 import javax.persistence.*;
 //import play.db.ebean.Model;
 //import java.sql.Timestamp;
-/**
- * Created by Guro on 3/7/2015.
- */
-public class Team {
+
+@Entity
+public class Team extends Model {
+
     @Id
     private Long id;
-    @OneToOne
+
     private String teamName;
     private String teamMembers;
 
@@ -19,6 +22,8 @@ public class Team {
     }
 
     public String getTeamMembers() { return this.teamMembers; }
+
+    public Long getId() { return id; }
 
     public long[] getMembersList() {
         String[] list = this.teamMembers.split(",");

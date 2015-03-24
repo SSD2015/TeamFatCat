@@ -9,7 +9,9 @@ import play.db.ebean.Model;
 public class Vote extends Model{
     @Id
     public Long id;
-    public int score = 1;
+
+    @Constraints.Required
+    public int score;
 
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName="id")

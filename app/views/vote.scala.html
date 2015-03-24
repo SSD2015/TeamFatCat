@@ -1,4 +1,5 @@
 @(user: User, project: Project, voteCat: List[VoteCategory])
+
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -23,22 +24,38 @@
             <h1> Welcome user : @(user.getFirstName() +"  "+ user.getLastName() )</h1>
             <h3>Select category  to Vote </h3>
 
-            <ul><br>
-            <form action="/vote" method="post">
-            @voteCat.map { cat =>
-                @cat.name:      Score : <br>
-                    <label class="radio-inline"><input type="radio" name="optradio"></label>
-                    <label class="radio-inline"><input type="radio" name="optradio"></label>
-                    <label class="radio-inline"><input type="radio" name="optradio"></label>
-                    <label class="radio-inline"><input type="radio" name="optradio"></label>
-                    <label class="radio-inline"><input type="radio" name="optradio"></label>
-                <br><br>
-            }
             <br>
+            <form action="/vote" method="post">
+            <div class = "Cat1">
+                @(voteCat(0).name)<br>
+                <label class="radio-inline"><input type="radio" name="scores[0]" value="1"></label>
+                <label class="radio-inline"><input type="radio" name="scores[0]" value="2"></label>
+                <label class="radio-inline"><input type="radio" name="scores[0]" value="3"></label>
+                <label class="radio-inline"><input type="radio" name="scores[0]" value="4"></label>
+                <label class="radio-inline"><input type="radio" name="scores[0]" value="5"></label>
+            <br><br>
+            </div>
+            <div class = "Cat2">
+                @(voteCat(1).name)<br>
+                <label class="radio-inline"><input type="radio" name="scores[1]" value="1"></label>
+                <label class="radio-inline"><input type="radio" name="scores[1]" value="2"></label>
+                <label class="radio-inline"><input type="radio" name="scores[1]" value="3"></label>
+                <label class="radio-inline"><input type="radio" name="scores[1]" value="4"></label>
+                <label class="radio-inline"><input type="radio" name="scores[1]" value="5"></label>
+            <br><br>
+            </div>
+            <div class = "Cat3">
+                @(voteCat(2).name)<br>
+                <label class="radio-inline"><input type="radio" name="scores[2]" value="1"></label>
+                <label class="radio-inline"><input type="radio" name="scores[2]" value="2"></label>
+                <label class="radio-inline"><input type="radio" name="scores[2]" value="3"></label>
+                <label class="radio-inline"><input type="radio" name="scores[2]" value="4"></label>
+                <label class="radio-inline"><input type="radio" name="scores[2]" value="5"></label>
+            <br><br>
+            </div>
+                <br>
                 <button type="submit" class="btn btn-default">Make Vote!</button><br>
             </form>
-            </ul>
         </div>
-
     </body>
 </html>
