@@ -1,3 +1,4 @@
+@(userList: List[User])
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -27,6 +28,7 @@
         <div class="row">
             <div class="" style="width=100%; min-height: 100px;"></div>
             <div class="col-sm-4 col-sm-offset-4 text-center">
+
                 <form action="@routes.Application.addUser()" method="post" class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Username</label>
@@ -37,7 +39,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Password</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="password" name="password"/>
+                            <input class="form-control" id="focusedInput" type="text" name="password"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,32 +55,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Major</label>
+                        <label class="col-sm-4 control-label">Type</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="major"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Year</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" id="sel1" type="text" name="year">
+                            <select class="form-control" id="sel1" type="number" name="type">
                                 <option>1</option>
                                 <option>2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Team</label>
-                        <div class="col-sm-6">
-                            <select class="form-control" id="sel1" type="text" name="team">
-                                <option>TeamFatCat</option>
-                                <option>TeamGuro</option>
                             </select>
                         </div>
                     </div>
 
                     <button class="btn btn-primary">Add user</button>
                 </form>
+
             </div>
         </div>
 
@@ -92,10 +80,18 @@
                         <th>Password</th>
                         <th>Firstname</th>
                         <th>Lastname</th>
-                        <th>Major</th>
-                        <th>Year</th>
-                        <th>Team</th>
+                        <th>Type</th>
                     </tr>
+                    @userList.map { list =>
+                        <tr>
+                            <td>@list.getId()</td>
+                            <td>@list.getUsername()</td>
+                            <td>@list.getPassword(1234)</td>
+                            <td>@list.getFirstName()</td>
+                            <td>@list.getLastName()</td>
+                            <td>@list.getType()</td>
+                        </tr>
+                    }
                 </thead>
                 <tbody>
 

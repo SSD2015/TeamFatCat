@@ -21,23 +21,41 @@ public class User extends Model {
     private String firstName;
     private String lastName;
 
+    private int type;
+
     @Version
     Timestamp lastUpdate;
 
-    public static Finder<Integer, User> find = new Finder<Integer, User>(Integer.class, User.class);
-
+    public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 
     public static List<User> all() {
         return find.all();
     }
 
-    public static void create(User user) {
-        user.save();
-    }
-
 //	public static void delete(String username) {
 //		find.ref(username).delete();
 //	}
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public long getId(){ return id; }
 
     public String getFirstName() { return firstName; }
@@ -46,6 +64,18 @@ public class User extends Model {
 
     public String getUsername(){
         return username;
+    }
+
+    public String getPassword(int pw) {
+        if (pw == 1234) {
+            return this.password;
+        } else {
+            return "no permission";
+        }
+    }
+
+    public int getType() {
+        return this.type;
     }
 
     public Timestamp getLastUpdate() {
