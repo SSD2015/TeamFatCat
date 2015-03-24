@@ -12,7 +12,7 @@ import java.util.List;
 public class ProjectController extends Controller {
 
 
-    public static Result addProject() {
+    public static Result addProjectPage() {
         List<Team> teams = Team.find.all();
         List<Project> projects = Project.find.all();
         for( int i=0;i<projects.size();i++ ) {
@@ -25,6 +25,12 @@ public class ProjectController extends Controller {
             }
         }
         return ok(views.html.addproject.render( projects, teams ));
+    }
+
+    public static Result addProject() {
+        Project project = Form.form(Project.class).bindFromRequest().get();
+        project.save();
+        return redirect(routes.ProjectController.addProjectPage());
     }
 
     public static Result project() {
