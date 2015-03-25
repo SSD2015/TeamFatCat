@@ -37,8 +37,8 @@ public class ProjectController extends Controller {
         return redirect(routes.ProjectController.addProjectPage());
     }
 
-    public static Result project(Long loginUser) {
-        Project pj = Project.find.byId((long) 1);
+    public static Result project(Long loginUser, Long projectId) {
+        Project pj = Project.find.byId(projectId);
         long teamId = pj.getId();
         Team team = Team.find.byId( teamId );
         long[] teamMembers = team.getMembersList();
@@ -63,10 +63,22 @@ public class ProjectController extends Controller {
         return ok(views.html.project.render( user, pj, members, avg ));
     }
 
+    public static Result projectlist(Long loginUser) {
+        List<Project> pj = Project.find.all();
+        User user = User.find.byId(loginUser);
+        return ok(views.html.projectlist.render( user, pj ));
+    }
+
     public static Result makeVote() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
         return redirect(
                 routes.VoteController.vote( Long.parseLong(form.data().get("uId")),Long.parseLong(form.data().get("pId")) )
+        );
+    }
+    public static Result select() {
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        return redirect(
+                routes.ProjectController.project( Long.parseLong(form.data().get("uId")),Long.parseLong(form.data().get("pId")) )
         );
     }
 

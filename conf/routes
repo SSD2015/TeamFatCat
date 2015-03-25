@@ -3,33 +3,36 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.Application.index()
+GET         /                         controllers.Application.index()
 
-GET         /login               controllers.Application.login()
-POST        /login               controllers.Application.authenticate()
+GET         /login                    controllers.Application.login()
+POST        /login                    controllers.Application.authenticate()
 
-GET         /user                controllers.Application.user()
-POST        /user                controllers.Application.addUser()
-GET         /user                controllers.Application.clearUser()
+GET         /user                     controllers.Application.user()
+POST        /user                     controllers.Application.addUser()
+GET         /user                     controllers.Application.clearUser()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file             controllers.Assets.at(path="/public", file)
 
-GET         /vote                controllers.VoteController.vote( userId: Long, projectId: Long )
-POST        /vote                controllers.VoteController.manageVote()
+GET         /vote                     controllers.VoteController.vote( userId: Long, projectId: Long )
+POST        /vote                     controllers.VoteController.manageVote()
 
-GET         /project             controllers.ProjectController.project(userId: Long)
-POST        /project             controllers.ProjectController.makeVote()
+GET         /project                  controllers.ProjectController.project(userId: Long, projectId: Long)
+POST        /project                  controllers.ProjectController.makeVote()
 
-GET         /result              controllers.VoteController.result()
+GET         /result                   controllers.VoteController.result()
 
-GET         /addproject          controllers.ProjectController.addProjectPage()
-POST        /addproject          controllers.ProjectController.addProject()
+GET         /addproject               controllers.ProjectController.addProjectPage()
+POST        /addproject               controllers.ProjectController.addProject()
 
 
-GET         /team                controllers.Application.team()
-POST        /team                controllers.Application.addTeam()
+GET         /team                     controllers.Application.team()
+POST        /team                     controllers.Application.addTeam()
 
-POST        /team/members        controllers.Application.addMember()
+POST        /team/members             controllers.Application.addMember()
 
 POST        /team/removeMember        controllers.Application.removeMemberFromTeam()
+
+GET         /projectlist             controllers.ProjectController.projectlist(userId: Long)
+POST        /projectlist             controllers.ProjectController.select()

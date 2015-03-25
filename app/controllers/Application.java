@@ -63,7 +63,7 @@ public class Application extends Controller {
             session("username", loginForm.get().username);
             User user = User.find.where().eq("username", loginForm.get().username).findUnique();
             return redirect(
-                    routes.ProjectController.project(user.getId())
+                    routes.ProjectController.projectlist(user.getId())
             );
         }
     }
