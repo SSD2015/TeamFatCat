@@ -51,10 +51,9 @@ public class Team extends Model {
     }
 
     public List<User> getMembers(){
-        if (this.members == null) {
-            return null;
-        }
         List<User> users = new ArrayList<User>();
+        if (this.members == null)
+            return users;
         long[] list = this.getMembersList();
         for(int i = 0 ; i < list.length ; i++) {
             users.add(User.find.byId(list[i]));

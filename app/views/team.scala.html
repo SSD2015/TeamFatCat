@@ -71,16 +71,23 @@
                 </div>
             </div>
 
-            <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">
-                <h2>Teams and Members</h2>
+            <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
+                <h1>Team Lists</h1>
                 @teamList.map { list =>
-                    <table class="table table-hover" id="teamAndMember">
-                        <h4>@list.getName</h4>
-                        <thead>
+                    <h3><u>@list.getName()</u> (ID: @list.getId())</h3>
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Username</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                        </tr>
+                        @list.getMembers().map { listlist =>
                             <tr>
-
+                                <td>@listlist.getUsername()</td>
+                                <td>@listlist.getFirstName()</td>
+                                <td>@listlist.getLastName()</td>
                             </tr>
-                        </thead>
+                        }
                     </table>
                 }
             </div>
