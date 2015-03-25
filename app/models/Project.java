@@ -2,8 +2,8 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 public class Project extends Model{
@@ -39,6 +39,9 @@ public class Project extends Model{
     //get
     public String getProjectDesc() { return this.projectDesc; }
     public String getBriefDesc() {
+        if (this.projectDesc == null) {
+            return "IT'S NULL SUS!";
+        }
         if( this.projectDesc.length()>20 )
             return this.projectDesc.substring(0,21)+"..";
         return this.projectDesc;
@@ -46,5 +49,4 @@ public class Project extends Model{
 
     public long getId() { return id; }
     public long getTeamId() { return teamId; }
-
 }

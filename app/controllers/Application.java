@@ -39,6 +39,14 @@ public class Application extends Controller {
         return redirect(routes.Application.user());
     }
 
+    public static Result clearUser() {
+        List<User> users = new Model.Finder(Long.class, User.class).all();
+        for (int i = 0 ; i < users.size() ; i++) {
+            users.get(i).delete();
+        }
+        return redirect(routes.Application.user());
+    }
+
     public static Result getUser() {
         List<User> users = new Model.Finder(Long.class, User.class).all();
         return ok(toJson(users));
@@ -51,8 +59,9 @@ public class Application extends Controller {
         } else {
             session().clear();
             session("username", loginForm.get().username);
+            User user = User.find.where().eq("username", loginForm.get().username).findUnique();
             return redirect(
-                    routes.ProjectController.project()
+                    routes.ProjectController.project(user.getId())
             );
         }
     }
