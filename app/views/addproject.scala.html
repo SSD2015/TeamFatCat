@@ -32,19 +32,22 @@
 
                         <label class="col-sm-4 control-label">Project name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="project_name"/>
+                            <input class="form-control" id="focusedInput" type="text" name="projectName"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Project description</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="project_desc"/>
+                            <input class="form-control" id="focusedInput" type="text" name="projectDesc"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Team ID</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="team_id"/>
+                            <select class="form-control" id="sel1" type="number" name="teamId">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -52,27 +55,26 @@
                 </form>
             </div>
         </div>
+    </div>
 
-        <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
-            <h2>Project Lists</h2>
-            <table class="table table-hover">
+    <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
+        <h2>Project Lists</h2>
+        <table class="table table-hover">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>TeamId</th>
+            </tr>
+            @projects.map { list =>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>TeamId</th>
+                    <td>@list.getId()</td>
+                    <td>@list.getProjectName()</td>
+                    <td>@list.getBriefDesc()</td>
+                    <td>@list.getTeamId()</td>
                 </tr>
-                @projects.map { list =>
-                    <tr>
-                        <td>@list.getId()</td>
-                        <td>@list.getProjectName()</td>
-                        <td>@list.getBriefDesc()</td>
-                        <td>@list.getTeamId()</td>
-                    </tr>
-                }
-            </table>
-        </div>
-
+            }
+        </table>
     </div>
 
 </body>

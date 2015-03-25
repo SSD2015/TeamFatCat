@@ -28,7 +28,11 @@ public class ProjectController extends Controller {
     }
 
     public static Result addProject() {
-        Project project = Form.form(Project.class).bindFromRequest().get();
+        Form<Project> projectForm = Form.form(Project.class).bindFromRequest();
+        if (projectForm.hasErrors()) {
+            return redirect(routes.Application.index());
+        }
+        Project project = projectForm.get();
         project.save();
         return redirect(routes.ProjectController.addProjectPage());
     }
