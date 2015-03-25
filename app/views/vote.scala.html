@@ -25,7 +25,8 @@
                 <div class="" style="width=100%; min-height: 100px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
                     <form action="@routes.VoteController.manageVote()" method="post" class="form-horizontal" role="form">
-
+                        <input type="hidden" value=@user.getId() name="uId">
+                        <input type="hidden" value=@project.getId() name="pId">
                         @voteCat.map { list =>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">@list.name</label>

@@ -13,8 +13,8 @@ public class VoteController extends Controller {
 
 	public static Result manageVote() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-        User user = User.find.byId((long) 1);
-        Project project = Project.find.byId((long) 1);
+        User user = User.find.byId( Long.parseLong( form.data().get("uId") ) );
+        Project project = Project.find.byId( Long.parseLong( form.data().get("pId") ) );
         List<VoteCategory> voteCategories = VoteCategory.find.all();
         List<Vote> votes = Vote.find.all();
         for( Vote v: votes ) {
