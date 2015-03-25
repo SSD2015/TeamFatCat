@@ -117,4 +117,11 @@ public class Application extends Controller {
         return redirect(routes.Application.team());
     }
 
+    public static Result removeMemberFromTeam() {
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        Team team = Team.find.byId( Long.parseLong(form.data().get("tId")) );
+        team.removeMember( Long.parseLong(form.data().get("uId")) );
+        team.update();
+        return redirect(routes.Application.team());
+    }
 }

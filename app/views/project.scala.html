@@ -31,7 +31,6 @@
         </div>
 
         <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
-
             <input type="hidden" value=@user.getId() name="uId">
             <input type="hidden" value=@project.getId() name="pId">
             <button class="btn btn-default">Make Vote</button>

@@ -62,13 +62,25 @@ public class Team extends Model {
         return users;
     }
 
-    public void setMembers( long[] list ) {
-        if (list.length <= 0) {
+    public void removeMember( long id ) {
+        List<User> lists = this.getMembers();
+        List<User> newLists = new ArrayList<User>();
+        for( User u: lists ) {
+            if( u.getId() != id ) {
+                newLists.add(u);
+            }
+        }
+        this.setMembers( newLists );
+    }
+
+    public void setMembers( List<User> list ) {
+        this.members = "";
+        if (list.size() <= 0) {
             return;
         }
-        this.members += list[0];
-        for( int i = 1 ; i < list.length ; i++ ) {
-            this.members += "," + list[i];
+        this.members += list.get(0).getId();
+        for( int i = 1 ; i < list.size() ; i++ ) {
+            this.members += "," + list.get(i).getId();
         }
 
     }

@@ -86,6 +86,13 @@
                                 <td>@listlist.getUsername()</td>
                                 <td>@listlist.getFirstName()</td>
                                 <td>@listlist.getLastName()</td>
+                                <td>
+                                    <form action="@routes.Application.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
+                                        <input type="hidden" value=@list.getId() name="tId">
+                                        <input type="hidden" value=@listlist.getId() name="uId">
+                                        <button class="btn btn-danger">X</button>
+                                    </form>
+                                </td>
                             </tr>
                         }
                     </table>

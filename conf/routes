@@ -31,3 +31,5 @@ GET         /team                controllers.Application.team()
 POST        /team                controllers.Application.addTeam()
 
 POST        /team/members        controllers.Application.addMember()
+
+POST        /team/removeMember        controllers.Application.removeMemberFromTeam()
