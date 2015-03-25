@@ -29,17 +29,18 @@ public class VoteController extends Controller {
         this.currentUser = user;
     }
 
-	public static Result manageVote(){
+	public static Result manageVote() {
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+
         User user = User.find.byId((long) 1);
         Project project = Project.find.byId((long) 1);
         List<VoteCategory> voteCategories = VoteCategory.find.all();
 
         Vote vote;
-
         for(int i = 0 ; i < voteCategories.size() ; i++) {
             vote = new Vote();
             vote.category = voteCategories.get(i);
-            vote.score = 1;
+            vote.score = Integer.parseInt( form.data().get( vote.category.name ) );
             vote.user = user;
             vote.project = project;
             vote.save();
