@@ -7,20 +7,20 @@ import play.data.Form;
 import play.data.DynamicForm;
 import views.html.*;
 
-import java.util.List;
+import java.util.*;
 
 public class VoteController extends Controller {
 
 	public static Result manageVote() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-        User user = User.find.byId( Long.parseLong( form.data().get("uId") ) );
+        User user = User.find.byId(Long.parseLong(form.data().get("uId")));
         Project project = Project.find.byId( Long.parseLong( form.data().get("pId") ) );
         List<VoteCategory> voteCategories = VoteCategory.find.all();
-        List<Vote> votes = Vote.find.all();
-        for( Vote v: votes ) {
-            if( v.user.getId() != user.getId() )
-                votes.remove(v);
-            else {
+        List<Vote> allVotes = Vote.find.all();
+        List<Vote> votes = new ArrayList<Vote>();
+        for( Vote v: allVotes ) {
+            if( v.user.getId() == user.getId() ) {
+                votes.add( v );
                 VoteCategory voteCat = v.category;
                 v.score = Integer.parseInt( form.data().get( voteCat.name ) );
                 voteCategories.remove( voteCat );
