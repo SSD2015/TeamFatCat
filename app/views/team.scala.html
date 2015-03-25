@@ -1,0 +1,90 @@
+@(userList: List[User] , teamList: List[Team])
+
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Team Member</title>
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+    </head>
+
+    <body>
+
+        <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script type='text/javascript' src="@routes.Assets.at("js/user.js")"></script>
+        <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/login">INDEX</a>
+                </div>
+                <div style="color: #f9f2f4;">
+                    <h2>Team</h2>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="" style="width=100%; min-height: 100px;"></div>
+                <div class="col-sm-4 col-sm-offset-4 text-center">
+
+                    <form action="@routes.Application.addTeam()" method="post" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Team</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="focusedInput" type="text" name="name" placeholder="Team Name"/>
+
+                            </div>
+                </div>
+                        <button class="btn btn-primary">Create Team</button>
+                    </form>
+
+                    <div class="" style="width=100%; min-height: 100px;"></div>
+
+                    <form action="@routes.Application.addMember()" method="post" class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Select Team</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="focusedInput" type="text" name="teamName">
+                                    @teamList.map { list =>
+                                        <option>@list.getName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Select User</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="focusedInput" type="text" name="username">
+                                    @userList.map { list =>
+                                        <option>@list.getUsername</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary">Add Member</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">
+                <h2>Teams and Members</h2>
+                @teamList.map { list =>
+                    <table class="table table-hover" id="teamAndMember">
+                        <h4>@list.getName</h4>
+                        <thead>
+                            <tr>
+
+                            </tr>
+                        </thead>
+                    </table>
+                }
+            </div>
+
+        </div>
+    </body>
+</html>
