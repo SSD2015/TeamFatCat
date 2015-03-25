@@ -20,42 +20,31 @@
             </div>
         </nav>
 
-        <div class="text-center" style="padding: 60px;">
-            <h1> Welcome user : @(user.getFirstName() +"  "+ user.getLastName() )</h1>
-            <h3>Select category  to Vote </h3>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="" style="width=100%; min-height: 100px;"></div>
+                <div class="col-sm-4 col-sm-offset-4 text-center">
+                    <form action="@routes.VoteController.manageVote()" method="post" class="form-horizontal" role="form">
 
-            <br>
-            <form action="/vote" method="post">
-            <div class = "Cat1">
-                @(voteCat(0).name)<br>
-                <label class="radio-inline"><input type="radio" name="scores[0]" value="1"></label>
-                <label class="radio-inline"><input type="radio" name="scores[0]" value="2"></label>
-                <label class="radio-inline"><input type="radio" name="scores[0]" value="3"></label>
-                <label class="radio-inline"><input type="radio" name="scores[0]" value="4"></label>
-                <label class="radio-inline"><input type="radio" name="scores[0]" value="5"></label>
-            <br><br>
+                        @voteCat.map { list =>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">@list.name</label>
+                            <div class="col-sm-6">
+                                <label class="radio-inline"><input type="radio" name=@list.name value="1"></label>
+                                <label class="radio-inline"><input type="radio" name=@list.name value="2"></label>
+                                <label class="radio-inline"><input type="radio" name=@list.name value="3"></label>
+                                <label class="radio-inline"><input type="radio" name=@list.name value="4"></label>
+                                <label class="radio-inline"><input type="radio" name=@list.name value="5"></label>
+                            </div>
+                        </div>
+                        }
+
+                        <button class="btn btn-primary">Make Vote</button>
+
+                    </form>
+                </div>
             </div>
-            <div class = "Cat2">
-                @(voteCat(1).name)<br>
-                <label class="radio-inline"><input type="radio" name="scores[1]" value="1"></label>
-                <label class="radio-inline"><input type="radio" name="scores[1]" value="2"></label>
-                <label class="radio-inline"><input type="radio" name="scores[1]" value="3"></label>
-                <label class="radio-inline"><input type="radio" name="scores[1]" value="4"></label>
-                <label class="radio-inline"><input type="radio" name="scores[1]" value="5"></label>
-            <br><br>
-            </div>
-            <div class = "Cat3">
-                @(voteCat(2).name)<br>
-                <label class="radio-inline"><input type="radio" name="scores[2]" value="1"></label>
-                <label class="radio-inline"><input type="radio" name="scores[2]" value="2"></label>
-                <label class="radio-inline"><input type="radio" name="scores[2]" value="3"></label>
-                <label class="radio-inline"><input type="radio" name="scores[2]" value="4"></label>
-                <label class="radio-inline"><input type="radio" name="scores[2]" value="5"></label>
-            <br><br>
-            </div>
-                <br>
-                <button type="submit" class="btn btn-default">Make Vote!</button><br>
-            </form>
         </div>
+
     </body>
 </html>
