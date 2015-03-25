@@ -41,9 +41,9 @@ public class VoteController extends Controller {
 
 	}
 	
-    public static Result vote() {
-        User user = User.find.byId((long) 1);
-        Project project = Project.find.byId((long) 1);
+    public static Result vote( long userId, long projectId ) {
+        User user = User.find.byId( userId );
+        Project project = Project.find.byId( projectId );
         List<VoteCategory> voteCategories = VoteCategory.find.all();
 
         return ok(vote.render(user,project,voteCategories));

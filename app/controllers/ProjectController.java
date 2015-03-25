@@ -63,4 +63,11 @@ public class ProjectController extends Controller {
         return ok(views.html.project.render( user, pj, members, avg ));
     }
 
+    public static Result makeVote() {
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        return redirect(
+                routes.VoteController.vote( Long.parseLong(form.data().get("uId")),Long.parseLong(form.data().get("pId")) )
+        );
+    }
+
 }
