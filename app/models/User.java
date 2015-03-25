@@ -39,6 +39,10 @@ public class User extends Model {
 //		find.ref(username).delete();
 //	}
 
+    public void clearAll() {
+        find.all().clear();
+    }
+
     public boolean checkPassword(String candidate) {
         return BCrypt.checkpw(candidate, this.password);
     }

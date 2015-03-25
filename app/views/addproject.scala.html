@@ -46,7 +46,7 @@
                         <div class="col-sm-6">
                             <select class="form-control" id="sel1" type="number" name="teamId">
                                 @teams.map { list =>
-                                    <option value=@list.getId()>@list.getTeamName()</option>
+                                    <option value=@list.getId()>@list.getName()</option>
                                 }
                             </select>
                         </div>
@@ -72,7 +72,7 @@
                     <td>@list.getId()</td>
                     <td>@list.getProjectName()</td>
                     <td>@list.getBriefDesc()</td>
-                    <td>@list.getTeamId()</td>
+                    <td>@list.getId()</td>
                 </tr>
             }
         </table>
