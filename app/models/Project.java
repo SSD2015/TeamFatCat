@@ -12,7 +12,7 @@ public class Project extends Model{
 
     private String projectName;
     private String projectDesc;
-    
+
     private long teamId;
 
     // Finder will help us easily query data from database.

@@ -45,8 +45,9 @@
                         <label class="col-sm-4 control-label">Team ID</label>
                         <div class="col-sm-6">
                             <select class="form-control" id="sel1" type="number" name="teamId">
-                                <option>1</option>
-                                <option>2</option>
+                                @teams.map { list =>
+                                    <option>@list.getId()</option>
+                                }
                             </select>
                         </div>
                     </div>
