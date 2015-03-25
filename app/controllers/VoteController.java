@@ -35,7 +35,17 @@ public class VoteController extends Controller {
         User user = User.find.byId((long) 1);
         Project project = Project.find.byId((long) 1);
         List<VoteCategory> voteCategories = VoteCategory.find.all();
-
+        List<Vote> votes = Vote.find.all();
+        for( Vote v: votes ) {
+            if( v.user.getId() != user.getId() )
+                votes.remove(v);
+            else {
+                VoteCategory voteCat = v.category;
+                v.score = Integer.parseInt( form.data().get( voteCat.name ) );
+                voteCategories.remove( voteCat );
+                v.update();
+            }
+        }
         Vote vote;
         for(int i = 0 ; i < voteCategories.size() ; i++) {
             vote = new Vote();
