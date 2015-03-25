@@ -13,7 +13,6 @@ public class VoteController extends Controller {
 
 	public static Result manageVote() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-
         User user = User.find.byId((long) 1);
         Project project = Project.find.byId((long) 1);
         List<VoteCategory> voteCategories = VoteCategory.find.all();
