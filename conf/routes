@@ -10,15 +10,16 @@ POST        /login               controllers.Application.authenticate()
 
 GET         /user                controllers.Application.user()
 POST        /user                controllers.Application.addUser()
-GET         /users               controllers.Application.getUser()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.at(path="/public", file)
 
 GET         /vote                controllers.VoteController.vote()
 POST        /vote                controllers.VoteController.manageVote()
 
-GET         /project             controllers.Application.project()
+GET         /project             controllers.ProjectController.project()
 
 GET         /result              controllers.VoteController.result()
 
-GET         /addproject              controllers.ProjectController.index()
+GET         /addproject          controllers.ProjectController.addProjectPage()
+POST        /addproject          controllers.ProjectController.addProject()

@@ -25,21 +25,22 @@ public class Application extends Controller {
     }
 
     public static Result user() {
-        return ok(user.render());
-    }
-
-    public static Result project() {
-        return ok(views.html.project.render( new Project() ));
+        List<User> userList = User.find.all();
+        return ok(user.render(userList));
     }
 
     public static Result addUser() {
-        User user = Form.form(User.class).bindFromRequest().get();
+        Form<User> userForm = Form.form(User.class).bindFromRequest();
+        if (userForm.hasErrors()) {
+            return redirect(routes.Application.index());
+        }
+        User user = userForm.get();
         user.save();
         return redirect(routes.Application.user());
     }
 
     public static Result getUser() {
-        List<User> users = new Model.Finder(Integer.class, User.class).all();
+        List<User> users = new Model.Finder(Long.class, User.class).all();
         return ok(toJson(users));
     }
 
@@ -51,7 +52,7 @@ public class Application extends Controller {
             session().clear();
             session("username", loginForm.get().username);
             return redirect(
-                    routes.VoteController.vote()
+                    routes.ProjectController.project()
             );
         }
     }
@@ -62,13 +63,10 @@ public class Application extends Controller {
         public String password;
 
         public String validate() {
-            if(User.authenticate(username,password) == null) {
+            if(User.authenticate(username, password) == null) {
                 return "Invalid user or password";
             }
-
             return null;
         }
-
-
     } 
 }
