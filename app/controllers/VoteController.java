@@ -10,28 +10,9 @@ import views.html.*;
 import java.util.List;
 
 public class VoteController extends Controller {
-	private User currentUser;
-    private Project currentProject;
-
-    public Project getCurrentProject(){
-        return this.currentProject;
-    }
-
-    public void setCurrentProject(Project project){
-        this.currentProject = project;
-    }
-
-    public User getCurrentUser(){
-        return this.currentUser;
-    }
-
-    public void setCurrentUser(User user){
-        this.currentUser = user;
-    }
 
 	public static Result manageVote() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-
         User user = User.find.byId((long) 1);
         Project project = Project.find.byId((long) 1);
         List<VoteCategory> voteCategories = VoteCategory.find.all();

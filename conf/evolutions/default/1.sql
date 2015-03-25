@@ -21,7 +21,7 @@ create table team (
   id                        bigint auto_increment not null,
   name                      varchar(255),
   members                   varchar(255),
-  count                     integer,
+
   constraint pk_team primary key (id))
 ;
 

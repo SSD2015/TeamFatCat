@@ -30,12 +30,22 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">@list.name</label>
                             <div class="col-sm-6">
-                                <input type=range min=0 max=5 value=0 name=@list.name>
+                                <input type=range min=0 max=5 value=0 id=@list.name name=@list.name list=volsettings>
+                                <datalist id=volsettings>
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </datalist>
+
                             </div>
+
                         </div>
                         }
-
-                        <button class="btn btn-primary">Make Vote</button>
+                        <br>
+                        <button class="btn btn-default">Make Vote</button>
 
                     </form>
                 </div>

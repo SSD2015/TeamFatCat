@@ -16,7 +16,7 @@ public class ProjectController extends Controller {
         List<Team> teams = Team.find.all();
         List<Project> projects = Project.find.all();
         for( int i=0;i<projects.size();i++ ) {
-            long teamId = projects.get(i).getTeamId();
+            long teamId = projects.get(i).getId();
             for( int j=0;j<teams.size();j++ ) {
                 if( teams.get(j).getId() == teamId ) {
                     teams.remove(j);
@@ -37,9 +37,9 @@ public class ProjectController extends Controller {
         return redirect(routes.ProjectController.addProjectPage());
     }
 
-    public static Result project() {
-        Project pj = Project.find.byId( (long) 1 );
-        long teamId = pj.getTeamId();
+    public static Result project(Long loginUser) {
+        Project pj = Project.find.byId((long) 1);
+        long teamId = pj.getId();
         Team team = Team.find.byId( teamId );
         long[] teamMembers = team.getMembersList();
         List<User> members = new ArrayList<User>();
@@ -47,7 +47,7 @@ public class ProjectController extends Controller {
             User user = User.find.byId( teamMembers[i] );
             members.add( user );
         }
-        User user = User.find.byId( (long) 1 );
+        User user = User.find.byId(loginUser);
         List<Vote> votes = Vote.find.all();
         double avg = 0.0;
         int count = 0;

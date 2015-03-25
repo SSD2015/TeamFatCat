@@ -2,8 +2,10 @@ package models;
 
 import play.db.ebean.Model;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 //import play.db.ebean.Model;
@@ -18,8 +20,7 @@ public class Team extends Model {
     private String name;
     private String members;
 
-
-    public String getTeamName(){
+    public String getName(){
         return name;
     }
 
@@ -41,6 +42,7 @@ public class Team extends Model {
     public Long getId() { return id; }
 
     public long[] getMembersList() {
+
         String[] list = this.members.split(",");
         long[] memberLists = new long[list.length];
         for( int i = 0 ; i < memberLists.length ; i++ )
@@ -60,7 +62,7 @@ public class Team extends Model {
 
         return users;
     }
-/*
+
     public void setMembers( long[] list ) {
         if (list.length <= 0) {
             return;
@@ -69,8 +71,9 @@ public class Team extends Model {
         for( int i = 1 ; i < list.length ; i++ ) {
             this.members += "," + list[i];
         }
+
     }
-*/
+
     public void addMembers(User member) {
         if(count() > 0) {
             this.members += ",";
