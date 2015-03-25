@@ -2,7 +2,9 @@ package controllers;
 
 import models.Project;
 import models.User;
+import models.Team;
 import models.VoteCategory;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
@@ -17,7 +19,7 @@ import static play.libs.Json.toJson;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("hello"));
+        return ok(index.render("404 Happy Error"));
     }
     
     public static Result login() {
@@ -58,7 +60,6 @@ public class Application extends Controller {
     }
 
     public static class Login {
-
         public String username;
         public String password;
 
@@ -68,5 +69,43 @@ public class Application extends Controller {
             }
             return null;
         }
-    } 
+    }
+
+
+    public static Result team() {
+        List<User> userList = User.find.all();
+        List<Team> teamList = Team.find.all();
+        return ok(team.render(userList , teamList));
+    }
+
+    public static Result addTeam() {
+        Form<Team> teamForm = Form.form(Team.class).bindFromRequest();
+        if (teamForm.hasErrors()) {
+            return redirect(routes.Application.index());
+        }
+        Team team = teamForm.get();
+        team.save();
+        return redirect(routes.Application.team());
+    }
+
+    public static Result addMember(){
+        DynamicForm form = Form.form().bindFromRequest();
+        if (form.hasErrors()) {
+            return redirect(routes.Application.index());
+        }
+
+        String teamName = form.get("teamName");
+        String username = form.get("username");
+
+        Team team = Team.find.where().eq("name", teamName).findUnique();
+        User user = User.find.where().eq("username", username).findUnique();
+
+        if(team != null & user != null){
+            team.addMembers(user);
+        } else {
+            return redirect(routes.Application.index());
+        }
+        return redirect(routes.Application.team());
+    }
+
 }

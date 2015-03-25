@@ -23,3 +23,8 @@ GET         /result              controllers.VoteController.result()
 
 GET         /addproject          controllers.ProjectController.addProjectPage()
 POST        /addproject          controllers.ProjectController.addProject()
+
+GET         /team                controllers.Application.team()
+POST        /team                controllers.Application.addTeam()
+
+POST        /team/members        controllers.Application.addMember()
