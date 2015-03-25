@@ -19,7 +19,7 @@ public class VoteController extends Controller {
         List<Vote> allVotes = Vote.find.all();
         List<Vote> votes = new ArrayList<Vote>();
         for( Vote v: allVotes ) {
-            if( v.user.getId() == user.getId() ) {
+            if( v.user.getId() == user.getId() && v.project.getId() == project.getId() ) {
                 votes.add( v );
                 VoteCategory voteCat = v.category;
                 v.score = Integer.parseInt( form.data().get( voteCat.name ) );
