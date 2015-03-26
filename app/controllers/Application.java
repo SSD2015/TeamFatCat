@@ -84,6 +84,10 @@ public class Application extends Controller {
     public static Result team() {
         List<User> userList = User.find.all();
         List<Team> teamList = Team.find.all();
+        for( int i=0; i<teamList.size();i++ ) {
+            List<User> members = teamList.get(i).getMembers();
+            userList.removeAll(members);
+        }
         return ok(team.render(userList , teamList));
     }
 
