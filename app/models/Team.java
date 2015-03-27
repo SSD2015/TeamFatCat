@@ -41,12 +41,13 @@ public class Team extends Model {
 
     public Long getId() { return id; }
 
-    public long[] getMembersList() {
-
+    public List<Long> getMembersList() {
+        List<Long> memberLists = new ArrayList<Long>();
+        if( this.members.length() <= 0 )
+            return memberLists;
         String[] list = this.members.split(",");
-        long[] memberLists = new long[list.length];
-        for( int i = 0 ; i < memberLists.length ; i++ )
-            memberLists[i] = Long.parseLong(list[i]);
+        for (int i = 0; i < list.length ; i++ )
+            memberLists.add( Long.parseLong( list[i] ) );
         return memberLists;
     }
 
@@ -54,11 +55,10 @@ public class Team extends Model {
         List<User> users = new ArrayList<User>();
         if (this.members == null)
             return users;
-        long[] list = this.getMembersList();
-        for(int i = 0 ; i < list.length ; i++) {
-            users.add(User.find.byId(list[i]));
+        List<Long> list = this.getMembersList();
+        for(int i = 0 ; i < list.size() ; i++) {
+            users.add(User.find.byId(list.get( i )));
         }
-
         return users;
     }
 

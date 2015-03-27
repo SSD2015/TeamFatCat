@@ -41,10 +41,10 @@ public class ProjectController extends Controller {
         Project pj = Project.find.byId(projectId);
         long teamId = pj.getId();
         Team team = Team.find.byId( teamId );
-        long[] teamMembers = team.getMembersList();
+        List<Long> teamMembers = team.getMembersList();
         List<User> members = new ArrayList<User>();
-        for( int i=0;i<teamMembers.length;i++ ) {
-            User user = User.find.byId( teamMembers[i] );
+        for( int i=0;i<teamMembers.size() ;i++ ) {
+            User user = User.find.byId( teamMembers.get(i) );
             members.add( user );
         }
         User user = User.find.byId(loginUser);
