@@ -1,4 +1,4 @@
-@(userList: List[User])
+@(form: Form[User], userList: List[User])
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -28,8 +28,13 @@
         <div class="row">
             <div class="" style="width=100%; min-height: 100px;"></div>
             <div class="col-sm-4 col-sm-offset-4 text-center">
-
                 <form action="@routes.Application.addUser()" method="post" class="form-horizontal" role="form">
+                    <h1>Sign in</h1>
+                    @if(form.hasGlobalErrors) {
+                        <p class="error">
+                        @form.globalError.message
+                        </p>
+                    }
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Username</label>
                         <div class="col-sm-6">
@@ -63,7 +68,6 @@
                             </select>
                         </div>
                     </div>
-
                     <button class="btn btn-primary">Add user</button>
                 </form>
             </div>
@@ -71,7 +75,6 @@
 
         <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">
             <h2>User Lists</h2>
-            <button action="@routes.Application.clearUser()" class="btn btn-danger">Clear all</button>
             <table class="table table-hover" id="usersList">
                 <thead>
                     <tr>
@@ -97,6 +100,10 @@
 
                 </tbody>
             </table>
+
+            @helper.form(routes.Application.clearUsers()) {
+                <button class="btn btn - danger">Clear all</button>
+            }
         </div>
     </div>
 

@@ -9,8 +9,8 @@ GET         /login                    controllers.Application.login()
 POST        /login                    controllers.Application.authenticate()
 
 GET         /user                     controllers.Application.user()
-POST        /user                     controllers.Application.addUser()
-GET         /user                     controllers.Application.clearUser()
+POST        /user/add                 controllers.Application.addUser()
+POST        /user/clear               controllers.Application.clearUsers()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file             controllers.Assets.at(path="/public", file)
@@ -26,7 +26,6 @@ GET         /result                   controllers.VoteController.result()
 GET         /addproject               controllers.ProjectController.addProjectPage()
 POST        /addproject               controllers.ProjectController.addProject()
 
-
 GET         /team                     controllers.Application.team()
 POST        /team                     controllers.Application.addTeam()
 
@@ -34,5 +33,9 @@ POST        /team/members             controllers.Application.addMember()
 
 POST        /team/removeMember        controllers.Application.removeMemberFromTeam()
 
-GET         /projectlist             controllers.ProjectController.projectlist(userId: Long)
-POST        /projectlist             controllers.ProjectController.select()
+GET         /projectlist              controllers.ProjectController.projectlist(userId: Long)
+POST        /projectlist              controllers.ProjectController.select()
+
+GET         /test                     controllers.Application.test()
+
+GET         /error                    controllers.Application.error()

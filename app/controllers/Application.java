@@ -21,38 +21,52 @@ public class Application extends Controller {
     public static Result index() {
         return ok(index.render("404 Happy Error"));
     }
-    
+
+    public static Result error() {
+        return ok(error.render(""));
+    }
+
     public static Result login() {
         return ok(login.render(Form.form(Login.class)));
     }
 
+    public static Result test() {
+        User user = User.find.where().eq("username", session().get("username")).findUnique();
+        if (user != null) {
+            return ok(test.render(user));
+        } else {
+            return ok(error.render("No user"));
+        }
+    }
+
     public static Result user() {
         List<User> userList = User.find.all();
-        return ok(user.render(userList));
+        return ok(user.render(Form.form(User.class), userList));
     }
 
     public static Result addUser() {
         Form<User> userForm = Form.form(User.class).bindFromRequest();
         if (userForm.hasErrors()) {
-            return redirect(routes.Application.index());
+            List<User> userList = User.find.all();
+            return badRequest(user.render(userForm, userList));
         }
         User user = userForm.get();
         user.save();
         return redirect(routes.Application.user());
     }
 
-    public static Result clearUser() {
+    public static Result clearUsers() {
         List<User> users = new Model.Finder(Long.class, User.class).all();
         for (int i = 0 ; i < users.size() ; i++) {
-            users.get(i).delete();
+            User.find.ref(users.get(i).getId()).delete();
         }
         return redirect(routes.Application.user());
     }
 
-    public static Result getUser() {
-        List<User> users = new Model.Finder(Long.class, User.class).all();
-        return ok(toJson(users));
-    }
+//    public static Result getUser() {
+//        session().get("username");
+//        return ok(toJson(users));
+//    }
 
     public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
@@ -64,6 +78,7 @@ public class Application extends Controller {
             User user = User.find.where().eq("username", loginForm.get().username).findUnique();
             return redirect(
                     routes.ProjectController.projectlist(user.getId())
+                    //routes.Application.test()
             );
         }
     }
@@ -80,7 +95,6 @@ public class Application extends Controller {
         }
     }
 
-
     public static Result team() {
         List<User> userList = User.find.all();
         List<Team> teamList = Team.find.all();
@@ -94,7 +108,7 @@ public class Application extends Controller {
     public static Result addTeam() {
         Form<Team> teamForm = Form.form(Team.class).bindFromRequest();
         if (teamForm.hasErrors()) {
-            return redirect(routes.Application.index());
+            return redirect(routes.Application.error());
         }
         Team team = teamForm.get();
         team.save();
@@ -104,7 +118,7 @@ public class Application extends Controller {
     public static Result addMember(){
         DynamicForm form = Form.form().bindFromRequest();
         if (form.hasErrors()) {
-            return redirect(routes.Application.index());
+            return redirect(routes.Application.error());
         }
 
         String teamName = form.get("teamName");
@@ -116,7 +130,7 @@ public class Application extends Controller {
         if(team != null & user != null){
             team.addMembers(user);
         } else {
-            return redirect(routes.Application.index());
+            return redirect(routes.Application.error());
         }
         return redirect(routes.Application.team());
     }

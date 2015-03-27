@@ -101,4 +101,15 @@ public class User extends Model {
 
         return null;
     }
+
+    public String validate() {
+        List<User> userList = find.all();
+        for (User u: userList) {
+            if (username.equals(u.getUsername())) {
+                return "This username is already used";
+            }
+        }
+
+        return null;
+    }
 }
