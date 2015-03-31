@@ -53,4 +53,21 @@ public class VoteController extends Controller {
         List<Vote> voteList = Vote.find.all();
         return ok(views.html.result.render(voteList));
     }
+
+    public static Result addVoteCat(){
+        Form<VoteCategory> voteCatForm = Form.form(VoteCategory.class).bindFromRequest();
+        if (voteCatForm.hasErrors()) {
+            return ok(views.html.error.render("Can't add Vote Category !!!"));
+        }
+        VoteCategory voteCat = voteCatForm.get();
+        voteCat.save();
+        return redirect(routes.VoteController.addVoteCatPage());
+    }
+
+    public static Result addVoteCatPage(){
+        List<VoteCategory> votecatlist = VoteCategory.find.all();
+        return ok(views.html.addvotecat.render( votecatlist ));
+    }
+
+
 }

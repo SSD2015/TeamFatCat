@@ -39,3 +39,6 @@ POST        /projectlist              controllers.ProjectController.select()
 GET         /test                     controllers.Application.test()
 
 GET         /error                    controllers.Application.error()
+
+GET         /addvotecat               controllers.VoteController.addVoteCatPage()
+POST        /addvotecat               controllers.VoteController.addVoteCat()
