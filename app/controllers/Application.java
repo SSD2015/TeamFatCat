@@ -2,9 +2,8 @@ package controllers;
 
 import models.Project;
 import models.User;
-import models.*;
+import models.Team;
 import models.VoteCategory;
-import play.data.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
