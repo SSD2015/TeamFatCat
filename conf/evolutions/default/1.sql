@@ -21,7 +21,6 @@ create table team (
   id                        bigint auto_increment not null,
   name                      varchar(255),
   members                   varchar(255),
-
   constraint pk_team primary key (id))
 ;
 
@@ -61,20 +60,20 @@ create index ix_vote_project_3 on vote (project_id);
 
 
 # --- !Downs
-#
-# SET FOREIGN_KEY_CHECKS=0;
-#
-# drop table project;
-#
-# drop table screenshot;
-#
-# drop table team;
-#
-# drop table user;
-#
-# drop table vote;
-#
-# drop table vote_category;
-#
-# SET FOREIGN_KEY_CHECKS=1;
-#
+
+SET FOREIGN_KEY_CHECKS=0;
+
+drop table project;
+
+drop table screenshot;
+
+drop table team;
+
+drop table user;
+
+drop table vote;
+
+drop table vote_category;
+
+SET FOREIGN_KEY_CHECKS=1;
+

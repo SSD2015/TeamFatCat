@@ -52,7 +52,7 @@ public class User extends Model {
     }
 
     public void setPassword(String password) {
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt());;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public void setFirstName(String firstName) {
@@ -104,8 +104,49 @@ public class User extends Model {
 
     public String validate() {
         List<User> userList = find.all();
+        if (this.username == null) {
+            return "Username is required";
+        }
+        if (this.password == null) {
+            return "Password is required";
+        }
+        if (this.firstName == null) {
+            return "First Name is required";
+        }
+        if (this.lastName == null) {
+            return "Last Name is required";
+        }
+
+        char x;
+
+        for (int i = 0 ; i < this.username.length() ; i++) {
+            x = username.charAt(i);
+            if (!((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9'))) {
+                return "Username should not contain special characters";
+            }
+        }
+
+        for (int i = 0 ; i < this.firstName.length() ; i++) {
+            x = firstName.charAt(i);
+            if (!((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9'))) {
+                return "First name should not contain special characters";
+            }
+        }
+
+        for (int i = 0 ; i < this.lastName.length() ; i++) {
+            x = lastName.charAt(i);
+            if (!((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9'))) {
+                return "Last name should not contain special characters";
+            }
+        }
+
+
+        if (this.username.length() < 6 || this.username.length() > 20) {
+            return "Username should have 6-20 characters";
+        }
+
         for (User u: userList) {
-            if (username.equals(u.getUsername())) {
+            if ((this.username).toLowerCase().equals(u.getUsername().toLowerCase())) {
                 return "This username is already used";
             }
         }
