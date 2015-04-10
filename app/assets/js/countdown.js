@@ -1,4 +1,4 @@
-function setcountdown(theyear,themonth,theday,thehour,theminute,thesecond){
+/*function setcountdown(theyear,themonth,theday,thehour,theminute,thesecond){
 	yr=theyear;
 	mo=themonth;
 	da=theday;
@@ -83,3 +83,5 @@ function countdown() {
 	}
 	setTimeout("countdown()",1000);
 }
+
+    */
