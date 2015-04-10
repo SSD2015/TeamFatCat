@@ -1,4 +1,6 @@
-@(userList: List[User] , teamList: List[Team])
+@(userList: List[User] , teamList: List[Team] , form: Form[Team])
+
+
 
 <!DOCTYPE html>
 <html>
@@ -35,13 +37,20 @@
                 <div class="col-sm-4 col-sm-offset-4 text-center">
 
                     <form action="@routes.Application.addTeam()" method="post" class="form-horizontal" role="form">
+
+                        @if(form.hasGlobalErrors) {
+                            <p class="error">
+                            @form.globalError.message
+                            </p>
+                        }
+
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Team</label>
                             <div class="col-sm-6">
                                 <input class="form-control" id="focusedInput" type="text" name="name" placeholder="Team Name"/>
 
                             </div>
-                </div>
+                        </div>
                         <button class="btn btn-primary">Create Team</button>
                     </form>
 
