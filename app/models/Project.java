@@ -5,6 +5,8 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import java.util.List;
+
 @Entity
 public class Project extends Model{
     @Id
@@ -16,7 +18,7 @@ public class Project extends Model{
     private long teamId;
 
     // Finder will help us easily query data from database.
-    public static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
+    private static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
 
     //Project Name
     //set
@@ -49,4 +51,12 @@ public class Project extends Model{
 
     public long getId() { return id; }
     public long getTeamId() { return teamId; }
+
+    public static List<Project> getAllProjects() {
+        return find.all();
+    }
+
+    public static Project findById(long id) {
+        return find.byId(id);
+    }
 }

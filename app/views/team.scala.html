@@ -21,7 +21,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/login">INDEX</a>
+                    <a class="navbar-brand" href="/">INDEX</a>
                 </div>
                 <div style="color: #f9f2f4;">
                     <h2>Team</h2>
@@ -34,7 +34,7 @@
                 <div class="" style="width=100%; min-height: 100px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
 
-                    <form action="@routes.Application.addTeam()" method="post" class="form-horizontal" role="form">
+                    <form action="@routes.TeamController.addTeam()" method="post" class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Team</label>
                             <div class="col-sm-6">
@@ -47,7 +47,7 @@
 
                     <div class="" style="width=100%; min-height: 100px;"></div>
 
-                    <form action="@routes.Application.addMember()" method="post" class="form-horizontal" role="form">
+                    <form action="@routes.TeamController.addMember()" method="post" class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Select Team</label>
                             <div class="col-sm-6">
@@ -90,7 +90,7 @@
                                 <td>@listlist.getFirstName()</td>
                                 <td>@listlist.getLastName()</td>
                                 <td>
-                                    <form action="@routes.Application.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
+                                    <form action="@routes.TeamController.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
                                         <input type="hidden" value=@list.getId() name="tId">
                                         <input type="hidden" value=@listlist.getId() name="uId">
                                         <button class="btn btn-danger">X</button>

@@ -29,12 +29,34 @@ public class User extends Model {
     @Version
     Timestamp lastUpdate;
 
-    public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
+    public static final int ADMIN = 99;
+    public static final int STUDENT = 1;
+    public static final int ORGANIZER = 2;
+    public static final int INSTRUCTOR = 3;
+
+    private static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 
     public static List<User> all() {
         return find.all();
     }
 
+    private User(String username, String password, String firstName, String lastName, int type) {
+        this.username = username;
+        setPassword(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.type = type;
+    }
+
+    public static User create(String username, String password, String firstName, String lastName, int type) {
+        if (User.findByUsername(username) == null) {
+            User user = new User(username, password, firstName, lastName, type);
+            user.save();
+            return user;
+        }
+
+        return null;
+    }
 //	public static void delete(String username) {
 //		find.ref(username).delete();
 //	}
@@ -85,12 +107,42 @@ public class User extends Model {
         return this.type;
     }
 
+    public String getTypeName() {
+        if (this.type == ADMIN) {
+            return "Admin";
+        } else if (this.type == STUDENT) {
+            return "Student";
+        } else if (this.type == ORGANIZER) {
+            return "Organizer";
+        } else if (this.type == INSTRUCTOR) {
+            return "Instructor";
+        } else {
+            return "Error";
+        }
+    }
+
     public Timestamp getLastUpdate() {
         return lastUpdate;
     }
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public static List<User> getAllUsers() {
+        return find.all();
+    }
+
+    public static void deleteById(long id) {
+        find.ref(id).delete();
+    }
+
+    public static User findByUsername(String username) {
+        return find.where().eq("username", username).findUnique();
+    }
+
+    public static User findById(long id) {
+        return find.byId(id);
     }
 
     public static User authenticate(String username, String password) {
@@ -139,7 +191,6 @@ public class User extends Model {
                 return "Last name should not contain special characters";
             }
         }
-
 
         if (this.username.length() < 6 || this.username.length() > 20) {
             return "Username should have 6-20 characters";

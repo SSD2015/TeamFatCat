@@ -1,4 +1,4 @@
-@(form: Form[User], userList: List[User])
+@(form: Form[User], userList: List[User], user: User)
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -12,14 +12,23 @@
     <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
     <script type='text/javascript' src="@routes.Assets.at("js/user.js")"></script>
     <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+    <script>
+        function validateForm() {
+            var x = document.forms["form"]["username"].value;
+            if (x == null || x == "") {
+                alert("username must be filled out");
+                return false;
+            }
+        }
+    </script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="col-sm-1 navbar-header">
-                <a href="/login"><h2>LOGIN</h2></a>
+                <a href="/projectlist"><h2>MAIN</h2></a>
             </div>
             <div class="col-sm-4" style="color: #f9f2f4;">
-                <h2>Register</h2>
+                <h2>Logged in as @user.getUsername() (@user.getFirstName() @user.getLastName())</h2>
             </div>
             <div class="col-sm-offset-1 navbar-right">
                 <h2>Logout</h2>
@@ -32,7 +41,8 @@
         <div class="row">
             <div class="" style="width=100%; min-height: 100px;"></div>
             <div class="col-sm-4 col-sm-offset-4 text-center">
-                <form action="@routes.Application.addUser()" method="post" class="form-horizontal" role="form">
+                <form action="@routes.UserController.addUser()" name="form" method="post" class="form-horizontal" role="form"
+                autocomplete="on">
                     <h1>Register</h1>
                     @if(form.hasGlobalErrors) {
                         <p class="error">
@@ -42,33 +52,35 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Username</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="username"/>
+                            <input class="form-control" id="focusedInput" type="text" name="username" required=""/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Password</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="password" name="password"/>
+                            <input class="form-control" id="focusedInput" type="password" name="password" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">First Name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="firstName"/>
+                            <input class="form-control" id="focusedInput" type="text" name="firstName" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Last Name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="lastName"/>
+                            <input class="form-control" id="focusedInput" type="text" name="lastName" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Type</label>
                         <div class="col-sm-6">
                             <select class="form-control" id="sel1" type="number" name="type">
-                                <option>1</option>
-                                <option>2</option>
+                                <option value="@User.STUDENT">Student</option>
+                                <option value="@User.ORGANIZER">Organizer</option>
+                                <option value="@User.INSTRUCTOR">Instructor</option>
+                                <option value="@User.ADMIN">Admin</option>
                             </select>
                         </div>
                     </div>
@@ -96,7 +108,7 @@
                             <td>@list.getPassword()</td>
                             <td>@list.getFirstName()</td>
                             <td>@list.getLastName()</td>
-                            <td>@list.getType()</td>
+                            <td>@list.getTypeName()</td>
                         </tr>
                     }
                 </thead>
@@ -105,7 +117,7 @@
                 </tbody>
             </table>
 
-            @helper.form(routes.Application.clearUsers()) {
+            @helper.form(routes.UserController.removeAllUsers()) {
                 <button class="btn btn - danger">Clear all</button>
             }
         </div>

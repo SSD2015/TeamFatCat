@@ -14,7 +14,7 @@
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/login">INDEX</a>
+                    <a class="navbar-brand" href="/">INDEX</a>
                 </div>
                 <div style="color: #f9f2f4;">
                     <h2>Logged in as @user.getUsername() (@user.getFirstName() @user.getLastName())</h2>
@@ -26,18 +26,18 @@
             <div class="row">
                 <div class="" style="width=100%; min-height: 100px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
-            <div class="btn-group-vertical" role="group"">
-        @projects.map { list =>
-                <form action="@routes.ProjectController.select()" method="post" class="form-horizontal" role="form">
-                    <input type="hidden" value=@user.getId() name="uId">
-                    <input type="hidden" value=@list.getId() name="pId">
-                    <button class="btn btn-info">@list.getProjectName()</button>
-                </form>
-
-        }
+                    <div class="btn-group-vertical" role="group">
+                    @projects.map { list =>
+                        <form action="@routes.ProjectController.select()" method="post" class="form-horizontal" role="form">
+                            <input type="hidden" value=@user.getId() name="uId">
+                            <input type="hidden" value=@list.getId() name="pId">
+                            <button class="btn btn-info">@list.getProjectName()</button>
+                        </form>
+                    }
+                    </div>
+                </div>
             </div>
-        </div></div></div>
-
+        </div>
 
     </body>
 </html>

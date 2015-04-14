@@ -3,42 +3,47 @@
 # ~~~~
 
 # Home page
-GET         /                         controllers.Application.index()
 
-GET         /login                    controllers.Application.login()
-POST        /login                    controllers.Application.authenticate()
+GET         /index                          controllers.Application.toIndexPage()
 
-GET         /user                     controllers.Application.user()
-POST        /user                     controllers.Application.addUser()
-POST        /user/clear               controllers.Application.clearUsers()
+GET         /                               controllers.Application.toLoginPage()
+POST        /                               controllers.Application.authenticate()
+
+GET         /projectlist                    controllers.ProjectController.toProjectListPage()
+POST        /projectlist                    controllers.ProjectController.select()
+
+GET         /project/:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
+POST        /project                        controllers.ProjectController.makeVote()
+
+GET         /vote                           controllers.VoteController.toVotePage(projectId: Long)
+POST        /vote                           controllers.VoteController.manageVote()
+
+# admin
+
+GET         /admin                          controllers.AdminController.toAdminPage()
+
+GET         /admin/addvotecat               controllers.VoteController.toAddVoteCatPage()
+POST        /admin/addvotecat               controllers.VoteController.addVoteCat()
+
+GET         /admin/user                     controllers.UserController.toAddUserPage()
+POST        /admin/user/add                 controllers.UserController.addUser()
+POST        /admin/user/clear               controllers.UserController.removeAllUsers()
+
+GET         /admin/team                     controllers.TeamController.toTeamPage()
+POST        /admin/team                     controllers.TeamController.addTeam()
+POST        /admin/team/members             controllers.TeamController.addMember()
+POST        /admin/team/removeMember        controllers.TeamController.removeMemberFromTeam()
+
+GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
+POST        /admin/addproject               controllers.ProjectController.addProject()
+
+GET         /result                         controllers.VoteController.toResultPage()
+
+# test
+
+GET         /test                           controllers.Application.toTestPage()
+
+GET         /error                          controllers.Application.toErrorPage()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file             controllers.Assets.at(path="/public", file)
-
-GET         /vote                     controllers.VoteController.vote( userId: Long, projectId: Long )
-POST        /vote                     controllers.VoteController.manageVote()
-
-GET         /project                  controllers.ProjectController.project(userId: Long, projectId: Long)
-POST        /project                  controllers.ProjectController.makeVote()
-
-GET         /result                   controllers.VoteController.result()
-
-GET         /addproject               controllers.ProjectController.addProjectPage()
-POST        /addproject               controllers.ProjectController.addProject()
-
-GET         /team                     controllers.Application.team()
-POST        /team                     controllers.Application.addTeam()
-
-POST        /team/members             controllers.Application.addMember()
-
-POST        /team/removeMember        controllers.Application.removeMemberFromTeam()
-
-GET         /projectlist              controllers.ProjectController.projectlist(userId: Long)
-POST        /projectlist              controllers.ProjectController.select()
-
-GET         /test                     controllers.Application.test()
-
-GET         /error                    controllers.Application.error()
-
-GET         /addvotecat               controllers.VoteController.addVoteCatPage()
-POST        /addvotecat               controllers.VoteController.addVoteCat()
+GET         /assets/*file                   controllers.Assets.at(path="/public", file)

@@ -11,10 +11,10 @@ import java.util.List;
 
 public class ProjectController extends Controller {
 
-
-    public static Result addProjectPage() {
-        List<Team> teams = Team.find.all();
-        List<Project> projects = Project.find.all();
+    @Security.Authenticated(AdminSecured.class)
+    public static Result toAddProjectPage() {
+        List<Team> teams = Team.getAllTeams();
+        List<Project> projects = Project.getAllProjects();
         for( int i=0;i<projects.size();i++ ) {
             long teamId = projects.get(i).getId();
             for( int j=0;j<teams.size();j++ ) {
@@ -27,28 +27,31 @@ public class ProjectController extends Controller {
         return ok(views.html.addproject.render( projects, teams ));
     }
 
+    @Security.Authenticated(AdminSecured.class)
     public static Result addProject() {
         Form<Project> projectForm = Form.form(Project.class).bindFromRequest();
         if (projectForm.hasErrors()) {
-            return redirect(routes.Application.index());
+            return redirect(routes.Application.toIndexPage());
         }
         Project project = projectForm.get();
         project.save();
-        return redirect(routes.ProjectController.addProjectPage());
+        return redirect(routes.ProjectController.toAddProjectPage());
     }
 
-    public static Result project(Long loginUser, Long projectId) {
-        Project pj = Project.find.byId(projectId);
+    @Security.Authenticated(Secured.class)
+    public static Result toProjectPage(Long projectId) {
+        Project pj = Project.findById(projectId);
         long teamId = pj.getId();
-        Team team = Team.find.byId( teamId );
-        List<Long> teamMembers = team.getMembersList();
+        Team team = Team.findById(teamId);
+        team.deleteNullMembers();
+        List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
         for( int i=0;i<teamMembers.size() ;i++ ) {
-            User user = User.find.byId( teamMembers.get(i) );
+            User user = User.findById(teamMembers.get(i));
             members.add( user );
         }
-        User user = User.find.byId(loginUser);
-        List<Vote> votes = Vote.find.all();
+        User user = User.findByUsername(request().username());
+        List<Vote> votes = Vote.getAllVotes();
         double avg = 0.0;
         int count = 0;
         for( int i=0;i<votes.size();i++ ) {
@@ -63,22 +66,25 @@ public class ProjectController extends Controller {
         return ok(views.html.project.render( user, pj, members, avg ));
     }
 
-    public static Result projectlist(Long loginUser) {
-        List<Project> pj = Project.find.all();
-        User user = User.find.byId(loginUser);
-        return ok(views.html.projectlist.render( user, pj ));
+    @Security.Authenticated(Secured.class)
+    public static Result toProjectListPage() {
+        List<Project> pj = Project.getAllProjects();
+        return ok(views.html.projectlist.render(User.findByUsername(request().username()), pj));
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result makeVote() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
         return redirect(
-                routes.VoteController.vote( Long.parseLong(form.data().get("uId")),Long.parseLong(form.data().get("pId")) )
+                routes.VoteController.toVotePage(Long.parseLong(form.data().get("pId")))
         );
     }
+
+    @Security.Authenticated(Secured.class)
     public static Result select() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
         return redirect(
-                routes.ProjectController.project( Long.parseLong(form.data().get("uId")),Long.parseLong(form.data().get("pId")) )
+                routes.ProjectController.toProjectPage(Long.parseLong(form.data().get("pId")))
         );
     }
 

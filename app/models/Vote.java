@@ -1,9 +1,14 @@
 package models;
 
-import javax.persistence.*;
-
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import java.util.List;
 
 @Entity
 public class Vote extends Model{
@@ -26,6 +31,10 @@ public class Vote extends Model{
     public Project project;
 
     // Finder will help us easily query data from database.
-    public static Finder<Long, Vote> find = new Finder<Long, Vote>(Long.class, Vote.class);
+    private static Finder<Long, Vote> find = new Finder<Long, Vote>(Long.class, Vote.class);
+
+    public static List<Vote> getAllVotes() {
+        return find.all();
+    }
 
 }
