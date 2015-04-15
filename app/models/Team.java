@@ -92,19 +92,19 @@ public class Team extends Model {
     }
 
     public boolean addMember(User member) {
-        String[] membersId = members.split(",");
-        for (int i = 0 ; i < membersId.length ; i++) {
-            if (String.valueOf(member.getId()).equals(membersId[i])) {
-                return false;
-            }
-        }
 
-        if(count() > 0) {
-            this.members += ",";
-        } if(count() == 0) {
+        
+        if(count() == 0) {
             this.members = String.valueOf(member.getId());
-        } else {
-            this.members += member.getId();
+        } else if (count() > 0) {
+            String[] membersId = members.split(",");
+            for (int i = 0 ; i < membersId.length ; i++) {
+                if (String.valueOf(member.getId()).equals(membersId[i])) {
+                    return false;
+                }
+            }
+
+            this.members += "," + member.getId();
         }
 
         this.update();
