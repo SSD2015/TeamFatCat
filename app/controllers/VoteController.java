@@ -28,6 +28,7 @@ public class VoteController extends Controller {
                 v.update();
             }
         }
+
         Vote vote;
         for(int i = 0 ; i < voteCategories.size() ; i++) {
             vote = new Vote();

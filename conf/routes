@@ -9,6 +9,8 @@ GET         /index                          controllers.Application.toIndexPage(
 GET         /                               controllers.Application.toLoginPage()
 POST        /                               controllers.Application.authenticate()
 
+GET         /logout                         controllers.Application.logout()
+
 GET         /projectlist                    controllers.ProjectController.toProjectListPage()
 POST        /projectlist                    controllers.ProjectController.select()
 

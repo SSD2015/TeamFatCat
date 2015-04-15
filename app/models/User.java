@@ -154,6 +154,18 @@ public class User extends Model {
         return null;
     }
 
+    public static List<User> getStudents() {
+        List<User> studentList = find.all();
+        for (int i = 0 ; i < studentList.size() ; i++) {
+            if (studentList.get(i).getType() != STUDENT) {
+                studentList.remove(i);
+                i--;
+            }
+        }
+
+        return studentList;
+    }
+
     public String validate() {
         List<User> userList = find.all();
         if (this.username == null) {

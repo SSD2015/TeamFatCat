@@ -9,7 +9,7 @@ public class AdminSecured extends Secured {
     public String getUsername(Http.Context context) {
         String username = super.getUsername(context);
 
-        if (User.findByUsername(username).getType() != User.ADMIN) {
+        if (username == null || User.findByUsername(username).getType() != User.ADMIN) {
             return null;
         }
 
@@ -18,6 +18,6 @@ public class AdminSecured extends Secured {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return redirect(routes.ProjectController.toProjectListPage());
+        return notFound("<h1>Page not found</h1>").as("text/html");
     }
 }

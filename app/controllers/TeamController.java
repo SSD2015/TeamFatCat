@@ -16,7 +16,7 @@ public class TeamController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toTeamPage() {
-        List<User> userList = User.getAllUsers();
+        List<User> userList = User.getStudents();
         List<Team> teamList = Team.getAllTeams();
         for( int i=0; i<teamList.size();i++ ) {
             List<User> members = teamList.get(i).getMembers();

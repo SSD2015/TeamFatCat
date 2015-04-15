@@ -13,12 +13,16 @@
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">INDEX</a>
+                <div class="col-sm-1 navbar-header">
+                    <a href="/projectlist"><h2>MAIN</h2></a>
                 </div>
-                <div style="color: #f9f2f4;">
+                <div class="col-sm-4" style="color: #f9f2f4;">
                     <h2>Logged in as @user.getUsername() (@user.getFirstName() @user.getLastName())</h2>
                 </div>
+                <div class="col-sm-offset-1 navbar-right">
+                    <button class="btn btn-default"><a href="@routes.Application.logout()">Logout</a></button>
+                </div>
+
             </div>
         </nav>
 
