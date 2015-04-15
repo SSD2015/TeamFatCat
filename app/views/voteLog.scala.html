@@ -3,7 +3,7 @@
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>User</title>
+        <title>Vote Log</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
     </head>
@@ -45,18 +45,16 @@
                         @voteList.map { list =>
                             <tr>
                                 <td>@list.getId()</td>
-                                <td>@list.getUser()</td>
-                                <td>@list.getProject()</td>
-                                <td>@list.getCategory()</td>
+                                <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
+                                <td>@list.getProject().getProjectName</td>
+                                <td>@list.getCategory().getName()</td>
                                 <td>@list.getScore()</td>
                                 <td>@list.getTimestamp()</td>
                             </tr>
                         }
                     </thead>
-                    <tbody>
-
-                    </tbody>
                 </table>
+
             </div>
         </div>
 
