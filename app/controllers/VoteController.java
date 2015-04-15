@@ -42,7 +42,7 @@ public class VoteController extends Controller {
 
 	}
 
-    @Security.Authenticated(AdminSecured.class)
+    @Security.Authenticated(Secured.class)
     public static Result toVotePage(long projectId ) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
