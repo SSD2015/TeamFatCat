@@ -24,6 +24,7 @@
             <div class="row">
                 <div class="" style="width=100%; min-height: 100px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
+                    <h3>Rate Score : 0 - 5</h3><br>
                     <form action="@routes.VoteController.manageVote(project.getId)" method="post" class="form-horizontal" role="form">
                         @voteCat.map { list =>
                         <div class="form-group">
@@ -44,7 +45,7 @@
                         </div>
                         }
                         <br>
-                        <button class="btn btn-default">Make Vote</button>
+                        <button class="btn btn-default">Vote</button>
 
                     </form>
                 </div>
