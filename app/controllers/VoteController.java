@@ -39,7 +39,7 @@ public class VoteController extends Controller {
             vote.save();
         }
 
-        return redirect(routes.VoteController.toResultPage());
+        return redirect(routes.ProjectController.toProjectListPage());
 
 	}
 
