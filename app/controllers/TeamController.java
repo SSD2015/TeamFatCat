@@ -52,7 +52,10 @@ public class TeamController extends Controller {
         User user = User.findByUsername(username);
 
         if(team != null & user != null){
-            team.addMember(user);
+            boolean success = team.addMember(user);
+            if (!success) {
+                return redirect(routes.Application.toErrorPage());
+            }
         } else {
             return redirect(routes.Application.toErrorPage());
         }

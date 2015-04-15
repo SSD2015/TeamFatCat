@@ -7,47 +7,45 @@ import play.data.Form;
 import play.data.DynamicForm;
 import views.html.*;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 public class VoteController extends Controller {
 
     @Security.Authenticated(Secured.class)
-	public static Result manageVote() {
-        Form<Object> form = Form.form(Object.class).bindFromRequest();
-        User user = User.findById(Long.parseLong(form.data().get("uId")));
-        Project project = Project.findById(Long.parseLong(form.data().get("pId")));
-        List<VoteCategory> voteCategories = VoteCategory.find.all();
-        List<Vote> allVotes = Vote.getAllVotes();
-        List<Vote> votes = new ArrayList<Vote>();
-        for( Vote v: allVotes ) {
-            if( v.user.getId() == user.getId() && v.project.getId() == project.getId() ) {
-                votes.add( v );
-                VoteCategory voteCat = v.category;
-                v.score = Integer.parseInt( form.data().get( voteCat.name ) );
-                voteCategories.remove( voteCat );
-                v.update();
+	public static Result manageVote(Long projectId) {
+        DynamicForm form = Form.form().bindFromRequest();
+        if (form.hasErrors()) {
+            return redirect(routes.Application.toErrorPage());
+        }
+
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+
+        List<VoteCategory> votecatList = VoteCategory.all();
+        int size = votecatList.size();
+        for (int i = 0 ; i < size ; i++) {
+            if (form.get(votecatList.get(i).getName()) != null) {
+                Vote vote = new Vote();
+                vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
+                vote.setUser(user);
+                vote.setProject(project);
+                vote.setCategory(votecatList.get(i));
+                vote.setTimestamp();
+                vote.save();
+            } else {
+                redirect(routes.Application.toErrorPage());
             }
         }
 
-        Vote vote;
-        for(int i = 0 ; i < voteCategories.size() ; i++) {
-            vote = new Vote();
-            vote.category = voteCategories.get(i);
-            vote.score = Integer.parseInt( form.data().get( vote.category.name ) );
-            vote.user = user;
-            vote.project = project;
-            vote.save();
-        }
-
-        return redirect(routes.ProjectController.toProjectListPage());
-
+        return redirect(routes.ProjectController.toProjectPage(project.getId()));
 	}
 
     @Security.Authenticated(Secured.class)
-    public static Result toVotePage(long projectId ) {
+    public static Result toVotePage(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        List<VoteCategory> voteCategories = VoteCategory.find.all();
+        List<VoteCategory> voteCategories = VoteCategory.all();
 
         return ok(vote.render(user,project,voteCategories));
     }
@@ -55,7 +53,7 @@ public class VoteController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result toResultPage() {
         List<Vote> voteList = Vote.getAllVotes();
-        return ok(views.html.result.render(voteList));
+        return ok(result.render(voteList));
     }
 
     @Security.Authenticated(AdminSecured.class)
@@ -71,8 +69,8 @@ public class VoteController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddVoteCatPage(){
-        List<VoteCategory> votecatlist = VoteCategory.find.all();
-        return ok(views.html.addvotecat.render( votecatlist ));
+        List<VoteCategory> votecatlist = VoteCategory.all();
+        return ok(addvotecat.render(votecatlist));
     }
 
 

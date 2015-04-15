@@ -55,8 +55,8 @@ public class ProjectController extends Controller {
         double avg = 0.0;
         int count = 0;
         for( int i=0;i<votes.size();i++ ) {
-            if( votes.get(i).user.getId() == user.getId() && votes.get(i).project.getId() == pj.getId() ) {
-                avg += votes.get(i).score;
+            if( votes.get(i).getUser().getId() == user.getId() && votes.get(i).getProject().getId() == pj.getId() ) {
+                avg += votes.get(i).getScore();
                 count++;
             }
         }

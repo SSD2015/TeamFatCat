@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Screenshot extends Model{
     @Id
-    public long Screenshot_ID;
+    private long Screenshot_ID;
 
     private long projectId;
 

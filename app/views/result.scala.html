@@ -35,11 +35,11 @@
                     </tr>
                     @voteList.map { list =>
                         <tr>
-                            <td>@list.id</td>
-                            <td>@list.score</td>
-                            <td>@(list.user.getFirstName()+"  "+list.user.getLastName())</td>
-                            <td>@list.category.name</td>
-                            <td>@list.project.getProjectName</td>
+                            <td>@list.getId()</td>
+                            <td>@list.getScore()</td>
+                            <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
+                            <td>@list.getCategory().getName()</td>
+                            <td>@list.getProject().getProjectName</td>
                         </tr>
                     }
                 </table>

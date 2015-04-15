@@ -41,6 +41,7 @@ create table vote (
   user_id                   bigint,
   category_id               bigint,
   project_id                bigint,
+  timestamp                 datetime not null,
   constraint pk_vote primary key (id))
 ;
 
