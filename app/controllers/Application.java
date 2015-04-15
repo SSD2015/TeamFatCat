@@ -12,6 +12,7 @@ import play.mvc.Result;
 
 import java.util.List;
 
+import play.mvc.Security;
 import views.html.*;
 
 import static play.libs.Json.toJson;
@@ -38,16 +39,10 @@ public class Application extends Controller {
             return ok(error.render("No user"));
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result user() {
-        User users = User.find.where().eq("username", session().get("username")).findUnique();
-        if (users != null) {
-            List<User> userList = User.find.all();
-            return ok(user.render(Form.form(User.class), userList));
-        } else {
-            return ok(error.render("No user"));
-        }
-
+        List<User> userList = User.find.all();
+        return ok(user.render(Form.form(User.class), userList));
     }
 
     public static Result addUser() {
@@ -100,11 +95,8 @@ public class Application extends Controller {
             return null;
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result team() {
-
-        User user = User.find.where().eq("username", session().get("username")).findUnique();
-        if (user != null) {
             List<User> userList = User.find.all();
             List<Team> teamList = Team.find.all();
             for( int i=0; i<teamList.size();i++ ) {
@@ -112,10 +104,6 @@ public class Application extends Controller {
                 userList.removeAll(members);
             }
             return ok(team.render(userList , teamList));
-        } else {
-            return ok(error.render("No user"));
-        }
-
     }
 
     public static Result addTeam() {

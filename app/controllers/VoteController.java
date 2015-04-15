@@ -40,30 +40,18 @@ public class VoteController extends Controller {
         return redirect(routes.VoteController.result());
 
 	}
-	
+    @Security.Authenticated(Secured.class)
     public static Result vote( long userId, long projectId ) {
-        User user = User.find.where().eq("username", session().get("username")).findUnique();
-        if (user != null) {
-            User users = User.find.byId( userId );
-            Project project = Project.find.byId( projectId );
-            List<VoteCategory> voteCategories = VoteCategory.find.all();
+        User user = User.find.byId( userId );
+        Project project = Project.find.byId( projectId );
+        List<VoteCategory> voteCategories = VoteCategory.find.all();
 
-            return ok(vote.render(users,project,voteCategories));
-        } else {
-            return ok(error.render("No user"));
-        }
-
+        return ok(vote.render(user,project,voteCategories));
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result result() {
-        User user = User.find.where().eq("username", session().get("username")).findUnique();
-        if (user != null) {
-            List<Vote> voteList = Vote.find.all();
-            return ok(views.html.result.render(voteList));
-        } else {
-            return ok(error.render("No user"));
-        }
-
+        List<Vote> voteList = Vote.find.all();
+        return ok(views.html.result.render(voteList));
     }
 
     public static Result addVoteCat(){
