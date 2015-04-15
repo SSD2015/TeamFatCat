@@ -42,16 +42,28 @@ public class VoteController extends Controller {
 	}
 	
     public static Result vote( long userId, long projectId ) {
-        User user = User.find.byId( userId );
-        Project project = Project.find.byId( projectId );
-        List<VoteCategory> voteCategories = VoteCategory.find.all();
+        User user = User.find.where().eq("username", session().get("username")).findUnique();
+        if (user != null) {
+            User users = User.find.byId( userId );
+            Project project = Project.find.byId( projectId );
+            List<VoteCategory> voteCategories = VoteCategory.find.all();
 
-        return ok(vote.render(user,project,voteCategories));
+            return ok(vote.render(users,project,voteCategories));
+        } else {
+            return ok(error.render("No user"));
+        }
+
     }
 
     public static Result result() {
-        List<Vote> voteList = Vote.find.all();
-        return ok(views.html.result.render(voteList));
+        User user = User.find.where().eq("username", session().get("username")).findUnique();
+        if (user != null) {
+            List<Vote> voteList = Vote.find.all();
+            return ok(views.html.result.render(voteList));
+        } else {
+            return ok(error.render("No user"));
+        }
+
     }
 
     public static Result addVoteCat(){

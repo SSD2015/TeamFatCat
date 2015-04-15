@@ -40,8 +40,14 @@ public class Application extends Controller {
     }
 
     public static Result user() {
-        List<User> userList = User.find.all();
-        return ok(user.render(Form.form(User.class), userList));
+        User users = User.find.where().eq("username", session().get("username")).findUnique();
+        if (users != null) {
+            List<User> userList = User.find.all();
+            return ok(user.render(Form.form(User.class), userList));
+        } else {
+            return ok(error.render("No user"));
+        }
+
     }
 
     public static Result addUser() {
@@ -96,13 +102,20 @@ public class Application extends Controller {
     }
 
     public static Result team() {
-        List<User> userList = User.find.all();
-        List<Team> teamList = Team.find.all();
-        for( int i=0; i<teamList.size();i++ ) {
-            List<User> members = teamList.get(i).getMembers();
-            userList.removeAll(members);
+
+        User user = User.find.where().eq("username", session().get("username")).findUnique();
+        if (user != null) {
+            List<User> userList = User.find.all();
+            List<Team> teamList = Team.find.all();
+            for( int i=0; i<teamList.size();i++ ) {
+                List<User> members = teamList.get(i).getMembers();
+                userList.removeAll(members);
+            }
+            return ok(team.render(userList , teamList));
+        } else {
+            return ok(error.render("No user"));
         }
-        return ok(team.render(userList , teamList));
+
     }
 
     public static Result addTeam() {
