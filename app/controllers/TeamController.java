@@ -22,7 +22,9 @@ public class TeamController extends Controller {
             List<User> members = teamList.get(i).getMembers();
             userList.removeAll(members);
         }
-        return ok(team.render(userList, teamList));
+
+        User user = User.findByUsername(request().username());
+        return ok(team.render(user, userList, teamList));
     }
 
     @Security.Authenticated(AdminSecured.class)
