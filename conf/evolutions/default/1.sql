@@ -3,21 +3,6 @@
 
 # --- !Ups
 
-create table image (
-  id                        bigint auto_increment not null,
-  name                      varchar(255),
-  data                      longblob,
-  constraint pk_image primary key (id))
-;
-
-create table picture (
-  id                        bigint auto_increment not null,
-  name                      varchar(255),
-  content_type              varchar(255),
-  type                      integer,
-  constraint pk_picture primary key (id))
-;
-
 create table project (
   id                        bigint auto_increment not null,
   project_name              varchar(255),
@@ -78,10 +63,6 @@ create index ix_vote_project_3 on vote (project_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
-
-drop table image;
-
-drop table picture;
 
 drop table project;
 

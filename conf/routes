@@ -20,11 +20,6 @@ POST        /project                        controllers.ProjectController.makeVo
 GET         /vote/project=:projectId        controllers.VoteController.toVotePage(projectId: Long)
 POST        /vote                           controllers.VoteController.manageVote(projectId: Long)
 
-POST        /upload                         controllers.ImageController.uploadImage()
-GET         /getImage                       controllers.ImageController.getImage(id: Long)
-
-GET         /picture                        controllers.ImageController.toImagePage()
-
 # admin
 
 GET         /admin                          controllers.AdminController.toAdminPage()
