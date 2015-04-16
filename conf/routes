@@ -14,11 +14,16 @@ GET         /logout                         controllers.Application.logout()
 GET         /projectlist                    controllers.ProjectController.toProjectListPage()
 POST        /projectlist                    controllers.ProjectController.select()
 
-GET         /project/:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
+GET         /project=:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
 POST        /project                        controllers.ProjectController.makeVote()
 
-GET         /vote                           controllers.VoteController.toVotePage(projectId: Long)
+GET         /vote/project=:projectId        controllers.VoteController.toVotePage(projectId: Long)
 POST        /vote                           controllers.VoteController.manageVote(projectId: Long)
+
+POST        /upload                         controllers.ImageController.uploadImage()
+GET         /getImage                       controllers.ImageController.getImage(id: Long)
+
+GET         /picture                        controllers.ImageController.toImagePage()
 
 # admin
 

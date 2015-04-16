@@ -1,13 +1,17 @@
 package controllers;
 
 import models.*;
-import play.*;
 import play.mvc.*;
 import play.data.Form;
 import views.html.*;
 
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import java.io.File;
 
 public class ProjectController extends Controller {
 
@@ -89,5 +93,38 @@ public class ProjectController extends Controller {
                 routes.ProjectController.toProjectPage(Long.parseLong(form.data().get("pId")))
         );
     }
+
+    @Security.Authenticated(Secured.class)
+    public static Result toUploadPage() {
+        User user = User.findByUsername(request().username());
+        return ok(uploadimage.render(user));
+    }
+
+//    @Security.Authenticated(Secured.class)
+//    public static Result upload() {
+//        MultipartFormData body = request().body().asMultipartFormData();
+//        FilePart picture = body.getFile("picture");
+//        if (picture != null) {
+//            String fileName = picture.getFilename();
+//            String contentType = picture.getContentType();
+//            File file = picture.getFile();
+//
+//            picture
+//            Picture pic = Picture.create(file, fileName, contentType);
+//            if (pic == null) {
+//                return redirect(routes.ProjectController.toUploadPage());
+//            }
+//            //return ok("File uploaded");
+//            return redirect(routes.ProjectController.getPicture(pic.getId()));
+//        } else {
+//            flash("error", "Missing file");
+//            return redirect(routes.ProjectController.toUploadPage());
+//        }
+//    }
+//
+//    @Security.Authenticated(Secured.class)
+//    public static Result getPicture(Long pictureId) {
+//        return ok(picture.render(Picture.findById(pictureId)));
+//    }
 
 }
