@@ -1,4 +1,4 @@
-@(voteList: List[Vote])
+@(voteList: List[Vote], catList: List[VoteCategory])
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -22,7 +22,29 @@
                 </div>
             </div>
         </nav>
+            <div class="row" style="background-color: #0; margin-top: 50px; padding: 50px;">
+            <h2>Best of Category</h2>
+            @catList.map { list =>
+                <h3>Best of @list.getName</h3>
+                <br>
 
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Proejct</th>
+                    <th>Score</th>
+                </tr>
+                @list.getBestFromCat.map { Plist =>
+                    <tr>
+                        <td>@Plist.getId()</td>
+                        <td>@Plist.getProjectName</td>
+                        <td>@Plist.getAvgFromCat(list)</td>
+                    </tr>
+                }
+            </table>
+            }
+
+            </div>
             <div class="row" style="background-color: #0; margin-top: 50px; padding: 50px;">
                 <h2>Vote Lists</h2>
                 <table class="table table-hover">

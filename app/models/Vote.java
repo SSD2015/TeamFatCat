@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 public class Vote extends Model{
@@ -87,4 +88,9 @@ public class Vote extends Model{
     public String getTimestamp() {
         return this.timestamp.toString();
     }
+
+    public static List<Vote> getProjectAndCatVote(Project proj,VoteCategory cat){
+        return Vote.find.where().eq("category",cat).eq("project",proj).findList();
+    }
+
 }

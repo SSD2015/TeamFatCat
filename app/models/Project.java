@@ -59,4 +59,14 @@ public class Project extends Model{
     public static Project findById(long id) {
         return find.byId(id);
     }
+
+    public double getAvgFromCat(VoteCategory cat){
+        List<Vote> Vlist = Vote.getProjectAndCatVote(this,cat);
+        double total=0;
+        for(int i = 0 ; i < Vlist.size() ; i++){
+            total += Vlist.get(i).getScore();
+        }
+        return total/Vlist.size();
+    }
+
 }

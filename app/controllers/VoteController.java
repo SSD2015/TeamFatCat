@@ -53,7 +53,8 @@ public class VoteController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result toResultPage() {
         List<Vote> voteList = Vote.getAllVotes();
-        return ok(result.render(voteList));
+        List<VoteCategory> catList = VoteCategory.all();
+        return ok(result.render(voteList,catList));
     }
 
     @Security.Authenticated(AdminSecured.class)
