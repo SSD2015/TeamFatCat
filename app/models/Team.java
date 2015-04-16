@@ -41,7 +41,7 @@ public class Team extends Model {
 
     public List<Long> getMemberList() {
         List<Long> memberLists = new ArrayList<Long>();
-        if( this.members.length() <= 0 )
+        if(this.members == null || this.members.length() <= 0)
             return memberLists;
         String[] list = this.members.split(",");
         for (int i = 0; i < list.length ; i++ )
@@ -69,15 +69,6 @@ public class Team extends Model {
             }
         }
         this.members = newMember;
-
-//        List<User> lists = this.getMembers();
-//        List<User> newLists = new ArrayList<User>();
-//        for( User u: lists ) {
-//            if( u.getId() != id ) {
-//                newLists.add(u);
-//            }
-//        }
-//        this.setMembers( newLists );
     }
 
     public void setMembers( List<User> list ) {
