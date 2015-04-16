@@ -16,7 +16,7 @@ public class ProjectController extends Controller {
         List<Team> teams = Team.getAllTeams();
         List<Project> projects = Project.getAllProjects();
         for( int i=0;i<projects.size();i++ ) {
-            long teamId = projects.get(i).getId();
+            long teamId = projects.get(i).getTeamId();
             for( int j=0;j<teams.size();j++ ) {
                 if( teams.get(j).getId() == teamId ) {
                     teams.remove(j);

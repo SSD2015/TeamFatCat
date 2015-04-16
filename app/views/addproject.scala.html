@@ -86,13 +86,15 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>TeamId</th>
+                <th>TeamName</th>
             </tr>
             @projects.map { list =>
                 <tr>
                     <td>@list.getId()</td>
                     <td>@list.getProjectName()</td>
                     <td>@list.getBriefDesc()</td>
-                    <td>@list.getId()</td>
+                    <td>@Team.findById(list.getTeamId).getId()</td>
+                    <td>@Team.findById(list.getTeamId).getName()</td>
                 </tr>
             }
         </table>
