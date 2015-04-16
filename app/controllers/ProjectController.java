@@ -24,7 +24,9 @@ public class ProjectController extends Controller {
                 }
             }
         }
-        return ok(views.html.addproject.render( projects, teams ));
+
+        User user = User.findByUsername(request().username());
+        return ok(views.html.addproject.render(user, projects, teams));
     }
 
     @Security.Authenticated(AdminSecured.class)

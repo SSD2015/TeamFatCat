@@ -70,7 +70,8 @@ public class VoteController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddVoteCatPage(){
         List<VoteCategory> votecatlist = VoteCategory.all();
-        return ok(addvotecat.render(votecatlist));
+        User user = User.findByUsername(request().username());
+        return ok(addvotecat.render(user, votecatlist));
     }
 
 
