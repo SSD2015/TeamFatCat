@@ -51,6 +51,15 @@ public class Image extends Model{
     public long getId(){
         return this.id;
     }
+    public static Image findByName(String name){
+        List<Image> images = getAllImage();
+        for(int i = 0 ; i < images.size() ; i++ ){
+            if(images.get(i).getName().equals(name)){
+                return images.get(i);
+            }
+        }
+        return new Image();
+    }
     public static Image findById(long id) {
         return find.byId(id);
     }

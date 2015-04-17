@@ -54,6 +54,8 @@ public class ProjectController extends Controller {
         long teamId = pj.getId();
         Team team = Team.findById(teamId);
         List<Image> images = Image.getByProjectId(projectId);
+        Image avatar = images.get(0);
+        images.remove(0);
         team.deleteNullMembers();
         List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
@@ -74,7 +76,7 @@ public class ProjectController extends Controller {
         if( count != 0 )
             avg /= count;
         avg = Math.round(avg*100)/100.0;
-        return ok(views.html.project.render( user, pj, members, avg, images ));
+        return ok(views.html.project.render( user, pj, members, avg, images , avatar));
     }
 
     @Security.Authenticated(Secured.class)
@@ -109,10 +111,16 @@ public class ProjectController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result upload() {
+        List<Image> images = Image.getAllImage();
         Form<Image> imageForm = Form.form(Image.class).bindFromRequest();
         Image image = imageForm.get();
         String url = image.getUrl();
         url = url.substring(url.lastIndexOf(".")+1);
+        for(int i = 0 ; i < images.size() ; i++){
+            if(image.getName().equals(images.get(i).getName())){
+                return redirect(routes.ProjectController.toUploadPage());
+            }
+        }
         if(url.equals("jpg")) {
             image.save();
         }
