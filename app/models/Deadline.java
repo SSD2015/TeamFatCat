@@ -116,7 +116,7 @@ public class Deadline extends Model {
 
     public static Deadline getDeadline() {
         if (find.all().size() == 0) {
-            Deadline.create(2015, 5, 1, 0, 0, 0);
+            Deadline.create(2015, 4, 20, 0, 0, 0);
         }
         return find.all().get(0);
     }

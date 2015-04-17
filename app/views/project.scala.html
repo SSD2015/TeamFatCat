@@ -23,23 +23,43 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Time <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Link</a></li>
+                        <li>
+                            <div class="navbar-text">
+                                <script src="@routes.Assets.at("js/countdown.js")"></script>
+                                <script>
+                                setcountdown(@Deadline.getDeadline().getYear(),
+                                    @Deadline.getDeadline().getMonth(),
+                                    @Deadline.getDeadline().getDay(),
+                                    @Deadline.getDeadline().getHour(),
+                                    @Deadline.getDeadline().getMin(),
+                                    @Deadline.getDeadline().getSec());
+                                </script>
+                                <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
+                                    <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
+                                    </layer>
+                                </ilayer>
+                            </div>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+
                         @*<li><a href="#">Link</a></li>*@
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a>Hello, </a></li>
-                            <li><a><h4>@user.getFirstName() @user.getLastName()</h4></a></li>
-                            <li class="divider"></li>
-                            <li><a href="@routes.Application.logout()">Log out</a></li>
-                        </ul>
-                    </li>
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a>Hello, </a></li>
+                                <li><a><h4>@user.getFirstName() @user.getLastName()</h4></a></li>
+                                <li class="divider"></li>
+                                @if(user.getType() == User.ADMIN) {
+                                    <li><a href="/admin">Admin</a></li>
+                                }
+                                <li><a href="@routes.Application.logout()">Log out</a></li>
+                            </ul>
+                        </li>
+
                     </ul>
                 </div>
-
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project List</a></li>
 

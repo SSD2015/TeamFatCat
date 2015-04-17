@@ -10,14 +10,16 @@ function setcountdown(theyear,themonth,theday,thehour,theminute,thesecond) {
 // Year,Month,Day,Hour,Minute,Second
 //setcountdown(2015,4,23,0,0,0);
 
-var occasion="ExceedVote12th";
+var occasion="";
 var message_on_occasion="ExceedVote Ended";
 
 var countdownwidth='480px';
 var countdownheight='20px';
 var countdownbgcolor='lightblue';
-var opentags='<font face="Verdana"><small>';
-var closetags='</small></font>';
+//var opentags='<font face="Verdana"><small>';
+var opentags = '';
+//var closetags='</small></font>';
+var closetags = '';
 
 var montharray=new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 var crosscount='';
@@ -31,7 +33,7 @@ function start_countdown() {
 }
 
 if (document.all||document.getElementById)
-    document.write('<span id="countdownie" style="width:'+countdownwidth+'; background-color:'+countdownbgcolor+'"></span>');
+    document.write('<span id="countdownie" style="width:'+countdownwidth+';"></span>');
 
 window.onload=start_countdown;
 
@@ -65,11 +67,11 @@ function countdown() {
     //if passed day of occasion
     else if (dday<=-1){
         if (document.layers){
-            document.countdownnsmain.document.countdownnssub.document.write(opentags+"Occasion already passed! "+closetags);
+            document.countdownnsmain.document.countdownnssub.document.write(opentags+"Vote is now closed"+closetags);
             document.countdownnsmain.document.countdownnssub.document.close();
         }
         else if (document.all||document.getElementById)
-            crosscount.innerHTML=opentags+"Occasion already passed! "+closetags;
+            crosscount.innerHTML=opentags+"Vote is now closed"+closetags;
         return ;
     }
     //else, if not yet
@@ -79,8 +81,8 @@ function countdown() {
             document.countdownnsmain.document.countdownnssub.document.close();
         }
         else if (document.all||document.getElementById)
-            crosscount.innerHTML=opentags+dday+ " days "+dhour+" hours "+dmin+" minutes "+dsec+" seconds to "+occasion+closetags;
+            crosscount.innerHTML=opentags+dday+ " days "+dhour+":"+dmin+":"+dsec+" "+occasion+closetags;
     }
 
-    setTimeout(countdown(),1000);
+    setTimeout(function(){countdown()},1000);
 }
