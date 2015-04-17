@@ -6,11 +6,65 @@
         <meta charset="UTF-8">
         <title>Vote</title>
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        @*<link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">*@
+        <link href="@routes.Assets.at("css/star-rating.min.css")" media="all" rel="stylesheet" type="text/css" />
+        <script src="@routes.Assets.at("js/star-rating.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
     </head>
     <body>
-        <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-        <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+        @*<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>*@
+        <script>
+        jQuery(document).ready(function () {
+        $("#input-21f").rating({
+        starCaptions: function(val) {
+        if (val < 3) {
+        return val;
+        } else {
+        return 'high';
+        }
+        },
+        starCaptionClasses: function(val) {
+        if (val < 3) {
+        return 'label label-danger';
+        } else {
+        return 'label label-success';
+        }
+        },
+        hoverOnClear: false
+        });
+
+        $('#rating-input').rating({
+        min: 0,
+        max: 5,
+        step: 1,
+        size: 'lg'
+        });
+
+        $('#btn-rating-input').on('click', function() {
+        var $a = self.$element.closest('.star-rating');
+        var chk = !$a.hasClass('rating-disabled');
+        $('#rating-input').rating('refresh', {showClear:!chk, disabled:chk});
+        });
+
+
+        $('.btn-danger').on('click', function() {
+        $("#kartik").rating('destroy');
+        });
+
+        $('.btn-success').on('click', function() {
+        $("#kartik").rating('create');
+        });
+
+        $('#rating-input').on('rating.change', function() {
+        alert($('#rating-input').val());
+        });
+
+
+        $('.rb-rating').rating({'showCaption':true, 'stars':'3', 'min':'0', 'max':'3', 'step':'1', 'size':'xs', 'starCaptions': {0:'status:nix', 1:'status:wackelt', 2:'status:geht', 3:'status:laeuft'}});
+        });
+        </script>
 
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -70,30 +124,18 @@
                     <h3>Rate Score : 0 - 5</h3><br>
                     <form action="@routes.VoteController.manageVote(project.getId)" method="post" class="form-horizontal" role="form">
                         @voteCat.map { list =>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">@list.getName()</label>
-                            <div class="col-sm-6">
-                                <input type="range" min=0 max=5 value=0 id="@list.getName()" name="@list.getName()" list="volsettings">
-                                <datalist id="volsettings">
-                                    <option>0</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </datalist>
-
+                            <div class="form-group">
+                                <label class="control-label">@list.getName()</label>
+                                <input id="@list.getName()" name="@list.getName()" type="number" class="rating" min=0 max=5 step=1 data-size="md" >
                             </div>
-
-                        </div>
                         }
                         <br>
                         <button class="btn btn-default">Vote</button>
 
                     </form>
+
                 </div>
             </div>
         </div>
-
     </body>
 </html>

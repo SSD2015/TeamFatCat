@@ -87,8 +87,6 @@ public class Team extends Model {
     }
 
     public boolean addMember(User member) {
-
-
         if(count() == 0) {
             this.members = String.valueOf(member.getId());
         } else if (count() > 0) {
