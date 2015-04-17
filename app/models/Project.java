@@ -20,6 +20,13 @@ public class Project extends Model{
     // Finder will help us easily query data from database.
     private static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
 
+
+    public Project(String projectName, String projectDesc, long teamId){
+        this.projectName = projectName;
+        this.projectDesc = projectDesc;
+        this.teamId = teamId;
+    }
+
     //Project Name
     //set
     public void setProjectName(String projectName) {
@@ -94,6 +101,11 @@ public class Project extends Model{
         }
 
         return null;
+    }
+    public static Project create(String projectName, String projectDesc, long teamId) {
+        Project project = new Project(projectName, projectDesc,teamId);
+        project.save();
+        return project;
     }
 
 }

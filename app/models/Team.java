@@ -18,6 +18,11 @@ public class Team extends Model {
     private String name;
     private String members;
 
+    public Team(String name, String members){
+        this.name = name;
+        this.members = members;
+    }
+
     public String getName(){
         return name;
     }
@@ -146,5 +151,13 @@ public class Team extends Model {
         }
 
         return null;
+    }
+    public static Team create(String name, String members) {
+            Team team = new Team(name, members);
+            team.save();
+            return team;
+
+
+
     }
 }

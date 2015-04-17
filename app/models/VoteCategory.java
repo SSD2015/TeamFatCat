@@ -23,6 +23,9 @@ public class VoteCategory extends Model{
     private static Finder<Long, VoteCategory> find = new Finder<Long, VoteCategory>(
             Long.class, VoteCategory.class);
 
+    public VoteCategory(String name){
+        this.name = name;
+    }
     public static List<VoteCategory> all() {
         return find.all();
     }
@@ -75,6 +78,11 @@ public class VoteCategory extends Model{
         }
 
         return null;
+    }
+    public static VoteCategory create(String name) {
+        VoteCategory votecat = new VoteCategory(name);
+        votecat.save();
+        return votecat;
     }
 
 }
