@@ -73,8 +73,8 @@
         </nav>
 
         <div class="container">
-            <div class="row" style="margin-top: 150px;">
-                <div class="col-sm-4 col-sm-offset-4 text-center">
+            <div class="row" style="margin-top: 150px; background-color: #ffffff;">
+                <div class="col-sm-4 col-sm-offset-1 text-center" style="background-color: #ffffff;">
 
                     <form action="@routes.TeamController.addTeam()" method="post" class="form-horizontal" role="form">
                         @if(form.hasGlobalErrors) {
@@ -91,7 +91,11 @@
                         <button class="btn btn-primary">Create Team</button>
                     </form>
 
-                    <div class="" style="width=100%; min-height: 100px;"></div>
+                    </div>
+                    @*<div class="" style="width=100%; min-height: 100px;"></div>*@
+
+
+                    <div class="col-sm-4 col-sm-offset-1 text-center" style="background-color: #ffffff;">
 
                     <form action="@routes.TeamController.addMember()" method="post" class="form-horizontal" role="form">
                         <div class="form-group">
@@ -117,6 +121,7 @@
                         </div>
                         <button class="btn btn-primary">Add Member</button>
                     </form>
+                </div>
                 </div>
             </div>
 
