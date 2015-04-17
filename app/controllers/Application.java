@@ -1,11 +1,13 @@
 package controllers;
 
+import models.Deadline;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import java.util.Date;
 import java.util.List;
 
 import views.html.*;
@@ -41,6 +43,10 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result toTestPage() {
         return ok(test.render(User.findByUsername(request().username())));
+    }
+
+    public static Result toClockPage() {
+        return ok(testclock.render());
     }
 
     public static Result authenticate() {

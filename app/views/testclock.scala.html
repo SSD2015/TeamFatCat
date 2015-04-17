@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+    <script src="@routes.Assets.at("js/countdown.js")"></script>
+    <script>
+    setcountdown(@Deadline.getDeadline().getYear(),
+        @Deadline.getDeadline().getMonth(),
+        @Deadline.getDeadline().getDay(),
+        @Deadline.getDeadline().getHour(),
+        @Deadline.getDeadline().getMin(),
+        @Deadline.getDeadline().getSec());
+    </script>
+    <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; bgColor=&{countdownbgcolor}; visibility=hide>
+        <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
+        </layer>
+    </ilayer>
+
+</body>
+</html>
