@@ -49,6 +49,7 @@ public class ProjectController extends Controller {
         Project pj = Project.findById(projectId);
         long teamId = pj.getId();
         Team team = Team.findById(teamId);
+        List<Image> images = Image.getAllImage();
         team.deleteNullMembers();
         List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
@@ -69,7 +70,7 @@ public class ProjectController extends Controller {
         if( count != 0 )
             avg /= count;
         avg = Math.round(avg*100)/100.0;
-        return ok(views.html.project.render( user, pj, members, avg ));
+        return ok(views.html.project.render( user, pj, members, avg, images ));
     }
 
     @Security.Authenticated(Secured.class)
