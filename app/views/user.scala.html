@@ -72,7 +72,7 @@
             <div class="col-sm-4 col-sm-offset-4 text-center">
                 <form action="@routes.UserController.addUser()" name="form" method="post" class="form-horizontal" role="form"
                 autocomplete="on">
-                    <h1>Register</h1>
+                    <h2><b>Register</b></h2>
                     @if(form.hasGlobalErrors) {
                         <p class="error">
                         @form.globalError.message
@@ -119,36 +119,37 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">
+    <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
         <div class="container">
-        <div class="row">
-            <h2>User Lists</h2>
-            <table class="table table-hover" id="usersList">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Type</th>
-                    </tr>
-                    @userList.map { list =>
-                        <tr>
-                            <td>@list.getId()</td>
-                            <td>@list.getUsername()</td>
-                            <td>@list.getPassword()</td>
-                            <td>@list.getFirstName()</td>
-                            <td>@list.getLastName()</td>
-                            <td>@list.getTypeName()</td>
+            <div class="row" style="background-color: #d0e9c6; margin-top: 20px; padding: 30px;">
+                <h3 class="text-center"><b>User Lists</b></h3>
+                <h2></h2>
+                <table class="table table-condensed" id="usersList">
+                    <thead>
+                        <tr  class="warning">
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Type</th>
                         </tr>
-                    }
-                </thead>
-                <tbody>
+                        @userList.map { list =>
+                            <tr>
+                                <td>@list.getId()</td>
+                                <td>@list.getUsername()</td>
+                                <td>@list.getPassword()</td>
+                                <td>@list.getFirstName()</td>
+                                <td>@list.getLastName()</td>
+                                <td>@list.getTypeName()</td>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

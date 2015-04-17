@@ -6,6 +6,8 @@
         <title>Add Vote Category</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     </head>
     <body>
 
@@ -86,20 +88,25 @@
             </div>
         </div>
 
-        <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
-            <h2>Vote Category Lists</h2>
-            <table class="table table-hover">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                </tr>
-                @votecatlist.map { list =>
-                    <tr>
-                        <td>@list.getId()</td>
-                        <td>@list.getName()</td>
-                    </tr>
-                }
-            </table>
+        <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
+            <div class="container">
+                <div class="row" style="background-color: #d0e9c6; margin-top: 20px; padding: 30px;">
+                    <h2 class="text-center"><b>Category List</b></h2>
+                    <h2></h2>
+                    <table class="table table-condensed">
+                        <tr class="warning">
+                            <th>ID</th>
+                            <th>Name</th>
+                        </tr>
+                        @votecatlist.map { list =>
+                        <tr>
+                            <td>@list.getId()</td>
+                            <td>@list.getName()</td>
+                        </tr>
+                        }
+                    </table>
+                </div>
+            </div>
         </div>
 
     </body>
