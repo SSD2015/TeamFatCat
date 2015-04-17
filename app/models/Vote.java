@@ -3,17 +3,10 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
-
+import javax.persistence.*;
 import java.sql.Timestamp;
-
-import java.util.List;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 @Entity
 public class Vote extends Model{
@@ -93,4 +86,8 @@ public class Vote extends Model{
         return Vote.find.where().eq("category",cat).eq("project",proj).findList();
     }
 
+    public Vote getUniqueVote(User user, Project project, VoteCategory votecat){
+        Vote vote = Vote.find.where().eq("category",votecat).eq("project",project).eq("user",user).findUnique();
+        return vote;
+    }
 }

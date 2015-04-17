@@ -45,7 +45,11 @@ public class Team extends Model {
             return memberLists;
         String[] list = this.members.split(",");
         for (int i = 0; i < list.length ; i++ )
-            memberLists.add( Long.parseLong( list[i] ) );
+            try {
+                memberLists.add(Long.parseLong(list[i]));
+            } catch(Exception e) {
+
+            }
         return memberLists;
     }
 

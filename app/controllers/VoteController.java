@@ -13,7 +13,7 @@ import java.util.*;
 public class VoteController extends Controller {
 
     @Security.Authenticated(Secured.class)
-	public static Result manageVote(Long projectId) {
+    public static Result manageVote(Long projectId) {
         DynamicForm form = Form.form().bindFromRequest();
         if (form.hasErrors()) {
             return redirect(routes.Application.toErrorPage());
@@ -26,6 +26,7 @@ public class VoteController extends Controller {
         int size = votecatList.size();
         for (int i = 0 ; i < size ; i++) {
             if (form.get(votecatList.get(i).getName()) != null) {
+
                 Vote vote = new Vote();
                 vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
                 vote.setUser(user);
@@ -39,7 +40,7 @@ public class VoteController extends Controller {
         }
 
         return redirect(routes.ProjectController.toProjectPage(project.getId()));
-	}
+    }
 
     @Security.Authenticated(Secured.class)
     public static Result toVotePage(long projectId) {
