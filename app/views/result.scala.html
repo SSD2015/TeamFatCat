@@ -1,4 +1,4 @@
-@(voteList: List[Vote], catList: List[VoteCategory])
+@(user: User, voteList: List[Vote], catList: List[VoteCategory])
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -15,7 +15,8 @@
 
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                         <span class="sr-only">Toggle navigation</span>
@@ -26,8 +27,20 @@
                     <a class="navbar-brand" href="@routes.AdminController.toAdminPage()">MAIN</a>
                 </div>
 
-
-
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a>Hello, </a></li>
+                            <li><a><h4>@user.getFirstName() @user.getLastName()</h4></a></li>
+                            <li class="divider"></li>
+                            <li><a href="@routes.Application.logout()">Log out</a></li>
+                        </ul>
+                    </li>
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -45,13 +58,13 @@
                             <th>Proejct</th>
                             <th>Score</th>
                         </tr>
-                    @list.getBestFromCat.map { Plist =>
-                        <tr>
-                            <td>@Plist.getId()</td>
-                            <td>@Plist.getProjectName</td>
-                            <td>@Plist.getAvgFromCat(list)</td>
-                        </tr>
-                    }
+                        @list.getBestFromCat.map { Plist =>
+                            <tr>
+                                <td>@Plist.getId()</td>
+                                <td>@Plist.getProjectName</td>
+                                <td>@Plist.getAvgFromCat(list)</td>
+                            </tr>
+                        }
                     </table>
                 }
 
