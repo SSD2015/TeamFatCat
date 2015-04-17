@@ -3,6 +3,17 @@
 
 # --- !Ups
 
+create table deadline (
+  id                        bigint auto_increment not null,
+  year                      integer,
+  month                     integer,
+  day                       integer,
+  hour                      integer,
+  min                       integer,
+  sec                       integer,
+  constraint pk_deadline primary key (id))
+;
+
 create table project (
   id                        bigint auto_increment not null,
   project_name              varchar(255),
@@ -63,6 +74,8 @@ create index ix_vote_project_3 on vote (project_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table deadline;
 
 drop table project;
 
