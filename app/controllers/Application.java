@@ -39,7 +39,7 @@ public class Application extends Controller {
             User.create("nichy", "nichy", "Nicha", "Han", 1);
             User.create("gurokung", "gurokung", "Jirat", "Inta", 1);
             Team.create("Fatcat","2,3,4,5,6");
-            Project.create("Fatcat", "", 1);
+            Project.create("Fatcat", "MEOW MEOW MEOW MEOW MEOW MEOW MEOW MEOW MEOW MEOW MEOW", 1);
             //Saint4
             User.create("munin","munin","Muninthorn","T",1);
             User.create("runya","runya","Runyasak","C",1);
@@ -47,7 +47,7 @@ public class Application extends Controller {
             User.create("vasup","vasup","Vasupol","C",1);
             User.create("wutti","wutti","Wuttipong","K",1);
             Team.create("Saint4","7,8,9,10,11");
-            Project.create("Saint4", "", 2);
+            Project.create("Saint4", "The eXceed Vote application focuses on boiling down the voting process to extract only its core function--to vote. This application requires no manual, it's self explanatory, and make the voting experience 100 times faster.", 2);
             //Manat
             User.create("chinna","chinna","Chinnaporn","S",1);
             User.create("sorra","sorra","Sorrawit","C",1);
@@ -55,7 +55,7 @@ public class Application extends Controller {
             User.create("nitik","nitik","Niti","P",1);
             User.create("supas","supas","Supasn","K",1);
             Team.create("Manat","12,13,14,15,16");
-            Project.create("Manat", "", 3);
+            Project.create("Manat", "Manat swim into the sky", 3);
             //2Big2Slim
             User.create("punpi","punpi","Punpikorn","R",1);
             User.create("nathak","natha","Nathakorn","S",1);
@@ -63,7 +63,7 @@ public class Application extends Controller {
             User.create("nabhat","nabhat","Nabhat","Y",1);
             User.create("nutka","nutka","Nut","K",1);
             Team.create("2Big2Slim","17,18,19,20,21");
-            Project.create("2Big2Slim", "", 4);
+            Project.create("2Big2Slim", "We have 2 big guys and 2 slim guys in this group", 4);
 
             //Division2
             //GG
