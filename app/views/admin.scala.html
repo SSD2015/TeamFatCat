@@ -56,8 +56,10 @@
                     <h2>Hello @user.getFirstName @user.getLastName</h2>
                     <button class="btn btn-default"><a href="@routes.UserController.toAddUserPage()">User</a></button>
                     <button class="btn btn-default"><a href="@routes.TeamController.toTeamPage()">Team</a></button>
-                    <button class="btn btn-default"><a href="@routes.ProjectController.toAddProjectPage()">Project</a></button>
+                    <button class="btn btn-default"><a href="@routes.ProjectController.toAddProjectPage()">Project</a></button><br>
                     <button class="btn btn-default"><a href="@routes.VoteController.toAddVoteCatPage()">Vote Category</a></button>
+                    <button class="btn btn-default"><a href="@routes.History.toVoteLog">View VoteLog</a></button>
+                    <button class="btn btn-default"><a href="@routes.VoteController.toResultPage()">Show Result</a></button>
                 </div>
             </div>
         </div>

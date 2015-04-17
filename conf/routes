@@ -42,9 +42,9 @@ POST        /admin/team/removeMember        controllers.TeamController.removeMem
 GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
 POST        /admin/addproject               controllers.ProjectController.addProject()
 
-GET         /result                         controllers.VoteController.toResultPage()
+GET         /admin/result                   controllers.VoteController.toResultPage()
 
-GET         /votelog                        controllers.History.toVoteLog()
+GET         /admin/votelog                  controllers.History.toVoteLog()
 # test
 
 GET         /test                           controllers.Application.toTestPage()

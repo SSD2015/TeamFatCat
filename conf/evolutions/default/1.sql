@@ -76,17 +76,17 @@ create index ix_vote_project_3 on vote (project_id);
 
 
 # --- !Downs
-
-# SET FOREIGN_KEY_CHECKS=0;
-#
-# drop table deadline;
-#
-# drop table project;
-#
-# drop table screenshot;
-#
-# drop table team;
-#
-#
-# SET FOREIGN_KEY_CHECKS=1;
-#
+--
+-- # SET FOREIGN_KEY_CHECKS=0;
+-- #
+-- # drop table deadline;
+-- #
+-- # drop table project;
+-- #
+-- # drop table screenshot;
+-- #
+-- # drop table team;
+-- #
+-- #
+-- # SET FOREIGN_KEY_CHECKS=1;
+-- #
