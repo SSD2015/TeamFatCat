@@ -97,7 +97,8 @@ public class ProjectController extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result toUploadPage() {
         User user = User.findByUsername(request().username());
-        return ok(uploadimage.render(user));
+        List<Image> images = Image.getAllImage();
+        return ok(uploadimage.render(user,images));
     }
 
     @Security.Authenticated(Secured.class)
@@ -105,7 +106,7 @@ public class ProjectController extends Controller {
         Form<Image> imageForm = Form.form(Image.class).bindFromRequest();
         Image image = imageForm.get();
         String url = image.getUrl();
-        url.substring(url.lastIndexOf(".")+1);
+        url = url.substring(url.lastIndexOf(".")+1);
         if(url.equals("jpg")) {
             image.save();
         }

@@ -5,6 +5,7 @@
 
 create table image (
   id                        bigint auto_increment not null,
+  name                      varchar(255),
   url                       varchar(255),
   constraint pk_image primary key (id))
 ;
@@ -63,18 +64,18 @@ create index ix_vote_project_3 on vote (project_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
-
-drop table image;
-
-drop table project;
-
-drop table team;
-
-drop table user;
-
-drop table vote;
-
-drop table vote_category;
+--
+-- drop table image;
+--
+-- drop table project;
+--
+-- drop table team;
+--
+-- drop table user;
+--
+-- drop table vote;
+--
+-- drop table vote_category;
 
 SET FOREIGN_KEY_CHECKS=1;
 
