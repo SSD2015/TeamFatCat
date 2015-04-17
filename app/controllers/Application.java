@@ -73,11 +73,11 @@ public class Application extends Controller {
             Team.create("GG","22,23,24");
 
             //JDED
-            User.create("b5410545044","warrunyou.r","Waranyu","",1);
-            User.create("b5410545052","supayut.r","Supayut","",1);
-            User.create("b5410546334", "wasin.ha","Wasin","",1);
-            User.create("b5410546393", "akkarawit.p","Akkarawit","",1);
-            User.create("b5410547594","nachanok.su","Nachanok","",1);
+            User.create("b5410545044","warrunyou.r","Waranyu","Rerkdee",1);
+            User.create("b5410545052","supayut.r","Supayut","Raksuk",1);
+            User.create("b5410546334", "wasin.ha","Wasin","Hawaree",1);
+            User.create("b5410546393", "akkarawit.p","Akkarawit","Piyawin",1);
+            User.create("b5410547594","nachanok.su","Nachanok","Suktarachan",1);
             Team.create("JDED","25,26,27,28,29");
 
             //Malee
