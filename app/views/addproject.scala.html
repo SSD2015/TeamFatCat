@@ -6,6 +6,8 @@
     <title>User</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -66,7 +68,7 @@
 
     <div class="container">
         <div class="row" style="margin-top: 150px;">
-            <div class="col-sm-4 col-sm-offset-4 text-center">
+            <div class="col-sm-5 col-sm-offset-4 text-center">
                 <form action="@routes.ProjectController.addProject()" method="post" class="form-horizontal" role="form">
                     @if(form.hasGlobalErrors) {
                         <p class="error">
@@ -98,32 +100,37 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary">Add project</button>
+                    <button class="btn btn-primary">Add Project</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
-        <h2>Project Lists</h2>
-        <table class="table table-hover">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>TeamId</th>
-                <th>TeamName</th>
-            </tr>
-            @projects.map { list =>
-                <tr>
-                    <td>@list.getId()</td>
-                    <td>@list.getProjectName()</td>
-                    <td>@list.getBriefDesc()</td>
-                    <td>@Team.findById(list.getTeamId).getId()</td>
-                    <td>@Team.findById(list.getTeamId).getName()</td>
-                </tr>
-            }
-        </table>
+    <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
+        <div class="container">
+            <div class="row" style="background-color: #d0e9c6; margin-top: 20px; padding: 30px;">
+                <h2 class="text-center"><b>Project Lists</b></h2>
+                <h2></h2>
+                <table class="table table-condensed">
+                    <tr class="warning">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Team ID</th>
+                        <th>Team Name</th>
+                    </tr>
+                    @projects.map { list =>
+                        <tr>
+                            <td>@list.getId()</td>
+                            <td>@list.getProjectName()</td>
+                            <td>@list.getBriefDesc()</td>
+                            <td>@Team.findById(list.getTeamId).getId()</td>
+                            <td>@Team.findById(list.getTeamId).getName()</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
     </div>
 
 </body>
