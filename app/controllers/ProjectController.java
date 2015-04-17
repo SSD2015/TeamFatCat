@@ -53,7 +53,7 @@ public class ProjectController extends Controller {
         Project pj = Project.findById(projectId);
         long teamId = pj.getId();
         Team team = Team.findById(teamId);
-        List<Image> images = Image.getByProjectId(projectId);
+        //List<Image> images = Image.getByProjectId(projectId);
         team.deleteNullMembers();
         List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
@@ -74,7 +74,7 @@ public class ProjectController extends Controller {
         if( count != 0 )
             avg /= count;
         avg = Math.round(avg*100)/100.0;
-        return ok(views.html.project.render( user, pj, members, avg, images ));
+        return ok(views.html.project.render( user, pj, members, avg));
     }
 
     @Security.Authenticated(Secured.class)
@@ -99,26 +99,76 @@ public class ProjectController extends Controller {
         );
     }
 
+//    @Security.Authenticated(Secured.class)
+//    public static Result toUploadPage() {
+//        User user = User.findByUsername(request().username());
+//        List<Project> projects = Project.getAllProjects();
+//        List<Image> images = Image.getAllImage();
+//        return ok(uploadimage.render(user,images, projects));
+//    }
+
+//    @Security.Authenticated(Secured.class)
+//    public static Result upload() {
+//        Form<Image> imageForm = Form.form(Image.class).bindFromRequest();
+//        Image image = imageForm.get();
+//        String url = image.getUrl();
+//        url = url.substring(url.lastIndexOf(".")+1);
+//        if(url.equals("jpg")) {
+//            image.save();
+//        }
+//
+//        return redirect(routes.ProjectController.toUploadPage());
+//
+//    }
+
     @Security.Authenticated(Secured.class)
-    public static Result toUploadPage() {
+    public static Result toEditProjectPage(long projectId) {
         User user = User.findByUsername(request().username());
-        List<Project> projects = Project.getAllProjects();
-        List<Image> images = Image.getAllImage();
-        return ok(uploadimage.render(user,images, projects));
+        Project project = Project.findById(projectId);
+        Form form = Form.form(Upload.class);
+        List<Image> images = Image.findImagesByProject(projectId);
+        return ok(editproject.render(user, project, images, form));
     }
 
-    @Security.Authenticated(Secured.class)
-    public static Result upload() {
-        Form<Image> imageForm = Form.form(Image.class).bindFromRequest();
-        Image image = imageForm.get();
-        String url = image.getUrl();
-        url = url.substring(url.lastIndexOf(".")+1);
-        if(url.equals("jpg")) {
-            image.save();
+    public static Result getImage(long id) {
+        Image image = Image.findById(id);
+
+        if (image != null) {
+            return ok(image.getData()).as("image");
+        } else {
+            flash("error", "File not found");
+            return redirect(routes.Application.toErrorPage());
+        }
+    }
+
+    public static Result upload(long projectId) {
+        Form<Upload> form = Form.form(Upload.class).bindFromRequest();
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        List<Image> images = Image.findImagesByProject(projectId);
+
+        if (form.hasErrors()) {
+            return badRequest(editproject.render(user, project, images, form));
         }
 
-        return redirect(routes.ProjectController.toUploadPage());
+        Image img = new Image(form.get().file.getFilename(), form.get().file.getFile(), projectId);
 
+        return redirect(routes.ProjectController.toEditProjectPage(projectId));
+    }
+
+    public static class Upload {
+        public FilePart file;
+
+        public String validate() {
+            MultipartFormData form = request().body().asMultipartFormData();
+            file = form.getFile("image");
+
+            if (file == null) {
+                return "No file";
+            }
+
+            return null;
+        }
     }
 
 }
