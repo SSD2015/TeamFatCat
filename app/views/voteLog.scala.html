@@ -90,7 +90,13 @@
                                 <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
                                 <td>@list.getProject().getProjectName</td>
                                 <td>@list.getCategory().getName()</td>
-                                <td>@list.getScore()</td>
+                                <td>
+                                @if(list.getScore() != -1) {
+                                    @list.getScore()
+                                } else {
+                                    No Vote
+                                }
+                                </td>
                                 <td>@list.getTimestamp()</td>
                             </tr>
                         }
