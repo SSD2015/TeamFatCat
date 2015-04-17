@@ -30,7 +30,12 @@ public class VoteController extends Controller {
                 Vote vote = Vote.getUniqueVote(request().username(), Project.findById(projectId),votecatList.get(i));
                 if(vote == null) {
                     vote = new Vote();
-                    vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
+                    int newScore = Integer.parseInt(form.get(votecatList.get(i).getName()));
+                    String isNoVote = form.get( "noVote"+votecatList.get(i).getName() );
+                    if( isNoVote != null )
+                        vote.setScore( -1 );
+                    else
+                        vote.setScore( newScore );
                     vote.setUser(user);
                     vote.setProject(project);
                     vote.setCategory(votecatList.get(i));
@@ -38,7 +43,12 @@ public class VoteController extends Controller {
                     vote.save();
                 }
                 else{
-                    vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
+                    int newScore = Integer.parseInt(form.get(votecatList.get(i).getName()));
+                    String isNoVote = form.get( "noVote"+votecatList.get(i).getName() );
+                    if( isNoVote != null )
+                        vote.setScore( -1 );
+                    else
+                        vote.setScore( newScore );
                     vote.setTimestamp();
                     Ebean.update(vote);
                 }
