@@ -50,16 +50,11 @@
         </nav>
 
         <div class="container">
-            <div class="row">
+            <div class="row text-center">
                 <div class="" style="width=100%; min-height: 100px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
-                    <h2>Hello @user.getFirstName @user.getLastName</h2>
-                    <button class="btn btn-default"><a href="@routes.UserController.toAddUserPage()">User</a></button>
-                    <button class="btn btn-default"><a href="@routes.TeamController.toTeamPage()">Team</a></button>
-                    <button class="btn btn-default"><a href="@routes.ProjectController.toAddProjectPage()">Project</a></button><br>
-                    <button class="btn btn-default"><a href="@routes.VoteController.toAddVoteCatPage()">Vote Category</a></button>
-                    <button class="btn btn-default"><a href="@routes.History.toVoteLog">View VoteLog</a></button>
-                    <button class="btn btn-default"><a href="@routes.VoteController.toResultPage()">Show Result</a></button>
+                    <h2>...WELCOME...</h2>
+                    <h2>@user.getFirstName @user.getLastName</h2>
                 </div>
             </div>
 
@@ -86,23 +81,23 @@
 
 
             </div>
-                <div class="row col-sm-8 col-sm-offset-8">
+                <div class="row col-sm-10 col-sm-offset-2">
                     <div class="col-xs-6 col-md-3 text-center">
                         <a href="@routes.VoteController.toAddVoteCatPage()" class="thumbnail">
                             <img src="@routes.Assets.at("/img/cat1.jpg")" >
-                            <h5>VOTE CATEGORY</h5>
+                            <h4>VOTE CATEGORY</h4>
                         </a>
                     </div>
                     <div class="col-xs-6 col-md-3 text-center">
                         <a href="@routes.History.toVoteLog()" class="thumbnail">
                             <img src="@routes.Assets.at("/img/cat1.jpg")" >
-                            <h5>VOTE LOG</h5>
+                            <h4>VOTE LOG</h4>
                         </a>
                     </div>
                     <div class="col-xs-6 col-md-3 text-center">
                         <a href="@routes.VoteController.toResultPage()" class="thumbnail">
                             <img src="@routes.Assets.at("/img/cat1.jpg")" >
-                            <h5>RESULT</h5>
+                            <h4>RESULT</h4>
                         </a>
                     </div>
                 </div>
