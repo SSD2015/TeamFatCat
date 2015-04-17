@@ -129,4 +129,24 @@ public class Team extends Model {
     }
 
     private static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
+
+
+    public String validate() {
+        List<Team> teamList = find.all();
+        if (this.name == null) {
+            return "Team Name is required";
+        }
+
+        if (this.name.length() < 1 || this.name.length() > 20) {
+            return "Team name must not exceed 20 characters";
+        }
+
+        for (Team t: teamList) {
+            if ((this.name).toLowerCase().equals(t.getName().toLowerCase())) {
+                return "This name is already used";
+            }
+        }
+
+        return null;
+    }
 }
