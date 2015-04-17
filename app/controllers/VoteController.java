@@ -36,11 +36,11 @@ public class VoteController extends Controller {
                         vote.setScore( -1 );
                     else
                         vote.setScore( newScore );
-                    vote.setUser(user);
-                    vote.setProject(project);
-                    vote.setCategory(votecatList.get(i));
-                    vote.setTimestamp();
-                    vote.save();
+                        vote.setUser(user);
+                        vote.setProject(project);
+                        vote.setCategory(votecatList.get(i));
+                        vote.setTimestamp();
+                        vote.save();
                 }
                 else{
                     int newScore = Integer.parseInt(form.get(votecatList.get(i).getName()));
