@@ -53,7 +53,9 @@
                 <p>
                     by @Team.findById(project.getTeamId).getName()<br>
                 </p>
-
+                @images.map { image =>
+                    <img src="@image.getUrl" alt="Mountain View" style="width:400px;height:200px">
+                }
                 @*<img src="@images(0).getUrl" alt="Mountain View" style="width:400px;height:200px">*@
                 @*<img src="@images(1).getUrl" alt="Mountain View" style="width:400px;height:200px">*@
                 <div class="panel panel-default" style="max-width: 50%;">

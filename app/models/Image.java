@@ -28,9 +28,15 @@ public class Image extends Model{
     }
 
     public static List<Image> getByProjectId(long id){
-        List<Image> images = new ArrayList<Image>();
+        List<Image> images = getAllImage();
+        List<Image> imagesSpec = new ArrayList<Image>();
+        for(int i = 0 ; i < images.size() ; i++){
+            if(images.get(i).getProjectId() == id){
+                imagesSpec.add(images.get(i));
+            }
+        }
 
-        return images;
+        return imagesSpec;
     }
 
     public void setName(String name){
