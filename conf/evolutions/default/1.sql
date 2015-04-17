@@ -1,3 +1,4 @@
+
 # --- Created by Ebean DDL
 # To stop Ebean DDL generation, remove this comment and start using Evolutions
 
@@ -9,6 +10,17 @@ create table image (
   url                       varchar(255),
   project_id                 bigint,
   constraint pk_image primary key (id))
+;
+
+create table deadline (
+  id                        bigint auto_increment not null,
+  year                      integer,
+  month                     integer,
+  day                       integer,
+  hour                      integer,
+  min                       integer,
+  sec                       integer,
+  constraint pk_deadline primary key (id))
 ;
 
 create table project (
@@ -65,19 +77,16 @@ create index ix_vote_project_3 on vote (project_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
---
--- drop table image;
---
--- drop table project;
---
--- drop table team;
---
--- drop table user;
---
--- drop table vote;
---
--- drop table vote_category;
-
-SET FOREIGN_KEY_CHECKS=1;
-
+# SET FOREIGN_KEY_CHECKS=0;
+#
+# drop table deadline;
+#
+# drop table project;
+#
+# drop table screenshot;
+#
+# drop table team;
+#
+#
+# SET FOREIGN_KEY_CHECKS=1;
+#

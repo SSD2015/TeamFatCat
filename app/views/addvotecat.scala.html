@@ -1,4 +1,4 @@
-@(user: User, votecatlist: List[VoteCategory])
+@(user: User, votecatlist: List[VoteCategory], form: Form[VoteCategory])
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -48,8 +48,12 @@
                 <div class="" style="width=100%; min-height: 100px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
                     <form action="@routes.VoteController.addVoteCat()" method="post" class="form-horizontal" role="form">
+                        @if(form.hasGlobalErrors) {
+                            <p class="error">
+                            @form.globalError.message
+                            </p>
+                        }
                         <div class="form-group">
-
                             <label class="col-sm-6 control-label">Vote Category name</label>
                             <div class="col-sm-6">
                                 <input class="form-control" id="focusedInput" type="text" name="name"/>

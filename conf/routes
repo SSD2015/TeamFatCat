@@ -48,6 +48,7 @@ GET         /votelog                        controllers.History.toVoteLog()
 # test
 
 GET         /test                           controllers.Application.toTestPage()
+GET         /testclock                      controllers.Application.toClockPage()
 
 GET         /error                          controllers.Application.toErrorPage()
 

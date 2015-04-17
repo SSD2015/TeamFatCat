@@ -70,7 +70,9 @@ public class VoteController extends Controller {
     public static Result addVoteCat() {
         Form<VoteCategory> voteCatForm = Form.form(VoteCategory.class).bindFromRequest();
         if (voteCatForm.hasErrors()) {
-            return ok(views.html.error.render("Can't add Vote Category !!!"));
+            User user = User.findByUsername(request().username());
+            List<VoteCategory> voteCatList = VoteCategory.getAllCategories();
+            return badRequest(addvotecat.render(user, voteCatList, voteCatForm));
         }
         VoteCategory voteCat = voteCatForm.get();
         voteCat.save();
@@ -81,7 +83,7 @@ public class VoteController extends Controller {
     public static Result toAddVoteCatPage(){
         List<VoteCategory> votecatlist = VoteCategory.all();
         User user = User.findByUsername(request().username());
-        return ok(addvotecat.render(user, votecatlist));
+        return ok(addvotecat.render(user, votecatlist, Form.form(VoteCategory.class)));
     }
 
 

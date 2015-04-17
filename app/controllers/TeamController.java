@@ -24,14 +24,17 @@ public class TeamController extends Controller {
         }
 
         User user = User.findByUsername(request().username());
-        return ok(team.render(user, userList, teamList));
+        return ok(team.render(user, userList, teamList, Form.form(Team.class)));
     }
 
     @Security.Authenticated(AdminSecured.class)
     public static Result addTeam() {
         Form<Team> teamForm = Form.form(Team.class).bindFromRequest();
         if (teamForm.hasErrors()) {
-            return redirect(routes.Application.toErrorPage());
+            User user = User.findByUsername(request().username());
+            List<User> userList = User.getAllUsers();
+            List<Team> teamList = Team.getAllTeams();
+            return badRequest(team.render(user, userList, teamList, teamForm));
         }
         Team team = teamForm.get();
         team.save();

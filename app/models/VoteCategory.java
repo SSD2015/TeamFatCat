@@ -54,5 +54,27 @@ public class VoteCategory extends Model{
         return Plist;
     }
 
+    public static List<VoteCategory> getAllCategories() {
+        return find.all();
+    }
+
+    public String validate() {
+        List<VoteCategory> voteList = find.all();
+        if (this.name == null || this.name.equals("")) {
+            return "Category name is required";
+        }
+
+        if (this.name.length() < 1 || this.name.length() > 20) {
+            return "Category Name must not exceed 20 characters";
+        }
+
+        for (VoteCategory v: voteList) {
+            if ((this.name).toLowerCase().equals(v.getName().toLowerCase())) {
+                return "This category is already used";
+            }
+        }
+
+        return null;
+    }
 
 }
