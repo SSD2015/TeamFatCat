@@ -30,7 +30,6 @@ public class TeamController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result addTeam() {
         Form<Team> teamForm = Form.form(Team.class).bindFromRequest();
-
         if (teamForm.hasErrors()) {
             User user = User.findByUsername(request().username());
             List<User> userList = User.getAllUsers();
