@@ -27,14 +27,21 @@ public class VoteController extends Controller {
         int size = votecatList.size();
         for (int i = 0 ; i < size ; i++) {
             if (form.get(votecatList.get(i).getName()) != null) {
-
-                Vote vote = new Vote();
-                vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
-                vote.setUser(user);
-                vote.setProject(project);
-                vote.setCategory(votecatList.get(i));
-                vote.setTimestamp();
-                vote.save();
+                Vote vote = Vote.getUniqueVote(request().username(), Project.findById(projectId),votecatList.get(i));
+                if(vote == null) {
+                    vote = new Vote();
+                    vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
+                    vote.setUser(user);
+                    vote.setProject(project);
+                    vote.setCategory(votecatList.get(i));
+                    vote.setTimestamp();
+                    vote.save();
+                }
+                else{
+                    vote.setScore(Integer.parseInt(form.get(votecatList.get(i).getName())));
+                    vote.setTimestamp();
+                    Ebean.update(vote);
+                }
             } else {
                 redirect(routes.Application.toErrorPage());
             }
