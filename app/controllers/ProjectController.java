@@ -151,7 +151,7 @@ public class ProjectController extends Controller {
             return badRequest(editproject.render(user, project, images, form));
         }
 
-        Image img = new Image(form.get().file.getFilename(), form.get().file.getFile(), projectId);
+        Image.create(form.get().file.getFilename(), form.get().file.getFile(), projectId);
 
         return redirect(routes.ProjectController.toEditProjectPage(projectId));
     }
