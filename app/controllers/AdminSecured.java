@@ -18,6 +18,6 @@ public class AdminSecured extends Secured {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return notFound("<h1>Page not found</h1>").as("text/html");
+        return redirect(routes.ProjectController.toProjectListPage());
     }
 }

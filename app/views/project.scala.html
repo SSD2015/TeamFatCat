@@ -1,4 +1,4 @@
-@(user: User, project: Project, members: List[User], avg: Double)
+@(user: User, project: Project, members: List[User], avg: Double, images: List[Image])
 <!doctype html>
 <html lang="en">
     <head>
@@ -54,6 +54,8 @@
                     by @Team.findById(project.getTeamId).getName()<br>
                 </p>
 
+                @*<img src="@images(0).getUrl" alt="Mountain View" style="width:400px;height:200px">*@
+                @*<img src="@images(1).getUrl" alt="Mountain View" style="width:400px;height:200px">*@
                 <div class="panel panel-default" style="max-width: 50%;">
                     <div class="panel-heading">Team Members</div>
 
