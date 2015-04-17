@@ -156,6 +156,19 @@ public class ProjectController extends Controller {
         return redirect(routes.ProjectController.toEditProjectPage(projectId));
     }
 
+    public static Result upload2(long projectId) {
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        File file = body.getFile("file").getFile();
+        String pId = body.asFormUrlEncoded().get("projectId")[0];
+        Long proId = Long.parseLong(pId);
+        List<ProjectImage> imgs = ProjectImage.findImageOfProject(proId);
+        if(imgs.size() >= 10){
+            return status(1);
+        }
+        ProjectImage image = new ProjectImage(proId, file);
+        return ok("success!");
+    }
+
     public static class Upload {
         public FilePart file;
 
