@@ -100,31 +100,20 @@ public class ProjectController extends Controller {
         return ok(uploadimage.render(user));
     }
 
-//    @Security.Authenticated(Secured.class)
-//    public static Result upload() {
-//        MultipartFormData body = request().body().asMultipartFormData();
-//        FilePart picture = body.getFile("picture");
-//        if (picture != null) {
-//            String fileName = picture.getFilename();
-//            String contentType = picture.getContentType();
-//            File file = picture.getFile();
-//
-//            picture
-//            Picture pic = Picture.create(file, fileName, contentType);
-//            if (pic == null) {
-//                return redirect(routes.ProjectController.toUploadPage());
-//            }
-//            //return ok("File uploaded");
-//            return redirect(routes.ProjectController.getPicture(pic.getId()));
-//        } else {
-//            flash("error", "Missing file");
-//            return redirect(routes.ProjectController.toUploadPage());
-//        }
-//    }
-//
-//    @Security.Authenticated(Secured.class)
-//    public static Result getPicture(Long pictureId) {
-//        return ok(picture.render(Picture.findById(pictureId)));
-//    }
+    @Security.Authenticated(Secured.class)
+    public static Result upload() {
+        Form<Image> imageForm = Form.form(Image.class).bindFromRequest();
+        Image image = imageForm.get();
+        String url = image.getUrl();
+        url.substring(url.lastIndexOf(".")+1);
+        if(url.equals("jpg")) {
+            image.save();
+        }
+
+        return redirect(routes.ProjectController.toUploadPage());
+
+    }
 
 }
+
+

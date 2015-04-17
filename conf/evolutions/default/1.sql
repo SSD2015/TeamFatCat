@@ -3,18 +3,18 @@
 
 # --- !Ups
 
+create table image (
+  id                        bigint auto_increment not null,
+  url                       varchar(255),
+  constraint pk_image primary key (id))
+;
+
 create table project (
   id                        bigint auto_increment not null,
   project_name              varchar(255),
   project_desc              varchar(255),
   team_id                   bigint,
   constraint pk_project primary key (id))
-;
-
-create table screenshot (
-  screenshot_id             bigint auto_increment not null,
-  project_id                bigint,
-  constraint pk_screenshot primary key (screenshot_id))
 ;
 
 create table team (
@@ -64,9 +64,9 @@ create index ix_vote_project_3 on vote (project_id);
 
 SET FOREIGN_KEY_CHECKS=0;
 
-drop table project;
+drop table image;
 
-drop table screenshot;
+drop table project;
 
 drop table team;
 
