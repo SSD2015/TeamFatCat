@@ -63,8 +63,7 @@ public class VoteController extends Controller {
     public static Result toResultPage() {
         List<Vote> voteList = Vote.getAllVotes();
         List<VoteCategory> catList = VoteCategory.all();
-
-        return ok(result.render(User.findByUsername(request().username()),voteList,catList));
+        return ok(result.render(User.findByUsername(request().username()), voteList,catList));
     }
 
     @Security.Authenticated(AdminSecured.class)
