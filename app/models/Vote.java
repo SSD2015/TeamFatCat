@@ -93,4 +93,8 @@ public class Vote extends Model{
         return Vote.find.where().eq("category",cat).eq("project",proj).findList();
     }
 
+    public Vote getUniqueVote(User user, Project project, VoteCategory votecat){
+        Vote vote = Vote.find.where().eq("category",votecat).eq("project",project).eq("user",user).findUnique();
+        return vote;
+    }
 }

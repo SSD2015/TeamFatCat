@@ -42,7 +42,7 @@ public class VoteCategory extends Model{
     public List<Project> getBestFromCat() {
         List<Project> Plist = Project.getAllProjects();
         List<Vote> Vlist = new ArrayList<Vote>();
-        VoteCategory currentCat = this;
+        final VoteCategory currentCat = this;
 
         Collections.sort(Plist, new Comparator<Project>() {
             public int compare(Project o1, Project o2) {
