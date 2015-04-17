@@ -97,5 +97,33 @@ public class Team extends Model {
         this.update();
     }
 
+    public String validate() {
+        List<Team> teamList = find.all();
+        if (this.name == null) {
+            return "Team Name is required";
+        }
+
+        char x;
+
+        for (int i = 0 ; i < this.name.length() ; i++) {
+            x = name.charAt(i);
+            if (!((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9'))) {
+                return "Team Name should not contain special characters";
+            }
+        }
+
+        if (this.name.length() < 6 || this.name.length() > 20) {
+            return "Team Name should have 6-20 characters";
+        }
+
+        for (Team t: teamList) {
+            if ((this.name).toLowerCase().equals(t.getName().toLowerCase())) {
+                return "This name is already used";
+            }
+        }
+
+        return null;
+    }
+
     public static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
 }

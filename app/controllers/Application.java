@@ -12,6 +12,7 @@ import play.mvc.Result;
 
 import java.util.List;
 
+import play.mvc.Security;
 import views.html.*;
 
 import static play.libs.Json.toJson;
@@ -38,7 +39,7 @@ public class Application extends Controller {
             return ok(error.render("No user"));
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result user() {
         List<User> userList = User.find.all();
         return ok(user.render(Form.form(User.class), userList));
@@ -94,21 +95,23 @@ public class Application extends Controller {
             return null;
         }
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result team() {
-        List<User> userList = User.find.all();
-        List<Team> teamList = Team.find.all();
-        for( int i=0; i<teamList.size();i++ ) {
-            List<User> members = teamList.get(i).getMembers();
-            userList.removeAll(members);
-        }
-        return ok(team.render(userList , teamList));
+            List<User> userList = User.find.all();
+            List<Team> teamList = Team.find.all();
+            for( int i=0; i<teamList.size();i++ ) {
+                List<User> members = teamList.get(i).getMembers();
+                userList.removeAll(members);
+            }
+            return ok(team.render(userList , teamList , Form.form(Team.class) ));
     }
 
     public static Result addTeam() {
         Form<Team> teamForm = Form.form(Team.class).bindFromRequest();
         if (teamForm.hasErrors()) {
-            return redirect(routes.Application.error());
+            List<Team> teamList = Team.find.all();
+            List<User> userList = User.find.all();
+            return badRequest(team.render(userList, teamList , Form.form(Team.class) ));
         }
         Team team = teamForm.get();
         team.save();

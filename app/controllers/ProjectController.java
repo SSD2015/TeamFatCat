@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ProjectController extends Controller {
 
-
+    @Security.Authenticated(Secured.class)
     public static Result addProjectPage() {
         List<Team> teams = Team.find.all();
         List<Project> projects = Project.find.all();
@@ -36,7 +36,7 @@ public class ProjectController extends Controller {
         project.save();
         return redirect(routes.ProjectController.addProjectPage());
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result project(Long loginUser, Long projectId) {
         Project pj = Project.find.byId(projectId);
         long teamId = pj.getId();
@@ -62,7 +62,7 @@ public class ProjectController extends Controller {
         avg = Math.round(avg*100)/100.0;
         return ok(views.html.project.render( user, pj, members, avg ));
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result projectlist(Long loginUser) {
         List<Project> pj = Project.find.all();
         User user = User.find.byId(loginUser);

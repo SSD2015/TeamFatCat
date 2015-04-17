@@ -40,7 +40,7 @@ public class VoteController extends Controller {
         return redirect(routes.VoteController.result());
 
 	}
-	
+    @Security.Authenticated(Secured.class)
     public static Result vote( long userId, long projectId ) {
         User user = User.find.byId( userId );
         Project project = Project.find.byId( projectId );
@@ -48,7 +48,7 @@ public class VoteController extends Controller {
 
         return ok(vote.render(user,project,voteCategories));
     }
-
+    @Security.Authenticated(Secured.class)
     public static Result result() {
         List<Vote> voteList = Vote.find.all();
         return ok(views.html.result.render(voteList));
