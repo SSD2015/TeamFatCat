@@ -69,4 +69,31 @@ public class Project extends Model{
         return total/Vlist.size();
     }
 
+    public String validate() {
+        List<Project> proList = find.all();
+        if (this.projectName == null) {
+            return "Project Name is required";
+        }
+
+        if (this.projectName.length() < 1 || this.projectName.length() > 20 ) {
+            return "Project name must not exceed 20 characters";
+        }
+
+        if (this.projectDesc.length() < 1 ) {
+            return "Description is required";
+        }
+
+        if (this.projectDesc.length() > 300){
+            return "Maxmimum size is 300 characters";
+        }
+
+        for (Project t: proList) {
+            if ((this.projectName).toLowerCase().equals(t.getProjectName().toLowerCase())) {
+                return "This name is already used";
+            }
+        }
+
+        return null;
+    }
+
 }

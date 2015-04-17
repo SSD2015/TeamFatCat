@@ -30,19 +30,23 @@ public class ProjectController extends Controller {
         }
 
         User user = User.findByUsername(request().username());
-        return ok(views.html.addproject.render(user, projects, teams));
+        return ok(views.html.addproject.render(user, projects, teams, Form.form(Project.class)));
     }
 
     @Security.Authenticated(AdminSecured.class)
     public static Result addProject() {
         Form<Project> projectForm = Form.form(Project.class).bindFromRequest();
         if (projectForm.hasErrors()) {
-            return redirect(routes.Application.toIndexPage());
+            User user = User.findByUsername(request().username());
+            List<Team> teamList = Team.getAllTeams();
+            List<Project> proList = Project.getAllProjects();
+            return badRequest(addproject.render(user, proList, teamList, projectForm));
         }
         Project project = projectForm.get();
         project.save();
         return redirect(routes.ProjectController.toAddProjectPage());
     }
+
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectPage(Long projectId) {
@@ -118,5 +122,3 @@ public class ProjectController extends Controller {
     }
 
 }
-
-
