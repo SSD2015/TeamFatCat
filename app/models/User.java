@@ -205,7 +205,7 @@ public class User extends Model {
         }
 
         if (this.username.length() < 5 || this.username.length() > 20) {
-            return "Username should have 6-20 characters";
+            return "Username should have 5-20 characters";
         }
 
         for (User u: userList) {
