@@ -19,7 +19,11 @@ public class Image extends Model{
     // Finder will help us easily query data from database.
     public static Finder< Long, Image> find = new Finder< Long, Image>( Long.class, Image.class);
 
-
+    public Image(String name, String url, long projectId){
+        this.name = name;
+        this.url = url;
+        this.projectId = projectId;
+    }
     public void setProjectId(long id){
         this.projectId = id;
     }
@@ -58,7 +62,7 @@ public class Image extends Model{
                 return images.get(i);
             }
         }
-        return new Image();
+        return null;
     }
     public static Image findById(long id) {
         return find.byId(id);

@@ -1,7 +1,6 @@
 package controllers;
 
-import models.Deadline;
-import models.User;
+import models.*;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -32,6 +31,19 @@ public class Application extends Controller {
         }
         if (count == 0) {
             User.create("admin99", "admin", "Auto", "Created", 99);
+            User.create("inont", "inont", "Natcha", "Charoen", 1);
+            User.create("yanagi", "yanagi", "Chonni", "Kitti", 1);
+            User.create("maxmi", "maxmi", "Kitti", "Promdi", 1);
+            User.create("nichy", "nichy", "Nicha", "Han", 1);
+            User.create("gurokung", "gurokung", "Jirat", "Inta", 1);
+            Team.create("Maxmi and Friends","2,3,4");
+            Team.create("Nichy and Friends", "5,6");
+            Project.create("Fast 7", "For paul", 1);
+            Project.create("Avenger 2","For Iron man",2);
+            VoteCategory.create("Security");
+            VoteCategory.create("Performance");
+
+
         }
 
         if (session().get("username") != null) {

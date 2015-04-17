@@ -54,8 +54,13 @@ public class ProjectController extends Controller {
         long teamId = pj.getId();
         Team team = Team.findById(teamId);
         List<Image> images = Image.getByProjectId(projectId);
-        Image avatar = images.get(0);
-        images.remove(0);
+        Image avatar;
+        if(images.size() >= 1) {
+            avatar = images.get(0);
+            images.remove(0);
+        }
+        else
+            avatar = new Image("Empty", "http://www.img.in.th/images/JtxBUC2dp.gif",projectId);
         team.deleteNullMembers();
         List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
