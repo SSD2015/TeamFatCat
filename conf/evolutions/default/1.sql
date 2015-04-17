@@ -7,6 +7,7 @@ create table image (
   id                        bigint auto_increment not null,
   name                      varchar(255),
   url                       varchar(255),
+  project_id                 bigint,
   constraint pk_image primary key (id))
 ;
 
@@ -22,6 +23,7 @@ create table team (
   id                        bigint auto_increment not null,
   name                      varchar(255),
   members                   varchar(255),
+
   constraint pk_team primary key (id))
 ;
 

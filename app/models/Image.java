@@ -4,6 +4,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,9 +14,24 @@ public class Image extends Model{
     private String name;
     private String url;
 
+    private long projectId;
+
     // Finder will help us easily query data from database.
     public static Finder< Long, Image> find = new Finder< Long, Image>( Long.class, Image.class);
 
+
+    public void setProjectId(long id){
+        this.projectId = id;
+    }
+    public long getProjectId(){
+        return this.projectId;
+    }
+
+    public static List<Image> getByProjectId(long id){
+        List<Image> images = new ArrayList<Image>();
+
+        return images;
+    }
 
     public void setName(String name){
         this.name = name;

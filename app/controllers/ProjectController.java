@@ -49,7 +49,7 @@ public class ProjectController extends Controller {
         Project pj = Project.findById(projectId);
         long teamId = pj.getId();
         Team team = Team.findById(teamId);
-        List<Image> images = Image.getAllImage();
+        List<Image> images = Image.getByProjectId(projectId);
         team.deleteNullMembers();
         List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
@@ -98,8 +98,9 @@ public class ProjectController extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result toUploadPage() {
         User user = User.findByUsername(request().username());
+        List<Project> projects = Project.getAllProjects();
         List<Image> images = Image.getAllImage();
-        return ok(uploadimage.render(user,images));
+        return ok(uploadimage.render(user,images, projects));
     }
 
     @Security.Authenticated(Secured.class)
