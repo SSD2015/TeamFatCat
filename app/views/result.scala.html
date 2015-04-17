@@ -75,14 +75,22 @@
                         <th>Proejct</th>
                         <th>Score</th>
                     </tr>
-                    @list.getBestFromCat.map { Plist =>
-                        <tr>
-                            <td>@Plist.getId()</td>
-                            <td>@Plist.getProjectName</td>
-                            <td>@Plist.getAvgFromCat(list)</td>
-                        </tr>
 
+                    @for((item, index) <- list.getBestFromCat.zipWithIndex) {
+                        <tr>
+                            <td>@item.getId()
+                                @if(index == 0){
+                                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
+                                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
+                                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
+                                    }
+                            </td>
+                            <td>@item.getProjectName</td>
+
+                            <td>@item.getAvgFromCat(list)</td>
+                        </tr>
                     }
+
                 </table>
             }
 
