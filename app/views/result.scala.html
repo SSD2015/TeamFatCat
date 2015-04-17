@@ -1,4 +1,4 @@
-@(voteList: List[Vote], catList: List[VoteCategory])
+@(user: User, voteList: List[Vote], catList: List[VoteCategory])
 <!DOCTYPE html>
 <html>
     <head lang="en">
@@ -13,16 +13,40 @@
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
+            <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">INDEX</a>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@routes.AdminController.toAdminPage()">MAIN</a>
                 </div>
-                <div style="color: #f9f2f4;">
-                    <h2>Vote</h2>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><p class="navbar-text">Hello, </p></li>
+                            <li>
+                                <p class="navbar-text">
+                                    @user.getFirstName() @user.getLastName()
+                                </p>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="@routes.Application.logout()">Log out</a></li>
+                        </ul>
+                    </li>
+                    </ul>
                 </div>
             </div>
         </nav>
-            <div class="row" style="background-color: #0; margin-top: 50px; padding: 50px;">
+
+        <div class="row" style="background-color: #0; margin-top: 50px; padding: 50px;">
             <h2>Best of Category</h2>
             @catList.map { list =>
                 <h3>Best of @list.getName</h3>
