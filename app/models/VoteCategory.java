@@ -67,8 +67,8 @@ public class VoteCategory extends Model{
             return "Category name is required";
         }
 
-        if (this.name.length() < 1 || this.name.length() > 20) {
-            return "Category Name must not exceed 20 characters";
+        if (this.name.length() < 1 || this.name.length() > 30) {
+            return "Category Name must not exceed 30 characters";
         }
 
         for (VoteCategory v: voteList) {

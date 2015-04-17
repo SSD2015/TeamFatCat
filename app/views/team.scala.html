@@ -7,6 +7,8 @@
         <title>Team Member</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
@@ -118,32 +120,39 @@
                 </div>
             </div>
 
-            <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
-                <h1>Team Lists</h1>
-                @teamList.map { list =>
-                    <h3><u>@list.getName()</u> (ID: @list.getId())</h3>
-                    <table class="table table-hover">
-                        <tr>
-                            <th>Username</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                        </tr>
-                        @list.getMembers().map { listlist =>
-                            <tr>
-                                <td>@listlist.getUsername()</td>
-                                <td>@listlist.getFirstName()</td>
-                                <td>@listlist.getLastName()</td>
-                                <td>
-                                    <form action="@routes.TeamController.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
-                                        <input type="hidden" value=@list.getId() name="tId">
-                                        <input type="hidden" value=@listlist.getId() name="uId">
-                                        <button class="btn btn-danger">X</button>
-                                    </form>
-                                </td>
-                            </tr>
+
+            <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
+                <div class ="container">
+                    <div class="row" style="background-color: #d0e9c6; margin-top: 20px; padding: 30px;">
+                        <h2 class="text-center"><b>Team Lists</b></h2>
+                        <h2></h2>
+                        @teamList.map { list =>
+                            <h3>@list.getName() (ID: @list.getId())</h3>
+                            <table class="table table-condensed">
+                                <tr class="warning">
+                                    <th>Username</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th></th>
+                                </tr>
+                                @list.getMembers().map { listlist =>
+                                    <tr>
+                                        <td>@listlist.getUsername()</td>
+                                        <td>@listlist.getFirstName()</td>
+                                        <td>@listlist.getLastName()</td>
+                                        <td>
+                                            <form action="@routes.TeamController.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
+                                                <input type="hidden" value=@list.getId() name="tId">
+                                                <input type="hidden" value=@listlist.getId() name="uId">
+                                                <button class="btn btn-danger">X</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
                         }
-                    </table>
-                }
+                    </div>
+                </div>
             </div>
 
         </div>
