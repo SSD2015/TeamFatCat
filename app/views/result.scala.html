@@ -45,26 +45,5 @@
             }
 
             </div>
-            <div class="row" style="background-color: #0; margin-top: 50px; padding: 50px;">
-                <h2>Vote Lists</h2>
-                <table class="table table-hover">
-                    <tr>
-                        <th>ID</th>
-                        <th>Score</th>
-                        <th>User</th>
-                        <th>Category</th>
-                        <th>Project</th>
-                    </tr>
-                    @voteList.map { list =>
-                        <tr>
-                            <td>@list.getId()</td>
-                            <td>@list.getScore()</td>
-                            <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
-                            <td>@list.getCategory().getName()</td>
-                            <td>@list.getProject().getProjectName</td>
-                        </tr>
-                    }
-                </table>
-            </div>
     </body>
 </html>
