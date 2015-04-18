@@ -71,8 +71,19 @@
         <div class="container">
             <div class="row" style="background: #eeeeee; margin-top: 150px;">
                 <div class="col-sm-2">
-                    <img src="@avatar.getUrl" alt=@avatar.getName style="width:150px;height:150px">
+                    @if(project.getProjectName == "FatCat") {
+                        <img src="https://dl-web.dropbox.com/get/ExceedVote/f.png?_subject_uid=71627828&w=AABhqdpdkFteNA-eFTdgYc26anYeRfz4OoTk1Q0oInT4xw" alt="FatCat" style="width:150px;height:150px">
+                    } else { @if(project.getProjectName == "2BigToSlim") {
+                        <img src="@avatar.getUrl" alt="2BigToSlim" style="width:150px;height:150px">
+                    } else { @if(project.getProjectName == "Manat") {
+                        <img src="https://dl-web.dropbox.com/get/ExceedVote/m.png?_subject_uid=71627828&w=AACN2vaRgYRCYT06VHILNxCqO80mRiuPgL3AiKT58epNxg" alt="Manat" style="width:150px;height:150px">
+                    } else { @if(project.getProjectName == "Saint4") {
+                        <img src="https://dl-web.dropbox.com/get/ExceedVote/S.png?_subject_uid=71627828&w=AADPKA0azrFsyz_hfReUsTzKQ4N347kXX_gqipnj74Fb0w" alt="Saint4" style="width:150px;height:150px">
+                    } else {
+                        <img src="@avatar.getUrl" alt="@avatar.getName" style="width:150px;height:150px">
+                    }}}}
                 </div>
+
                 <div class="col-sm-2">
                     <h2>
                         @project.getProjectName<br>
