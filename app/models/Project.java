@@ -76,6 +76,15 @@ public class Project extends Model{
         return total/Vlist.size();
     }
 
+    public double getAvg(){
+        List<Vote> Vlist = Vote.getProjectVote(this);
+        double total=0;
+        for(int i=0 ; i<Vlist.size() ; i++){
+            total += Vlist.get(i).getScore();
+        }
+        return total/Vlist.size();
+    }
+
     public String validate() {
         List<Project> proList = find.all();
         if (this.projectName == null) {

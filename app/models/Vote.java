@@ -98,4 +98,8 @@ public class Vote extends Model{
         Vote vote = Vote.find.where().eq("category",votecat).eq("project",project).eq("user",user).findUnique();
         return vote;
     }
+
+    public static List<Vote> getProjectVote(Project proj){
+        return Vote.find.where().eq("project",proj).findList();
+    }
 }

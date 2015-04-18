@@ -446,7 +446,6 @@
         showCaption: true,
         defaultCaption: '{rating} Stars',
         starCaptions: {
-        	0: 'Zero Star',
             0.5: 'Half Star',
             1: 'One Star',
             1.5: 'One & Half Star',
@@ -474,7 +473,7 @@
         clearButtonTitle: 'Clear',
         clearButtonBaseClass: 'clear-rating',
         clearButtonActiveClass: 'clear-rating-active',
-        clearCaption: 'Not Rated',
+        clearCaption: 'Zero Rated',
         clearCaptionClass: 'label label-default',
         clearValue: null,
         captionElement: null,
