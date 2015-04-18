@@ -69,7 +69,7 @@
         </nav>
 
         <div class="container">
-            <div class="row" style="margin-top: 150px;">
+            <div class="row" style="background: #eeeeee; margin-top: 150px;">
                 <div class="col-sm-2">
                     <img src="@avatar.getUrl" alt=@avatar.getName style="width:150px;height:150px">
                 </div>
@@ -77,43 +77,58 @@
                     <h2>
                         @project.getProjectName<br>
                     </h2>
-                    by @Team.findById(project.getTeamId).getName()<br>
+                        <i>by @Team.findById(project.getTeamId).getName()</i><br>
+                    <br>
+                    <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
+                        <input type="hidden" value=@user.getId() name="uId">
+                        <input type="hidden" value=@project.getId() name="pId">
+                        <button class="btn btn-default">Rate</button>
+                    </form>
                 </div>
-                <div class="col-sm-4">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                            <span class="sr-only">60% Complete</span>
-                        </div>
-                    </div>
-                </div>
+
             </div>
-            <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+
+            <div clas="container" style="padding: 20px; padding-top: 0px">
+                <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
+                    @if(Vote.getUniqueVote(user.getUsername, project, VoteCategory.getAllCategories.get(0)) != null) {
+                        <div style="padding-left: 15px;">
+                            <h5><i>Your last score rated for this project</i></h5>
+                        </div>
+                        <div class="col-sm-4">
+                        @VoteCategory.getAllCategories().map { cat =>
+                            @cat.getName()
+                        <div class="progress" style="max-height: 10px ; max-width: 70%">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Vote.getUniqueVote(user.getUsername, project, cat).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Vote.getUniqueVote(user.getUsername, project, cat).getPercentScore()%;">
+                            <span class="sr-only">60%</span>
+                        </div>
+                        </div>
+                        }
+                        </div>
+                    }
+                <div class="col-sm-8">
                 @images.map { image =>
                     <img src="@image.getUrl" alt=@image.getName style="width:auto;height:200px;">
                 }
-            </div>
-            <div class="panel panel-default" style="max-width: 50%;">
-                <div class="panel-heading">Team Members</div>
+                </div>
+                </div>
 
-                <table class="table">
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                    </tr>
-                    @members.map { list =>
+                <div class="panel panel-default" style="max-width: 50%;">
+                    <div class="panel-heading">Team Members</div>
+
+                    <table class="table">
                         <tr>
-                            <td>@list.getUsername()</td>
-                            <td>@list.getFirstName() @list.getLastName()</td>
+                            <th>Student ID</th>
+                            <th>Name</th>
                         </tr>
-                    }
-                </table>
+                        @members.map { list =>
+                            <tr>
+                                <td>@list.getUsername()</td>
+                                <td>@list.getFirstName() @list.getLastName()</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
-
-            <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
-                <input type="hidden" value=@user.getId() name="uId">
-                <input type="hidden" value=@project.getId() name="pId">
-                <button class="btn btn-default">Vote</button>
-            </form>
 
         </div>
 

@@ -5,17 +5,10 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Version;
-
+import javax.persistence.*;
 import java.sql.Timestamp;
-
-import java.util.List;
 import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 @Entity
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
@@ -74,6 +67,10 @@ public class Vote extends Model{
 
     public int getScore() {
         return score;
+    }
+
+    public int getPercentScore() {
+        return score*20;
     }
 
     public User getUser() {

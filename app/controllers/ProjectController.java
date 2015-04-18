@@ -126,9 +126,9 @@ public class ProjectController extends Controller {
                 return redirect(routes.ProjectController.toUploadPage());
             }
         }
-        if(url.equals("jpg")) {
+        //if(url.equals("jpg") || url.equals("png")) {
             image.save();
-        }
+        //}
 
         return redirect(routes.ProjectController.toUploadPage());
 
