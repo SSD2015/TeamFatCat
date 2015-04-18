@@ -2,6 +2,8 @@ package controllers;
 
 import models.Deadline;
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -50,16 +52,16 @@ public class Application extends Controller {
     }
 
     public static Result authenticate() {
-        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
-        if (loginForm.hasErrors()) {
-            return badRequest(login.render(loginForm));
-        } else {
+        DynamicForm dy = new DynamicForm().bindFromRequest();
+        String username = dy.get("username");
+        String password = dy.get("password");
+        User user = User.findByUsername(username);
+        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             session().clear();
-            session("username", loginForm.get().username);
-            User user = User.findByUsername(loginForm.get().username);
-            return redirect(
-                    routes.ProjectController.toProjectListPage()
-            );
+            session("username", username);
+            return redirect(routes.ProjectController.toProjectListPage());
+        }else{
+            return redirect(routes.Application.toLoginPage());
         }
     }
 

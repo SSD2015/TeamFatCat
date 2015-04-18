@@ -1,6 +1,6 @@
 package models;
 
-import play.db.ebean.Model;
+import play.db.ebean.*;
 
 import play.data.validation.Constraints;
 import javax.persistence.*;
@@ -46,11 +46,12 @@ public class Image extends Model {
                 }
             }
         }
+        this.save();
     }
 
     public static Image create(String name, File img, Long projectId) {
         Image image = new Image(name, img, projectId);
-        image.save();
+        //image.save();
         return image;
     }
 

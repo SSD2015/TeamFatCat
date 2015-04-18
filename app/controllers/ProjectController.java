@@ -146,12 +146,10 @@ public class ProjectController extends Controller {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
         List<Image> images = Image.findImagesByProject(projectId);
-
         if (form.hasErrors()) {
             return badRequest(editproject.render(user, project, images, form));
         }
-
-        Image.create(form.get().file.getFilename(), form.get().file.getFile(), projectId);
+        Image img = new Image(form.get().file.getFilename(), form.get().file.getFile(), projectId);
 
         return redirect(routes.ProjectController.toEditProjectPage(projectId));
     }
@@ -161,11 +159,11 @@ public class ProjectController extends Controller {
         File file = body.getFile("file").getFile();
         String pId = body.asFormUrlEncoded().get("projectId")[0];
         Long proId = Long.parseLong(pId);
-        List<ProjectImage> imgs = ProjectImage.findImageOfProject(proId);
+        List<Image> imgs = Image.findImagesByProject(proId);
         if(imgs.size() >= 10){
             return status(1);
         }
-        ProjectImage image = new ProjectImage(proId, file);
+        Image image = new Image("xxx" , file,proId);
         return ok("success!");
     }
 
