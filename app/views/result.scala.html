@@ -25,7 +25,7 @@
             <div class="container">
 
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">FATCAT</a>
+                    <a class="navbar-brand" href="/projectlist">eXceedvote</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -65,6 +65,7 @@
                 </div>
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project list</a></li>
+                    <li><a href="/admin">Admin</a></li>
                     <li class="active">Result</li>
                 </ol>
             </div>
@@ -73,13 +74,13 @@
 
         <div class="container-fluid" style="background-color: #ffffff; margin-top: 100px; padding: 10px; padding-bottom: 30px;">
             <div class="container">
-                <h2 class="text-center"><b>Project Avg Score</b></h2>
+                @*<h2 class="text-center"><b>Project Score</b></h2>*@
                     <!-- Chart -->
-                <div id="canvas-holder" style="margin-top: 20px;padding-bottom: 30px;padding-left: 370px">
-                    <canvas id="chart-area" width="500" height="500"/>
-                </div>
+                @*<div id="canvas-holder" style="margin-top: 20px;padding-bottom: 30px;padding-left: 370px">*@
+                    @*<canvas id="chart-area" width="500" height="500"/>*@
+                @*</div>*@
 
-                <div class="row" style="background-color: #E8E8E8; padding: 30px;">
+                <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
                     <h2 class="text-center"><b>Best of Category</b></h2>
                     <h2></h2>
             @catList.map { list =>
@@ -156,8 +157,6 @@
         var ctx = document.getElementById("chart-area").getContext("2d");
         window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
         };
-
-
 
         </script>
     </body>
