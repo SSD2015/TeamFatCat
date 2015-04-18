@@ -36,7 +36,7 @@ public class Application extends Controller {
             User.create("inont", "inont", "Natcha", "Charoen", 1);
             User.create("yanagi", "yanagi", "Chonni", "Kitti", 1);
             User.create("maxmi", "maxmi", "Kitti", "Promdi", 1);
-            User.create("nichy", "nichy", "Nicha", "Han", 1);
+            User.create("nichy", "nichy", "Nichy", "Han", 1);
             User.create("gurokung", "gurokung", "Jirat", "Inta", 1);
             Team.create("Fatcat","2,3,4,5,6");
             Project.create("Fatcat", "", 1);
