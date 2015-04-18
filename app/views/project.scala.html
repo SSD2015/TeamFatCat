@@ -70,45 +70,50 @@
 
         <div class="container">
             <div class="row" style="margin-top: 150px;">
-                <div class="col-sm-4">
-                    <img src="@avatar.getUrl" alt=@avatar.getName style="width:100px;height:100px">
+                <div class="col-sm-2">
+                    <img src="@avatar.getUrl" alt=@avatar.getName style="width:150px;height:150px">
                 </div>
-                <div class="col-sm-8">
-                @project.getProjectName<br>
+                <div class="col-sm-2">
+                    <h2>
+                        @project.getProjectName<br>
+                    </h2>
                     by @Team.findById(project.getTeamId).getName()<br>
+                </div>
+                <div class="col-sm-4">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                            <span class="sr-only">60% Complete</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
-            <div class="row" style="margin-top: 50px;">
-            img
-            </div>
-
-        @images.map { image =>
-            <img src="@image.getUrl" alt=@image.getName style="width:400px;height:200px">
-        }
-        <div class="panel panel-default" style="max-width: 50%;">
-            <div class="panel-heading">Team Members</div>
-
-            <table class="table">
-                <tr>
-                    <th>Student ID</th>
-                    <th>Name</th>
-                </tr>
-                @members.map { list =>
-                    <tr>
-                        <td>@list.getUsername()</td>
-                        <td>@list.getFirstName() @list.getLastName()</td>
-                    </tr>
+            <div class="row" style="margin-top: 50px; margin-bottom: 50px;">
+                @images.map { image =>
+                    <img src="@image.getUrl" alt=@image.getName style="width:auto;height:200px;">
                 }
-            </table>
-        </div>
+            </div>
+            <div class="panel panel-default" style="max-width: 50%;">
+                <div class="panel-heading">Team Members</div>
 
-        <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
-            <input type="hidden" value=@user.getId() name="uId">
-            <input type="hidden" value=@project.getId() name="pId">
-            <button class="btn btn-default">Vote</button>
-        </form>
+                <table class="table">
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                    </tr>
+                    @members.map { list =>
+                        <tr>
+                            <td>@list.getUsername()</td>
+                            <td>@list.getFirstName() @list.getLastName()</td>
+                        </tr>
+                    }
+                </table>
+            </div>
 
-
+            <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
+                <input type="hidden" value=@user.getId() name="uId">
+                <input type="hidden" value=@project.getId() name="pId">
+                <button class="btn btn-default">Vote</button>
+            </form>
 
         </div>
 
