@@ -6,6 +6,8 @@
         <title>Vote Log</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     </head>
     <body>
 
@@ -13,7 +15,7 @@
         <script type='text/javascript' src="@routes.Assets.at("js/user.js")"></script>
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
 
                 <div class="navbar-header">
@@ -69,7 +71,7 @@
 
         <div class="container-fluid" style="background-color: #ffffff; margin-top: 100px; padding: 10px; padding-bottom: 30px;">
             <div class="container">
-                <div class="row" style="background-color: #d0e9c6; margin-top: 20px; padding: 30px;">
+                <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
                     <h2 class="text-center"><b>Vote Log</b></h2>
                     <h2></h2>
                 <table class="table table-condensed" id="usersList">
@@ -88,7 +90,13 @@
                                 <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
                                 <td>@list.getProject().getProjectName</td>
                                 <td>@list.getCategory().getName()</td>
-                                <td>@list.getScore()</td>
+                                <td>
+                                @if(list.getScore() != -1) {
+                                    @list.getScore()
+                                } else {
+                                    No Vote
+                                }
+                                </td>
                                 <td>@list.getTimestamp()</td>
                             </tr>
                         }

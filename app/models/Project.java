@@ -71,7 +71,7 @@ public class Project extends Model{
         List<Vote> Vlist = Vote.getProjectAndCatVote(this,cat);
         double total=0;
         for(int i = 0 ; i < Vlist.size() ; i++){
-            total += Vlist.get(i).getScore();
+            if(Vlist.get(i).getScore() != -1) total += Vlist.get(i).getScore();
         }
         return total/Vlist.size();
     }
