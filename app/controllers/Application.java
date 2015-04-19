@@ -5,6 +5,8 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import org.mindrot.jbcrypt.BCrypt;
+import play.data.DynamicForm;
 
 import java.util.Date;
 import java.util.List;
@@ -124,7 +126,7 @@ public class Application extends Controller {
         return ok(testclock.render());
     }
 
-    public static Result authenticate() {
+    /*public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
@@ -136,7 +138,29 @@ public class Application extends Controller {
                     routes.ProjectController.toProjectListPage()
             );
         }
+    }*/
+
+    public static Result authenticate() {
+        DynamicForm dy = new DynamicForm().bindFromRequest();
+        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+        String username = dy.get("username");
+        String password = dy.get("password");
+        if(dy.hasErrors()) {
+            return ok("hello");
+        }
+        User user = User.findByUsername(username);
+        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            session().clear();
+            session("username", username);
+            return redirect(routes.ProjectController.toProjectListPage());
+        }
+        else{
+            //return redirect(routes.Application.toLoginPage());
+            return badRequest(login.render(loginForm));
+        }
     }
+
+
 
     @Security.Authenticated(Secured.class)
     public static Result logout() {
