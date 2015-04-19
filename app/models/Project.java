@@ -73,7 +73,12 @@ public class Project extends Model{
         for(int i = 0 ; i < Vlist.size() ; i++){
             if(Vlist.get(i).getScore() != -1) total += Vlist.get(i).getScore();
         }
-        return total/Vlist.size();
+        
+        total = total/Vlist.size();
+        total = total*100;
+        total = Math.round(total);
+        total = total /100;
+        return total;
     }
 
     public double getAvg(){
