@@ -11,6 +11,8 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
+
 public class ProjectController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
@@ -135,7 +137,22 @@ public class ProjectController extends Controller {
             return badRequest(editproject.render(user, project, images, form));
         }
 
-        Image.create(tag, form.get().file.getFile(), projectId);
+        //Image.create(tag, form.get().file.getFile(), projectId);
+
+        File img = form.get().file.getFile();
+        if (tag.equals(Image.AVT)) {
+            Image image_a = Image.findByNameAndProject(Image.AVT, projectId);
+            if (image_a == null) {
+                image_a = new Image(Image.AVT, img, projectId);
+            } else {
+                image_a.setData(img);
+                image_a.update();
+            }
+        } else {
+            Image image_s = new Image(Image.SCR, img, projectId);
+            image_s.setName(image_s.getName() + image_s.getId());
+            image_s.update();
+        }
 
         return redirect(routes.ProjectController.toEditProjectPage(projectId));
     }

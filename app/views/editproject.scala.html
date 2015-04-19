@@ -19,7 +19,11 @@
 
                 <div>
                     <h1>Avatar Image</h1>
-                        <img src="@routes.ProjectController.getImage(Image.findAvatarId(project.getId))" width="400px" height="auto">
+                        @if(Image.findAvatarId(project.getId) == -1) {
+                            <img src="@routes.Assets.at("img/noimage.png")" alt="@Image.findAvatarId(project.getId))" style="width:150px;height:150px">
+                        } else {
+                            <img src="@routes.ProjectController.getImage(Image.findAvatarId(project.getId))" width="400px" height="auto">
+                        }
                 </div>
 
                 <div>
