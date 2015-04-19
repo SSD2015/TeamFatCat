@@ -11,8 +11,6 @@ import play.mvc.Http.MultipartFormData.FilePart;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.io.File;
-
 public class ProjectController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
@@ -53,7 +51,7 @@ public class ProjectController extends Controller {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
 
-        long teamId = project.getId();
+        long teamId = project.getTeamId();
         Team team = Team.findById(teamId);
         team.deleteNullMembers();
 
@@ -65,15 +63,22 @@ public class ProjectController extends Controller {
         }
 
         Image avatar = Image.findAvatar(projectId);
+        long avatarId;
+        if (avatar == null) {
+            avatarId = -1;
+        } else {
+            avatarId = avatar.getId();
+        }
         List<Image> screenshots = Image.findImagesByProject(projectId);
 
-        return ok(views.html.project.render(user, project, members, avatar, screenshots));
+        return ok(views.html.project.render(user, project, members, avatarId, screenshots));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectListPage() {
+        User user = User.findByUsername(request().username());
         List<Project> projects = Project.getAllProjects();
-        return ok(views.html.projectlist.render(User.findByUsername(request().username()), projects));
+        return ok(projectlist.render(user, projects));
     }
 
     @Security.Authenticated(Secured.class)
@@ -120,7 +125,7 @@ public class ProjectController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result upload(long projectId) {
+    public static Result upload(long projectId, String tag) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
 
@@ -130,7 +135,7 @@ public class ProjectController extends Controller {
         if (form.hasErrors()) {
             return badRequest(editproject.render(user, project, images, form));
         }
-        Image img = new Image(form.get().file.getFilename(), form.get().file.getFile(), projectId);
+        Image.create(tag, form.get().file.getFile(), projectId);
 
         return redirect(routes.ProjectController.toEditProjectPage(projectId));
     }

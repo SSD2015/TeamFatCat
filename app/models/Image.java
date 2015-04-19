@@ -25,7 +25,7 @@ public class Image extends Model {
 
     private static Finder< Long, Image> find = new Finder< Long, Image>( Long.class, Image.class);
 
-    public Image(String name, File img, long projectId) {
+    private Image(String name, File img, long projectId) {
         this.name = name;
         this.data = new byte[(int)img.length()];
         this.projectId = projectId;
@@ -45,12 +45,14 @@ public class Image extends Model {
                 }
             }
         }
-        this.save();
+        //this.save();
     }
 
     public static Image create(String name, File img, Long projectId) {
         Image image = new Image(name, img, projectId);
-        //image.save();
+        image.save();
+        image.setName(image.getName() + image.getId());
+        image.update();
         return image;
     }
 
@@ -84,6 +86,15 @@ public class Image extends Model {
 
     public static Image findAvatar(long projectId) {
         return find.where().eq("name", "avatar").eq("projectId", projectId).findUnique();
+    }
+
+    public static long findAvatarId(long projectId) {
+        Image image = find.where().eq("name", "avatar").eq("projectId", projectId).findUnique();
+        if (image == null) {
+            return -1;
+        } else {
+            return image.getId();
+        }
     }
 
     public long getProjectId() {

@@ -1,4 +1,4 @@
-@(user: User, project: Project, members: List[User], avatar: Image, screenshots: List[Image])
+@(user: User, project: Project, members: List[User], avatarId: Long, screenshots: List[Image])
 <!doctype html>
 <html lang="en">
     <head>
@@ -71,17 +71,11 @@
         <div class="container">
             <div class="row" style="background: #eeeeee; margin-top: 150px;">
                 <div class="col-sm-2">
-                    @if(project.getProjectName == "Fatcat") {
-                        <img src="https://dl-web.dropbox.com/get/ExceedVote/f.png?_subject_uid=71627828&w=AABhqdpdkFteNA-eFTdgYc26anYeRfz4OoTk1Q0oInT4xw" alt="Fatcat" style="width:150px;height:150px">
-                    } else { @if(project.getProjectName == "2Big2Slim") {
-                        <img src="https://dl-web.dropbox.com/get/ExceedVote/2.png?_subject_uid=71627828&w=AAAn8UhSvHoTOebarNz-wTU6rQPdXgr8PBqQK57bJVgzzQ" alt="2Big2Slim" style="width:150px;height:150px">
-                    } else { @if(project.getProjectName == "Manat") {
-                        <img src="https://dl-web.dropbox.com/get/ExceedVote/m.png?_subject_uid=71627828&w=AACN2vaRgYRCYT06VHILNxCqO80mRiuPgL3AiKT58epNxg" alt="Manat" style="width:150px;height:150px">
-                    } else { @if(project.getProjectName == "Saint4") {
-                        <img src="https://dl-web.dropbox.com/get/ExceedVote/S.png?_subject_uid=71627828&w=AADPKA0azrFsyz_hfReUsTzKQ4N347kXX_gqipnj74Fb0w" alt="Saint4" style="width:150px;height:150px">
+                    @if(avatarId == -1) {
+                        <img src="@routes.Assets.at("img/noimage.png")" alt="@avatarId" style="width:150px;height:150px">
                     } else {
-                        <img src="@routes.ProjectController.getImage(avatar.getId)" alt="@avatar.getName()" style="width:150px;height:150px">
-                    }}}}
+                        <img src="@routes.ProjectController.getImage(avatarId)" alt="@avatarId" style="width:150px;height:150px">
+                    }
                 </div>
 
                 <div class="col-sm-2">

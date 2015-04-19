@@ -18,7 +18,7 @@
             <div class="row" style="margin-top: 100px; padding: 25px;">
                 <div>
                     <h1>Upload avatar:</h1>
-                    @helper.form(action = routes.ProjectController.upload(project.getId()), 'enctype -> "multipart/form-data") {
+                    @helper.form(action = routes.ProjectController.upload(project.getId(), "avatar"), 'enctype -> "multipart/form-data") {
                         <input type="file" class="" accept=".jpg, .png" name="image">
                         <button class="btn btn-default" type="submit">Upload image!</button>
                     }

@@ -23,9 +23,9 @@ POST        /vote                           controllers.VoteController.manageVot
 #GET         /uploadimage                    controllers.ProjectController.toUploadPage()
 #POST        /uploadimage/upload             controllers.ProjectController.upload()
 
-GET         /upload:id                      controllers.ProjectController.toEditProjectPage(id: Long)
-POST        /upload/:id                     controllers.ProjectController.upload(id: Long)
-GET         /images:id                      controllers.ProjectController.getImage(id: Long)
+GET         /editproject=:projectId         controllers.ProjectController.toEditProjectPage(projectId: Long)
+POST        /upload=:projectId              controllers.ProjectController.upload(projectId: Long, tag: String)
+GET         /images=:id                     controllers.ProjectController.getImage(id: Long)
 
 # admin
 
