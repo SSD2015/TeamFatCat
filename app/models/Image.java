@@ -20,8 +20,10 @@ public class Image extends Model {
     @Lob
     private byte[] data;
 
-
     private long projectId;
+
+    public static final String AVT = "Avatar";
+    public static final String SCR = "Screenshot";
 
     private static Finder< Long, Image> find = new Finder< Long, Image>( Long.class, Image.class);
 
@@ -45,17 +47,19 @@ public class Image extends Model {
                 }
             }
         }
-        //this.save();
     }
 
     public static Image create(String name, File img, Long projectId) {
-        if (name.equals("avatar")) {
-            Image image = find.where().eq("name", "avatar").eq("projectId", projectId).findUnique();
+        if (name.equals(AVT)) {
+            Image image = find.where().eq("name", Image.AVT).eq("projectId", projectId).findUnique();
             if (image == null) {
-                image = new Image("avatar", img, projectId);
+                image = new Image(Image.AVT, img, projectId);
+                image.save();
             } else {
                 image.setData(img);
+                image.update();
             }
+            return image;
         }
 
         Image image = new Image("screenshot", img, projectId);
@@ -74,7 +78,23 @@ public class Image extends Model {
     }
 
     public void setData(File img) {
-        this.data = new byte[(int)img.length()];;
+        this.data = new byte[(int)img.length()];
+
+        InputStream inStream = null;
+        try {
+            inStream = new BufferedInputStream(new FileInputStream(img));
+            inStream.read(this.data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inStream != null) {
+                try {
+                    inStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     public void setProjectId(long projectId) {
