@@ -30,6 +30,22 @@ create table project (
   constraint pk_project primary key (id))
 ;
 
+create table rate (
+  id                        bigint auto_increment not null,
+  score                     integer,
+  user_id                   bigint,
+  category_id               bigint,
+  project_id                bigint,
+  timestamp                 datetime not null,
+  constraint pk_rate primary key (id))
+;
+
+create table vote_category (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  constraint pk_vote_category primary key (id))
+;
+
 create table team (
   id                        bigint auto_increment not null,
   name                      varchar(255),
@@ -48,28 +64,18 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
-create table vote (
-  id                        bigint auto_increment not null,
-  score                     integer,
-  user_id                   bigint,
-  category_id               bigint,
-  project_id                bigint,
-  timestamp                 datetime not null,
-  constraint pk_vote primary key (id))
+create table vote)
 ;
 
-create table vote_category (
-  id                        bigint auto_increment not null,
-  name                      varchar(255),
-  constraint pk_vote_category primary key (id))
+create table vote_category)
 ;
 
-alter table vote add constraint fk_vote_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_vote_user_1 on vote (user_id);
-alter table vote add constraint fk_vote_category_2 foreign key (category_id) references vote_category (id) on delete restrict on update restrict;
-create index ix_vote_category_2 on vote (category_id);
-alter table vote add constraint fk_vote_project_3 foreign key (project_id) references project (id) on delete restrict on update restrict;
-create index ix_vote_project_3 on vote (project_id);
+alter table rate add constraint fk_rate_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_rate_user_1 on rate (user_id);
+alter table rate add constraint fk_rate_category_2 foreign key (category_id) references vote_category (id) on delete restrict on update restrict;
+create index ix_rate_category_2 on rate (category_id);
+alter table rate add constraint fk_rate_project_3 foreign key (project_id) references project (id) on delete restrict on update restrict;
+create index ix_rate_project_3 on rate (project_id);
 
 
 
@@ -82,6 +88,10 @@ drop table deadline;
 drop table image;
 
 drop table project;
+
+drop table rate;
+
+drop table vote_category;
 
 drop table team;
 
