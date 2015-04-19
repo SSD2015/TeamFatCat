@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>ExceedVote - Project</title>
+        <title>ExceedRate - Project</title>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -84,7 +84,7 @@
                     </h2>
                         <i>by @Team.findById(project.getTeamId).getName()</i><br>
                     <br>
-                    <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
+                    <form action="@routes.ProjectController.rate()" method="post" class="form-horizontal" role="form">
                         <input type="hidden" value=@user.getId() name="uId">
                         <input type="hidden" value=@project.getId() name="pId">
                         <button class="btn btn-default">Rate</button>
@@ -95,15 +95,15 @@
 
             <div clas="container" style="padding: 20px; padding-top: 0px">
                 <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
-                    @if(Vote.getUniqueVote(user.getUsername, project, VoteCategory.getAllCategories.get(0)) != null) {
+                    @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null) {
                         <div style="padding-left: 15px;">
                             <h5><i>Your last score rated for this project</i></h5>
                         </div>
                         <div class="col-sm-4">
-                        @VoteCategory.getAllCategories().map { cat =>
+                        @RateCategory.getAllCategories().map { cat =>
                             @cat.getName()
                         <div class="progress" style="max-height: 10px ; max-width: 70%">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Vote.getUniqueVote(user.getUsername, project, cat).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Vote.getUniqueVote(user.getUsername, project, cat).getPercentScore()%;">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.getUniqueRate(user.getUsername, project, cat).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.getUniqueRate(user.getUsername, project, cat).getPercentScore()%;">
                             <span class="sr-only">60%</span>
                         </div>
                         </div>

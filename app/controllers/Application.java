@@ -104,11 +104,11 @@ public class Application extends Controller {
             User.create("fengjeb","james.b","Jim","",3);
             User.create("geedev","keeratipong.u","Keeratipong","",3);
 
-            VoteCategory.create("Ease of use");
-            VoteCategory.create("Reliability/Stability");
-            VoteCategory.create("Completeness");
-            VoteCategory.create("Security");
-            VoteCategory.create("Quality of UI");
+            RateCategory.create("Ease of use");
+            RateCategory.create("Reliability/Stability");
+            RateCategory.create("Completeness");
+            RateCategory.create("Security");
+            RateCategory.create("Quality of UI");
 
         }
 

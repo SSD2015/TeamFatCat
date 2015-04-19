@@ -165,7 +165,7 @@ public class Team extends Model {
 
         String[] membersId = this.members.split(",");
         for (int i = 0 ; i < membersId.length ; i++) {
-            if (String.valueOf(userId).equals(membersId)) {
+            if (String.valueOf(userId).equals(membersId[i])) {
                 return true;
             }
         }

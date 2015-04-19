@@ -82,10 +82,10 @@ public class ProjectController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result makeVote() {
+    public static Result rate() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
         return redirect(
-                routes.VoteController.toVotePage(Long.parseLong(form.data().get("pId")))
+                routes.RateController.toRatePage(Long.parseLong(form.data().get("pId")))
         );
     }
 
@@ -103,7 +103,7 @@ public class ProjectController extends Controller {
         Project project = Project.findById(projectId);
         Team team = Team.findById(project.getTeamId());
 
-        if (!team.isMember(user.getId()) && user.getType() != User.ADMIN) {
+        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
             return redirect(routes.ProjectController.toProjectListPage());
         }
 
