@@ -50,44 +50,30 @@ public class ProjectController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectPage(Long projectId) {
-        Project pj = Project.findById(projectId);
-        long teamId = pj.getId();
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+
+        long teamId = project.getId();
         Team team = Team.findById(teamId);
-        List<Image> images = Image.getByProjectId(projectId);
-        Image avatar;
-        if(images.size() >= 1) {
-            avatar = images.get(0);
-            images.remove(0);
-        }
-        else
-            avatar = new Image("Empty", "http://www.img.in.th/images/JtxBUC2dp.gif",projectId);
         team.deleteNullMembers();
+
         List<Long> teamMembers = team.getMemberList();
         List<User> members = new ArrayList<User>();
-        for( int i=0;i<teamMembers.size() ;i++ ) {
-            User user = User.findById(teamMembers.get(i));
-            members.add( user );
+        for(int i = 0 ; i < teamMembers.size() ; i++) {
+            User member = User.findById(teamMembers.get(i));
+            members.add(member);
         }
-        User user = User.findByUsername(request().username());
-        List<Vote> votes = Vote.getAllVotes();
-        double avg = 0.0;
-        int count = 0;
-        for( int i=0;i<votes.size();i++ ) {
-            if( votes.get(i).getUser().getId() == user.getId() && votes.get(i).getProject().getId() == pj.getId() ) {
-                avg += votes.get(i).getScore();
-                count++;
-            }
-        }
-        if( count != 0 )
-            avg /= count;
-        avg = Math.round(avg*100)/100.0;
-        return ok(views.html.project.render( user, pj, members, avg, images , avatar));
+
+        Image avatar = Image.findAvatar(projectId);
+        List<Image> screenshots = Image.findImagesByProject(projectId);
+
+        return ok(views.html.project.render(user, project, members, avatar, screenshots));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectListPage() {
-        List<Project> pj = Project.getAllProjects();
-        return ok(views.html.projectlist.render(User.findByUsername(request().username()), pj));
+        List<Project> projects = Project.getAllProjects();
+        return ok(views.html.projectlist.render(User.findByUsername(request().username()), projects));
     }
 
     @Security.Authenticated(Secured.class)
@@ -107,31 +93,61 @@ public class ProjectController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result toUploadPage() {
+    public static Result toEditProjectPage(long projectId) {
         User user = User.findByUsername(request().username());
-        List<Project> projects = Project.getAllProjects();
-        List<Image> images = Image.getAllImage();
-        return ok(uploadimage.render(user,images, projects));
+        Project project = Project.findById(projectId);
+        Team team = Team.findById(project.getTeamId());
+
+        if (!team.isMember(user.getId()) && user.getType() != User.ADMIN) {
+            return redirect(routes.ProjectController.toProjectListPage());
+        }
+
+        Form form = Form.form(Upload.class);
+        List<Image> images = Image.findImagesByProject(projectId);
+        return ok(editproject.render(user, project, images, form));
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result upload() {
-        List<Image> images = Image.getAllImage();
-        Form<Image> imageForm = Form.form(Image.class).bindFromRequest();
-        Image image = imageForm.get();
-        String url = image.getUrl();
-        url = url.substring(url.lastIndexOf(".")+1);
-        for(int i = 0 ; i < images.size() ; i++){
-            if(image.getName().equals(images.get(i).getName())){
-                return redirect(routes.ProjectController.toUploadPage());
-            }
+    public static Result getImage(long imageId) {
+        Image image = Image.findById(imageId);
+
+        if (image != null) {
+            return ok(image.getData()).as("image");
+        } else {
+            flash("error", "File not found");
+            return redirect(routes.Application.toErrorPage());
         }
-        //if(url.equals("jpg") || url.equals("png")) {
-            image.save();
-        //}
+    }
 
-        return redirect(routes.ProjectController.toUploadPage());
+    @Security.Authenticated(Secured.class)
+    public static Result upload(long projectId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
 
+        Form<Upload> form = Form.form(Upload.class).bindFromRequest();
+
+        List<Image> images = Image.findImagesByProject(projectId);
+        if (form.hasErrors()) {
+            return badRequest(editproject.render(user, project, images, form));
+        }
+        Image img = new Image(form.get().file.getFilename(), form.get().file.getFile(), projectId);
+
+        return redirect(routes.ProjectController.toEditProjectPage(projectId));
+    }
+
+    public static class Upload {
+        public FilePart file;
+
+        public String validate() {
+            MultipartFormData form = request().body().asMultipartFormData();
+            file = form.getFile("image");
+
+            if (file == null) {
+                return "No file";
+            }
+
+            return null;
+        }
     }
 
 }

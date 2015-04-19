@@ -156,8 +156,20 @@ public class Team extends Model {
             Team team = new Team(name, members);
             team.save();
             return team;
+    }
 
+    public boolean isMember(long userId) {
+        if (this.members == null || this.members.length() <= 0) {
+            return false;
+        }
 
+        String[] membersId = this.members.split(",");
+        for (int i = 0 ; i < membersId.length ; i++) {
+            if (String.valueOf(userId).equals(membersId)) {
+                return true;
+            }
+        }
 
+        return false;
     }
 }

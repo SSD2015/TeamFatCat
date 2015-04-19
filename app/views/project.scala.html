@@ -1,4 +1,4 @@
-@(user: User, project: Project, members: List[User], avg: Double, images: List[Image], avatar: Image)
+@(user: User, project: Project, members: List[User], avatar: Image, screenshots: List[Image])
 <!doctype html>
 <html lang="en">
     <head>
@@ -80,7 +80,7 @@
                     } else { @if(project.getProjectName == "Saint4") {
                         <img src="https://dl-web.dropbox.com/get/ExceedVote/S.png?_subject_uid=71627828&w=AADPKA0azrFsyz_hfReUsTzKQ4N347kXX_gqipnj74Fb0w" alt="Saint4" style="width:150px;height:150px">
                     } else {
-                        <img src="@avatar.getUrl" alt="@avatar.getName" style="width:150px;height:150px">
+                        <img src="@routes.ProjectController.getImage(avatar.getId)" alt="@avatar.getName()" style="width:150px;height:150px">
                     }}}}
                 </div>
 
@@ -117,8 +117,8 @@
                         </div>
                     }
                 <div class="col-sm-8">
-                @images.map { image =>
-                    <img src="@image.getUrl" alt=@image.getName style="width:auto;height:200px;">
+                @screenshots.map { image =>
+                    <img src="@routes.ProjectController.getImage(image.getId)" alt=@image.getName() style="width:auto;height:200px;">
                 }
                 </div>
                 </div>

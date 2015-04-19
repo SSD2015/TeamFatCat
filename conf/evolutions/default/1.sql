@@ -1,16 +1,7 @@
-
 # --- Created by Ebean DDL
 # To stop Ebean DDL generation, remove this comment and start using Evolutions
 
 # --- !Ups
-
-create table image (
-  id                        bigint auto_increment not null,
-  name                      varchar(255),
-  url                       varchar(255),
-  project_id                 bigint,
-  constraint pk_image primary key (id))
-;
 
 create table deadline (
   id                        bigint auto_increment not null,
@@ -21,6 +12,14 @@ create table deadline (
   min                       integer,
   sec                       integer,
   constraint pk_deadline primary key (id))
+;
+
+create table image (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  data                      longblob,
+  project_id                bigint,
+  constraint pk_image primary key (id))
 ;
 
 create table project (
@@ -35,7 +34,6 @@ create table team (
   id                        bigint auto_increment not null,
   name                      varchar(255),
   members                   varchar(255),
-
   constraint pk_team primary key (id))
 ;
 
@@ -76,17 +74,22 @@ create index ix_vote_project_3 on vote (project_id);
 
 
 # --- !Downs
---
--- # SET FOREIGN_KEY_CHECKS=0;
--- #
--- # drop table deadline;
--- #
--- # drop table project;
--- #
--- # drop table screenshot;
--- #
--- # drop table team;
--- #
--- #
--- # SET FOREIGN_KEY_CHECKS=1;
--- #
+
+SET FOREIGN_KEY_CHECKS=0;
+
+drop table deadline;
+
+drop table image;
+
+drop table project;
+
+drop table team;
+
+drop table user;
+
+drop table vote;
+
+drop table vote_category;
+
+SET FOREIGN_KEY_CHECKS=1;
+
