@@ -64,24 +64,38 @@
             </div>
         </nav>
 
-
-
         <div class="container">
             <div class="row">
-                <div class="" style="width=100%; min-height: 100px;"></div>
-                <div class="col-sm-2 col-sm-offset-2 text-center">
+                <div class="" style="width: 100%; min-height: 100px;"></div>
+                <div class="col-lg-2" style="width: 20%; background-color: #a94442"></div>
+                <div class="col-lg-6" style="max-width: 60%;">
 
                     <div class="btn-group-vertical" role="group">
                     @projects.map { list =>
                         <a href="@routes.ProjectController.toProjectPage(list.getId)" style="text-decoration: none;"><div style="background: #afd9ee; min-width: 500pt; min-height: 150pt; margin-top: 25pt; margin-bottom: 25pt; padding: 15pt; color: #fff">
-                            <h2>@list.getProjectName()</h2><br>
-                            by @Team.findById(list.getTeamId).getName()<br>
-                            Description: @list.getBriefDesc()<br>
-
+                            <div class="col-lg-4">
+                                @if(list.getProjectName == "Fatcat") {
+                                    <img src="https://dl-web.dropbox.com/get/ExceedVote/f.png?_subject_uid=71627828&w=AABhqdpdkFteNA-eFTdgYc26anYeRfz4OoTk1Q0oInT4xw" alt="Fatcat" style="width:150px;height:150px">
+                                } else { @if(list.getProjectName == "2Big2Slim") {
+                                    <img src="https://dl-web.dropbox.com/get/ExceedVote/2.png?_subject_uid=71627828&w=AAAn8UhSvHoTOebarNz-wTU6rQPdXgr8PBqQK57bJVgzzQ" alt="2Big2Slim" style="width:150px;height:150px">
+                                } else { @if(list.getProjectName == "Manat") {
+                                    <img src="https://dl-web.dropbox.com/get/ExceedVote/m.png?_subject_uid=71627828&w=AACN2vaRgYRCYT06VHILNxCqO80mRiuPgL3AiKT58epNxg" alt="Manat" style="width:150px;height:150px">
+                                } else { @if(list.getProjectName == "Saint4") {
+                                    <img src="https://dl-web.dropbox.com/get/ExceedVote/S.png?_subject_uid=71627828&w=AADPKA0azrFsyz_hfReUsTzKQ4N347kXX_gqipnj74Fb0w" alt="Saint4" style="width:150px;height:150px">
+                                } else {
+                                    <img src="@Image.getByProjectId(list.getId).get(0).getUrl()" alt="@Image.getByProjectId(list.getId).get(0).getName()" style="width:150px;height:150px">
+                                }}}}
+                            </div>
+                            <div class="col-lg-4">
+                                <h2>@list.getProjectName()</h2>
+                                <i>by @Team.findById(list.getTeamId).getName()</i><br>
+                                Description: @list.getBriefDesc()<br>
+                            </div>
                         </div></a>
                     }
                     </div>
                 </div>
+                <div class="col-lg-2" style="width: 20%; background-color: #04663e"></div>
             </div>
         </div>
 
