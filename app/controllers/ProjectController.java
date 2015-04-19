@@ -130,11 +130,11 @@ public class ProjectController extends Controller {
         Project project = Project.findById(projectId);
 
         Form<Upload> form = Form.form(Upload.class).bindFromRequest();
-
         List<Image> images = Image.findImagesByProject(projectId);
         if (form.hasErrors()) {
             return badRequest(editproject.render(user, project, images, form));
         }
+
         Image.create(tag, form.get().file.getFile(), projectId);
 
         return redirect(routes.ProjectController.toEditProjectPage(projectId));
