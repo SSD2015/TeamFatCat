@@ -1,9 +1,9 @@
-@(user: User, voteList: List[Vote])
+@(user: User, rateList: List[Rate])
 <!DOCTYPE html>
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>Vote Log</title>
+        <title>Rate Log</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
@@ -62,7 +62,7 @@
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project List</a></li>
                     <li><a href="/admin">Admin</a></li>
-                    <li class="active">Vote Log</li>
+                    <li class="active">Rate Log</li>
                 </ol>
             </div>
         </nav>
@@ -72,7 +72,7 @@
         <div class="container-fluid" style="background-color: #ffffff; margin-top: 100px; padding: 10px; padding-bottom: 30px;">
             <div class="container">
                 <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
-                    <h2 class="text-center"><b>Vote Log</b></h2>
+                    <h2 class="text-center"><b>Rate Log</b></h2>
                     <h2></h2>
                 <table class="table table-condensed" id="usersList">
                     <thead>
@@ -80,11 +80,11 @@
                             <th>ID</th>
                             <th>User</th>
                             <th>Project</th>
-                            <th>Vote Category</th>
+                            <th>Rate Category</th>
                             <th>Score</th>
                             <th>Time</th>
                         </tr>
-                        @voteList.map { list =>
+                        @rateList.map { list =>
                             <tr>
                                 <td>@list.getId()</td>
                                 <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
@@ -94,7 +94,7 @@
                                 @if(list.getScore() != -1) {
                                     @list.getScore()
                                 } else {
-                                    No Vote
+                                    Not Rated
                                 }
                                 </td>
                                 <td>@list.getTimestamp()</td>

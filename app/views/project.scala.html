@@ -1,9 +1,9 @@
-@(user: User, project: Project, members: List[User], avg: Double, images: List[Image], avatar: Image)
+@(user: User, project: Project, members: List[User], avatarId: Long, screenshots: List[Image])
 <!doctype html>
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>ExceedVote - Project</title>
+        <title>ExceedRate - Project</title>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -69,46 +69,71 @@
         </nav>
 
         <div class="container">
-            <div class="row" style="margin-top: 150px;">
-                <div class="col-sm-4">
-                    <img src="@avatar.getUrl" alt=@avatar.getName style="width:100px;height:100px">
+            <div class="row" style="background: #eeeeee; margin-top: 150px;">
+                <div class="col-sm-2">
+                    @if(avatarId == -1) {
+                        <img src="@routes.Assets.at("img/noimage.png")" alt="@avatarId" style="width:150px;height:150px">
+                    } else {
+                        <img src="@routes.ProjectController.getImage(avatarId)" alt="@avatarId" style="width:150px;height:150px">
+                    }
                 </div>
+
+                <div class="col-sm-2">
+                    <h2>
+                        @project.getProjectName<br>
+                    </h2>
+                        <i>by @Team.findById(project.getTeamId).getName()</i><br>
+                    <br>
+                    <form action="@routes.ProjectController.rate()" method="post" class="form-horizontal" role="form">
+                        <input type="hidden" value=@user.getId() name="uId">
+                        <input type="hidden" value=@project.getId() name="pId">
+                        <button class="btn btn-default">Rate</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div clas="container" style="padding: 20px; padding-top: 0px">
+                <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
+                    @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null) {
+                        <div style="padding-left: 15px;">
+                            <h5><i>Your last score rated for this project</i></h5>
+                        </div>
+                        <div class="col-sm-4">
+                        @RateCategory.getAllCategories().map { cat =>
+                            @cat.getName()
+                        <div class="progress" style="max-height: 10px ; max-width: 70%">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.getUniqueRate(user.getUsername, project, cat).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.getUniqueRate(user.getUsername, project, cat).getPercentScore()%;">
+                            <span class="sr-only">60%</span>
+                        </div>
+                        </div>
+                        }
+                        </div>
+                    }
                 <div class="col-sm-8">
-                @project.getProjectName<br>
-                    by @Team.findById(project.getTeamId).getName()<br>
-            </div>
-            </div>
-            <div class="row" style="margin-top: 50px;">
-            img
-            </div>
-
-        @images.map { image =>
-            <img src="@image.getUrl" alt=@image.getName style="width:400px;height:200px">
-        }
-        <div class="panel panel-default" style="max-width: 50%;">
-            <div class="panel-heading">Team Members</div>
-
-            <table class="table">
-                <tr>
-                    <th>Student ID</th>
-                    <th>Name</th>
-                </tr>
-                @members.map { list =>
-                    <tr>
-                        <td>@list.getUsername()</td>
-                        <td>@list.getFirstName() @list.getLastName()</td>
-                    </tr>
+                @screenshots.map { image =>
+                    <img src="@routes.ProjectController.getImage(image.getId)" alt=@image.getName() style="width:auto;height:200px;">
                 }
-            </table>
-        </div>
+                </div>
+                </div>
 
-        <form action="@routes.ProjectController.makeVote()" method="post" class="form-horizontal" role="form">
-            <input type="hidden" value=@user.getId() name="uId">
-            <input type="hidden" value=@project.getId() name="pId">
-            <button class="btn btn-default">Vote</button>
-        </form>
+                <div class="panel panel-default" style="max-width: 50%;">
+                    <div class="panel-heading">Team Members</div>
 
-
+                    <table class="table">
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                        </tr>
+                        @members.map { list =>
+                            <tr>
+                                <td>@list.getUsername()</td>
+                                <td>@list.getFirstName() @list.getLastName()</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
 
         </div>
 

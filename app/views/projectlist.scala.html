@@ -64,24 +64,37 @@
             </div>
         </nav>
 
-
-
         <div class="container">
             <div class="row">
-                <div class="" style="width=100%; min-height: 100px;"></div>
-                <div class="col-sm-2 col-sm-offset-2 text-center">
+                <div class="" style="width: 100%; min-height: 100px;"></div>
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
 
-                    <div class="btn-group-vertical" role="group">
-                    @projects.map { list =>
-                        <a href="@routes.ProjectController.toProjectPage(list.getId)" style="text-decoration: none;"><div style="background: #afd9ee; min-width: 500pt; min-height: 150pt; margin-top: 25pt; margin-bottom: 25pt; padding: 15pt; color: #fff">
-                            <h2>@list.getProjectName()</h2><br>
-                            by @Team.findById(list.getTeamId).getName()<br>
-                            Description: @list.getBriefDesc()<br>
-
+                    <div class="btn-group-vertical" role="group" style="width: 100%;">
+                    @projects.map { project =>
+                        <a href="@routes.ProjectController.toProjectPage(project.getId)" style="text-decoration: none;"><div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
+                            <div class="col-lg-3">
+                                @if(Image.findAvatarId(project.getId) == -1) {
+                                    <img src="@routes.Assets.at("img/noimage.png")" alt="noimage" style="width:150px; height:150px">
+                                } else {
+                                    <img src="@routes.ProjectController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
+                                }
+                            </div>
+                            <div class="col-lg-9">
+                                <h2>@project.getProjectName()</h2>
+                                <i>by @Team.findById(project.getTeamId).getName()</i><br>
+                                Description: @project.getProjectDesc()<br>
+                            </div>
                         </div></a>
+                        <div style="width: 100%; margin-bottom: 25pt;">
+                            <button class="btn btn-default" style="width: 100%">
+                                Make @project.getProjectName() Best App
+                            </button>
+                        </div>
                     }
                     </div>
                 </div>
+                <div class="col-lg-2"></div>
             </div>
         </div>
 

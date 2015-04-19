@@ -1,6 +1,9 @@
 package controllers;
 
 import models.*;
+import org.mindrot.jbcrypt.BCrypt;
+import play.data.DynamicForm;
+
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -103,11 +106,11 @@ public class Application extends Controller {
             User.create("fengjeb","james.b","Jim","",3);
             User.create("geedev","keeratipong.u","Keeratipong","",3);
 
-            VoteCategory.create("Ease of use");
-            VoteCategory.create("Reliability/Stability");
-            VoteCategory.create("Completeness");
-            VoteCategory.create("Security");
-            VoteCategory.create("Quality of UI");
+            RateCategory.create("Ease of use");
+            RateCategory.create("Reliability/Stability");
+            RateCategory.create("Completeness");
+            RateCategory.create("Security");
+            RateCategory.create("Quality of UI");
 
         }
 
@@ -126,19 +129,6 @@ public class Application extends Controller {
         return ok(testclock.render());
     }
 
-    /*public static Result authenticate() {
-        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
-        if (loginForm.hasErrors()) {
-            return badRequest(login.render(loginForm));
-        } else {
-            session().clear();
-            session("username", loginForm.get().username);
-            User user = User.findByUsername(loginForm.get().username);
-            return redirect(
-                    routes.ProjectController.toProjectListPage()
-            );
-        }
-    }*/
 
     public static Result authenticate() {
         DynamicForm dy = new DynamicForm().bindFromRequest();
@@ -155,7 +145,6 @@ public class Application extends Controller {
             return redirect(routes.ProjectController.toProjectListPage());
         }
         else{
-            //return redirect(routes.Application.toLoginPage());
             return badRequest(login.render(loginForm));
         }
     }

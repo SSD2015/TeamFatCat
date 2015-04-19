@@ -1,9 +1,9 @@
-@(user: User, votecatlist: List[VoteCategory], form: Form[VoteCategory])
+@(user: User, ratecatlist: List[RateCategory], form: Form[RateCategory])
 <!DOCTYPE html>
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>Add Vote Category</title>
+        <title>Add Rate Category</title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
@@ -61,7 +61,7 @@
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project List</a></li>
                     <li><a href="/admin">Admin</a></li>
-                    <li class="active">Add Vote Category</li>
+                    <li class="active">Add Rate Category</li>
                 </ol>
             </div>
         </nav>
@@ -69,20 +69,20 @@
         <div class="container">
             <div class="row" style="margin-top: 150px;">
                 <div class="col-sm-4 col-sm-offset-4 text-center">
-                    <form action="@routes.VoteController.addVoteCat()" method="post" class="form-horizontal" role="form">
+                    <form action="@routes.RateController.addRateCat()" method="post" class="form-horizontal" role="form">
                         @if(form.hasGlobalErrors) {
                             <p class="error">
                             @form.globalError.message
                             </p>
                         }
                         <div class="form-group">
-                            <label class="col-sm-6 control-label">Vote Category name</label>
+                            <label class="col-sm-6 control-label">Rate Category name</label>
                             <div class="col-sm-6">
                                 <input class="form-control" id="focusedInput" type="text" name="name"/>
                             </div>
                         </div>
 
-                        <button class="btn btn-primary">Add Vote Category</button>
+                        <button class="btn btn-primary">Add Rate Category</button>
                     </form>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                             <th>ID</th>
                             <th>Name</th>
                         </tr>
-                        @votecatlist.map { list =>
+                        @ratecatlist.map { list =>
                         <tr>
                             <td>@list.getId()</td>
                             <td>@list.getName()</td>

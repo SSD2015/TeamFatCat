@@ -15,20 +15,24 @@ GET         /projectlist                    controllers.ProjectController.toProj
 POST        /projectlist                    controllers.ProjectController.select()
 
 GET         /project=:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
-POST        /project                        controllers.ProjectController.makeVote()
+POST        /project                        controllers.ProjectController.rate()
 
-GET         /vote/project=:projectId        controllers.VoteController.toVotePage(projectId: Long)
-POST        /vote                           controllers.VoteController.manageVote(projectId: Long)
+GET         /rate/project=:projectId        controllers.RateController.toRatePage(projectId: Long)
+POST        /rate                           controllers.RateController.rate(projectId: Long)
 
-GET         /uploadimage                    controllers.ProjectController.toUploadPage()
-POST        /uploadimage/upload             controllers.ProjectController.upload()
+#GET         /uploadimage                    controllers.ProjectController.toUploadPage()
+#POST        /uploadimage/upload             controllers.ProjectController.upload()
+
+GET         /editproject=:projectId         controllers.ProjectController.toEditProjectPage(projectId: Long)
+POST        /upload=:projectId              controllers.ProjectController.upload(projectId: Long, tag: String)
+GET         /images=:id                     controllers.ProjectController.getImage(id: Long)
 
 # admin
 
 GET         /admin                          controllers.AdminController.toAdminPage()
 
-GET         /admin/addvotecat               controllers.VoteController.toAddVoteCatPage()
-POST        /admin/addvotecat               controllers.VoteController.addVoteCat()
+GET         /admin/addratecat               controllers.RateController.toAddRateCatPage()
+POST        /admin/addratecat               controllers.RateController.addRateCat()
 
 GET         /admin/user                     controllers.UserController.toAddUserPage()
 POST        /admin/user/add                 controllers.UserController.addUser()
@@ -42,9 +46,9 @@ POST        /admin/team/removeMember        controllers.TeamController.removeMem
 GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
 POST        /admin/addproject               controllers.ProjectController.addProject()
 
-GET         /admin/result                   controllers.VoteController.toResultPage()
+GET         /admin/result                   controllers.RateController.toResultPage()
 
-GET         /admin/votelog                  controllers.History.toVoteLog()
+GET         /admin/ratelog                  controllers.History.toRateLog()
 # test
 
 GET         /test                           controllers.Application.toTestPage()
