@@ -103,7 +103,7 @@ public class ProjectController extends Controller {
         Project project = Project.findById(projectId);
         Team team = Team.findById(project.getTeamId());
 
-        if (!team.isMember(user.getId()) || user.getType() != User.ADMIN) {
+        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
             return redirect(routes.ProjectController.toProjectListPage());
         }
 
