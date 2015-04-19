@@ -73,9 +73,8 @@ public class RateController extends Controller {
     public static Result toResultPage() {
         List<Rate> rateList = Rate.getAllRates();
         List<RateCategory> catList = RateCategory.all();
-        List<Project> progList = Project.getAllProjects();
         User user = User.findByUsername(request().username());
-        return ok(result.render(user, rateList,catList,progList));
+        return ok(result.render(user, rateList,catList));
     }
 
     @Security.Authenticated(AdminSecured.class)
