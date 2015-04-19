@@ -49,7 +49,16 @@ public class Image extends Model {
     }
 
     public static Image create(String name, File img, Long projectId) {
-        Image image = new Image(name, img, projectId);
+        if (name.equals("avatar")) {
+            Image image = find.where().eq("name", "avatar").eq("projectId", projectId).findUnique();
+            if (image == null) {
+                image = new Image("avatar", img, projectId);
+            } else {
+                image.setData(img);
+            }
+        }
+
+        Image image = new Image("screenshot", img, projectId);
         image.save();
         image.setName(image.getName() + image.getId());
         image.update();
@@ -64,8 +73,8 @@ public class Image extends Model {
         this.name = name;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setData(File img) {
+        this.data = new byte[(int)img.length()];;
     }
 
     public void setProjectId(long projectId) {
