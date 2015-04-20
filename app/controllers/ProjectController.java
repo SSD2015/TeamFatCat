@@ -30,7 +30,7 @@ public class ProjectController extends Controller {
         }
 
         User user = User.findByUsername(request().username());
-        return ok(views.html.addproject.render(user, projects, teams, Form.form(Project.class)));
+        return ok(addproject.render(user, projects, teams, Form.form(Project.class)));
     }
 
     @Security.Authenticated(AdminSecured.class)
@@ -77,99 +77,10 @@ public class ProjectController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result toProjectListPage() {
-        User user = User.findByUsername(request().username());
-        List<Project> projects = Project.getAllProjects();
-        return ok(projectlist.render(user, projects));
-    }
-
-    @Security.Authenticated(Secured.class)
     public static Result rate() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
         return redirect(
                 routes.RateController.toRatePage(Long.parseLong(form.data().get("pId")))
         );
     }
-
-    @Security.Authenticated(Secured.class)
-    public static Result select() {
-        Form<Object> form = Form.form(Object.class).bindFromRequest();
-        return redirect(
-                routes.ProjectController.toProjectPage(Long.parseLong(form.data().get("pId")))
-        );
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Result toEditProjectPage(long projectId) {
-        User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
-
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
-            return redirect(routes.ProjectController.toProjectListPage());
-        }
-
-        Form form = Form.form(Upload.class);
-        List<Image> images = Image.findImagesByProject(projectId);
-        return ok(editproject.render(user, project, images, form));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Result getImage(long imageId) {
-        Image image = Image.findById(imageId);
-
-        if (image != null) {
-            return ok(image.getData()).as("image");
-        } else {
-            flash("error", "File not found");
-            return redirect(routes.Application.toErrorPage());
-        }
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Result upload(long projectId, String tag) {
-        User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
-
-        Form<Upload> form = Form.form(Upload.class).bindFromRequest();
-        List<Image> images = Image.findImagesByProject(projectId);
-        if (form.hasErrors()) {
-            return badRequest(editproject.render(user, project, images, form));
-        }
-
-        //Image.create(tag, form.get().file.getFile(), projectId);
-
-        File img = form.get().file.getFile();
-        if (tag.equals(Image.AVT)) {
-            Image image_a = Image.findByNameAndProject(Image.AVT, projectId);
-            if (image_a == null) {
-                image_a = new Image(Image.AVT, img, projectId);
-            } else {
-                image_a.setData(img);
-                image_a.update();
-            }
-        } else {
-            Image image_s = new Image(Image.SCR, img, projectId);
-            image_s.setName(image_s.getName() + image_s.getId());
-            image_s.update();
-        }
-
-        return redirect(routes.ProjectController.toEditProjectPage(projectId));
-    }
-
-    public static class Upload {
-        public FilePart file;
-
-        public String validate() {
-            MultipartFormData form = request().body().asMultipartFormData();
-            file = form.getFile("image");
-
-            if (file == null) {
-                return "No file";
-            }
-
-            return null;
-        }
-    }
-
 }

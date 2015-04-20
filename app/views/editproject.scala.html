@@ -1,4 +1,4 @@
-@(user: User, project: Project, images: List[Image], form: Form[ProjectController.Upload])
+@(user: User, project: Project, images: List[Image])
 <!doctype html>
 <html lang="en">
     <head>
@@ -22,13 +22,13 @@
                         @if(Image.findAvatarId(project.getId) == -1) {
                             <img src="@routes.Assets.at("img/noimage.png")" alt="@Image.findAvatarId(project.getId))" style="width:150px;height:150px">
                         } else {
-                            <img src="@routes.ProjectController.getImage(Image.findAvatarId(project.getId))" width="400px" height="auto">
+                            <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" width="400px" height="auto">
                         }
                 </div>
 
                 <div>
                     <h1>Upload avatar:</h1>
-                    @helper.form(action = routes.ProjectController.upload(project.getId(), Image.AVT), 'enctype -> "multipart/form-data") {
+                    @helper.form(action = routes.ImageController.upload(project.getId(), Image.AVT), 'enctype -> "multipart/form-data") {
                         <input type="file" class="" accept=".jpg, .png" name="image">
                         <button class="btn btn-default" type="submit">Upload image!</button>
                     }
@@ -36,7 +36,7 @@
 
                 <div>
                     <h1>Upload screenshot:</h1>
-                    @helper.form(action = routes.ProjectController.upload(project.getId(), Image.SCR), 'enctype -> "multipart/form-data") {
+                    @helper.form(action = routes.ImageController.upload(project.getId(), Image.SCR), 'enctype -> "multipart/form-data") {
                         <input type="file" class="" accept=".jpg, .png" name="image">
                         <button class="btn btn-default" type="submit">Upload image!</button>
                     }
@@ -46,7 +46,7 @@
                     <h1>Images in Database:</h1>
                     @for(image <- images) {
                         <h3>@image.getName()</h3>
-                        <img src="@routes.ProjectController.getImage(image.getId)" width="400px" height="auto">
+                        <img src="@routes.ImageController.getImage(image.getId)" width="400px" height="auto">
                     }
                 </div>
             </div>

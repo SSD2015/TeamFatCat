@@ -11,8 +11,8 @@ POST        /                               controllers.Application.authenticate
 
 GET         /logout                         controllers.Application.logout()
 
-GET         /projectlist                    controllers.ProjectController.toProjectListPage()
-POST        /projectlist                    controllers.ProjectController.select()
+GET         /projectlist                    controllers.ProjectListController.toProjectListPage()
+POST        /projectlist                    controllers.ProjectListController.select()
 
 GET         /project=:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
 POST        /project                        controllers.ProjectController.rate()
@@ -23,9 +23,9 @@ POST        /rate                           controllers.RateController.rate(proj
 #GET         /uploadimage                    controllers.ProjectController.toUploadPage()
 #POST        /uploadimage/upload             controllers.ProjectController.upload()
 
-GET         /editproject=:projectId         controllers.ProjectController.toEditProjectPage(projectId: Long)
-POST        /upload=:projectId              controllers.ProjectController.upload(projectId: Long, tag: String)
-GET         /images=:id                     controllers.ProjectController.getImage(id: Long)
+GET         /editproject=:projectId         controllers.ImageController.toEditProjectPage(projectId: Long)
+POST        /upload=:projectId              controllers.ImageController.upload(projectId: Long, tag: String)
+GET         /images=:id                     controllers.ImageController.getImage(id: Long)
 
 # admin
 
@@ -36,7 +36,7 @@ POST        /admin/addratecat               controllers.RateController.addRateCa
 
 GET         /admin/user                     controllers.UserController.toAddUserPage()
 POST        /admin/user/add                 controllers.UserController.addUser()
-POST        /admin/user/clear               controllers.UserController.removeAllUsers()
+#POST        /admin/user/clear               controllers.UserController.removeAllUsers()
 
 GET         /admin/team                     controllers.TeamController.toTeamPage()
 POST        /admin/team                     controllers.TeamController.addTeam()
