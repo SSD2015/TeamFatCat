@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "vote_category")
 public class RateCategory extends Model {
+
     @Id
     private Long id;
 

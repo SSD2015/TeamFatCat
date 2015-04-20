@@ -64,12 +64,24 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
+create table vote (
+  id                        bigint auto_increment not null,
+  user_id                   bigint,
+  project_id                bigint,
+  timestamp                 datetime not null,
+  constraint pk_vote primary key (id))
+;
+
 alter table rate add constraint fk_rate_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_rate_user_1 on rate (user_id);
 alter table rate add constraint fk_rate_category_2 foreign key (category_id) references vote_category (id) on delete restrict on update restrict;
 create index ix_rate_category_2 on rate (category_id);
 alter table rate add constraint fk_rate_project_3 foreign key (project_id) references project (id) on delete restrict on update restrict;
 create index ix_rate_project_3 on rate (project_id);
+alter table vote add constraint fk_vote_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_vote_user_4 on vote (user_id);
+alter table vote add constraint fk_vote_project_5 foreign key (project_id) references project (id) on delete restrict on update restrict;
+create index ix_vote_project_5 on vote (project_id);
 
 
 
@@ -90,6 +102,8 @@ drop table vote_category;
 drop table team;
 
 drop table user;
+
+drop table vote;
 
 SET FOREIGN_KEY_CHECKS=1;
 

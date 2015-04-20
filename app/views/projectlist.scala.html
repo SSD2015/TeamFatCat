@@ -81,15 +81,24 @@
                                 }
                             </div>
                             <div class="col-lg-9">
-                                <h2>@project.getProjectName()</h2>
+                                <div style="min-height: 38px;">
+                                    <h2>
+                                        @project.getProjectName()
+                                        @if(Vote.findSelectProject(user) != null && Vote.findSelectProject(user).getId == project.getId) {
+                                            <img src="@routes.Assets.at("/img/crown.png")" style="height: 35px;">
+                                            }
+                                    </h2>
+                                </div>
                                 <i>by @Team.findById(project.getTeamId).getName()</i><br>
                                 Description: @project.getProjectDesc()<br>
                             </div>
                         </div></a>
                         <div style="width: 100%; margin-bottom: 25pt;">
-                            <button class="btn btn-default" style="width: 100%">
-                                Make @project.getProjectName() Best App
-                            </button>
+                            <form method="post" action="@routes.VoteController.vote(project.getId())">
+                                <button class="btn btn-default" style="width: 100%">
+                                    Make @project.getProjectName() Best App
+                                </button>
+                            </form>
                         </div>
                     }
                     </div>
