@@ -72,13 +72,26 @@
             <div class="row">
                 <div class="" style="width=100%; min-height: 120px;"></div>
                 <div class="col-sm-4 col-sm-offset-4 text-center">
-                    <h3>Rate Score : 0 - 5</h3><br>
+                    <h3><b>Rate Score : 0 - 5</b></h3><br>
                     <form action="@routes.RateController.rate(project.getId)" method="post" class="form-horizontal" role="form">
                         @rateCat.map { list =>
                             <div class="form-group">
-                                <label class="control-label">@list.getName()</label>
+                                @*<label class="control-label"><h2>@list.getName()</h2></label>*@
+                                <a class="button">@list.getName()</a>
+                                <style>
+                                    a.button {
+                                        background: #48cccd;
+                                        color:white;
+                                        padding: 20px;
+                                        text-decoration: none;
+                                        display: inline-block;
+                                        font-size: 20px;
+                                        border-radius: 10px;
+                                    }
+                                </style>
                                 <input id="ratestar" name="@list.getName()" type="number" class="rating" min=0 max=5 step=1 data-size="md" >
                                 <input id="noRate@list.getName()" name="noRate@list.getName()" type="checkbox" value="isNoRate">Not Rated
+
                             </div>
                         }
                         <br>
