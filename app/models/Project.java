@@ -122,4 +122,8 @@ public class Project extends Model{
         return project;
     }
 
+    public long getAvatarId() {
+        return Image.findAvatarId(this.id);
+    }
+
 }

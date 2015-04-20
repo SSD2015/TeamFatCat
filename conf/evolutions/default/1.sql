@@ -64,12 +64,6 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
-create table vote)
-;
-
-create table vote_category)
-;
-
 alter table rate add constraint fk_rate_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_rate_user_1 on rate (user_id);
 alter table rate add constraint fk_rate_category_2 foreign key (category_id) references vote_category (id) on delete restrict on update restrict;
@@ -96,10 +90,6 @@ drop table vote_category;
 drop table team;
 
 drop table user;
-
-drop table vote;
-
-drop table vote_category;
 
 SET FOREIGN_KEY_CHECKS=1;
 

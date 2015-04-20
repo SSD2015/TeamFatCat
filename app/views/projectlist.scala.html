@@ -74,7 +74,11 @@
                     @projects.map { project =>
                         <a href="@routes.ProjectController.toProjectPage(project.getId)" style="text-decoration: none;"><div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
                             <div class="col-lg-3">
-                                <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
+                                @if(project.getAvatarId() == -1) {
+                                    <img src="@routes.Assets.at("/img/noimage.png")" style="width:150px;height:150px">
+                                } else {
+                                    <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
+                                }
                             </div>
                             <div class="col-lg-9">
                                 <h2>@project.getProjectName()</h2>
