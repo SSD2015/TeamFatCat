@@ -115,9 +115,9 @@ public class Application extends Controller {
         }
 
         if (session().get("username") != null) {
-            routes.ProjectController.toProjectListPage();
+            routes.ProjectListController.toProjectListPage();
         }
-        return ok(login.render(Form.form(Login.class)));
+        return ok(login.render());
     }
 
     @Security.Authenticated(Secured.class)
@@ -132,24 +132,19 @@ public class Application extends Controller {
 
     public static Result authenticate() {
         DynamicForm dy = new DynamicForm().bindFromRequest();
-        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         String username = dy.get("username");
         String password = dy.get("password");
-        if(dy.hasErrors()) {
-            return ok("hello");
-        }
+
         User user = User.findByUsername(username);
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
             session().clear();
             session("username", username);
-            return redirect(routes.ProjectController.toProjectListPage());
+            return redirect(routes.ProjectListController.toProjectListPage());
         }
         else{
-            return badRequest(login.render(loginForm));
+            return badRequest(login.render());
         }
     }
-
-
 
     @Security.Authenticated(Secured.class)
     public static Result logout() {
@@ -158,16 +153,16 @@ public class Application extends Controller {
         return redirect(routes.Application.toLoginPage());
     }
 
-    public static class Login {
-        public String username;
-        public String password;
-
-        public String validate() {
-            if(User.authenticate(username, password) == null) {
-                return "Invalid user or password";
-            }
-            return null;
-        }
-    }
+//    public static class Login {
+//        public String username;
+//        public String password;
+//
+//        public String validate() {
+//            if(User.authenticate(username, password) == null) {
+//                return "Invalid user or password";
+//            }
+//            return null;
+//        }
+//    }
 
 }

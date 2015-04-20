@@ -32,16 +32,16 @@ public class UserController extends Controller {
         return redirect(routes.UserController.toAddUserPage());
     }
 
-    @Security.Authenticated(AdminSecured.class)
-    public static Result removeAllUsers() {
-        List<User> users = new Model.Finder(Long.class, User.class).all();
-        for (int i = 0; i < users.size(); i++) {
-            User user = User.findById(users.get(i).getId());
-            if (user.getType() != User.ADMIN) {
-                User.deleteById(users.get(i).getId());
-            }
-        }
-
-        return redirect(routes.UserController.toAddUserPage());
-    }
+//    @Security.Authenticated(AdminSecured.class)
+//    public static Result removeAllUsers() {
+//        List<User> users = Model.Finder(Long.class, User.class).all();
+//        for (int i = 0; i < users.size(); i++) {
+//            User user = User.findById(users.get(i).getId());
+//            if (user.getType() != User.ADMIN) {
+//                User.deleteById(users.get(i).getId());
+//            }
+//        }
+//
+//        return redirect(routes.UserController.toAddUserPage());
+//    }
 }

@@ -18,6 +18,6 @@ public class AdminSecured extends Secured {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return redirect(routes.ProjectController.toProjectListPage());
+        return redirect(routes.ProjectListController.toProjectListPage());
     }
 }

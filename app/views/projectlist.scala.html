@@ -74,22 +74,31 @@
                     @projects.map { project =>
                         <a href="@routes.ProjectController.toProjectPage(project.getId)" style="text-decoration: none;"><div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
                             <div class="col-lg-3">
-                                @if(Image.findAvatarId(project.getId) == -1) {
-                                    <img src="@routes.Assets.at("img/noimage.png")" alt="noimage" style="width:150px; height:150px">
+                                @if(project.getAvatarId() == -1) {
+                                    <img src="@routes.Assets.at("/img/noimage.png")" style="width:150px;height:150px">
                                 } else {
-                                    <img src="@routes.ProjectController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
+                                    <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
                                 }
                             </div>
                             <div class="col-lg-9">
-                                <h2>@project.getProjectName()</h2>
+                                <div style="min-height: 38px;">
+                                    <h2>
+                                        @project.getProjectName()
+                                        @if(Vote.findSelectProject(user) != null && Vote.findSelectProject(user).getId == project.getId) {
+                                            <img src="@routes.Assets.at("/img/crown.png")" style="height: 35px;">
+                                            }
+                                    </h2>
+                                </div>
                                 <i>by @Team.findById(project.getTeamId).getName()</i><br>
                                 Description: @project.getProjectDesc()<br>
                             </div>
                         </div></a>
                         <div style="width: 100%; margin-bottom: 25pt;">
-                            <button class="btn btn-default" style="width: 100%">
-                                Make @project.getProjectName() Best App
-                            </button>
+                            <form method="post" action="@routes.VoteController.vote(project.getId())">
+                                <button class="btn btn-default" style="width: 100%">
+                                    Make @project.getProjectName() Best App
+                                </button>
+                            </form>
                         </div>
                     }
                     </div>
