@@ -27,7 +27,7 @@ POST        /vote=:projectId                controllers.VoteController.vote(proj
 GET         /editproject=:projectId         controllers.ImageController.toEditProjectPage(projectId: Long)
 POST        /upload=:projectId              controllers.ImageController.upload(projectId: Long, tag: String)
 GET         /images=:id                     controllers.ImageController.getImage(id: Long)
-
+POST        /deleteimage                    controllers.ImageController.deleteImage(projectId : Long, imageId: Long)
 # admin
 
 GET         /admin                          controllers.AdminController.toAdminPage()
@@ -50,6 +50,7 @@ POST        /admin/addproject               controllers.ProjectController.addPro
 GET         /admin/result                   controllers.RateController.toResultPage()
 
 GET         /admin/ratelog                  controllers.History.toRateLog()
+GET         /admin/votelog                  controllers.History.toVoteLog()
 # test
 
 GET         /test                           controllers.Application.toTestPage()

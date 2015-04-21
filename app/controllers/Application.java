@@ -19,10 +19,12 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result toIndexPage() {
+        response().setHeader("Cache-Control","no-cache");
         return ok(index.render("404 Happy Error"));
     }
 
     public static Result toErrorPage() {
+        response().setHeader("Cache-Control","no-cache");
         return ok(error.render(""));
     }
 
@@ -117,15 +119,19 @@ public class Application extends Controller {
         if (session().get("username") != null) {
             routes.ProjectListController.toProjectListPage();
         }
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(login.render());
     }
 
     @Security.Authenticated(Secured.class)
     public static Result toTestPage() {
+        response().setHeader("Cache-Control","no-cache");
         return ok(test.render(User.findByUsername(request().username())));
     }
 
     public static Result toClockPage() {
+        response().setHeader("Cache-Control","no-cache");
         return ok(testclock.render());
     }
 
@@ -141,7 +147,8 @@ public class Application extends Controller {
             session("username", username);
             return redirect(routes.ProjectListController.toProjectListPage());
         }
-        else{
+        else {
+            response().setHeader("Cache-Control","no-cache");
             return badRequest(login.render());
         }
     }

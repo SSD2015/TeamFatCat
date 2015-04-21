@@ -26,7 +26,28 @@ public class ImageController extends Controller {
         }
 
         List<Image> images = Image.findImagesByProject(projectId);
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(editproject.render(user, project, images));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteImage(long projectId, long imageId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        Team team = Team.findById(project.getTeamId());
+
+        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+            return redirect(routes.ProjectListController.toProjectListPage());
+        }
+
+        Image image = Image.findById(imageId);
+        image.setName(Image.NUL);
+        image.update();
+
+        List<Image> images = Image.findImagesByProject(projectId);
+
+        return redirect(routes.ImageController.toEditProjectPage(projectId));
     }
 
     @Security.Authenticated(Secured.class)
@@ -34,6 +55,7 @@ public class ImageController extends Controller {
         Image image = Image.findById(imageId);
 
         if (image != null) {
+            response().setHeader("Cache-Control","no-cache");
             return ok(image.getData()).as("image");
         } else {
             flash("error", "File not found");

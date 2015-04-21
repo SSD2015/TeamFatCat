@@ -80,8 +80,11 @@ function countdown() {
             document.countdownnsmain.document.countdownnssub.document.write(opentags+dday+ " days, "+dhour+" hours, "+dmin+" minutes, and "+dsec+" seconds left until "+occasion+closetags);
             document.countdownnsmain.document.countdownnssub.document.close();
         }
-        else if (document.all||document.getElementById)
-            crosscount.innerHTML=opentags+dday+ " days "+dhour+":"+dmin+":"+dsec+" "+occasion+closetags;
+        else if (document.all||document.getElementById) {
+            //crosscount.innerHTML=opentags+dday+ " days "+dhour+":"+dmin+":"+dsec+" "+occasion+closetags;
+            crosscount.innerHTML=dhour+" hr "+dmin+" min "+dsec+" sec left"+occasion+closetags;
+        }
+
     }
 
     setTimeout(function(){countdown()},1000);

@@ -74,6 +74,7 @@ public class RateController extends Controller {
         Project project = Project.findById(projectId);
         List<RateCategory> rateCategories = RateCategory.all();
 
+        response().setHeader("Cache-Control","no-cache");
         return ok(rate.render(user,project,rateCategories));
     }
 
@@ -82,6 +83,8 @@ public class RateController extends Controller {
         List<Rate> rateList = Rate.getAllRates();
         List<RateCategory> catList = RateCategory.all();
         User user = User.findByUsername(request().username());
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(result.render(user, rateList,catList));
     }
 
@@ -102,6 +105,8 @@ public class RateController extends Controller {
     public static Result toAddRateCatPage(){
         List<RateCategory> ratecatlist = RateCategory.all();
         User user = User.findByUsername(request().username());
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(addratecat.render(user, ratecatlist, Form.form(RateCategory.class)));
     }
 

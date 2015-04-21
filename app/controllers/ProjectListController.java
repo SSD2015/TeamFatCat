@@ -24,6 +24,8 @@ public class ProjectListController extends Controller {
     public static Result toProjectListPage() {
         User user = User.findByUsername(request().username());
         List<Project> projects = Project.getAllProjects();
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(projectlist.render(user, projects));
     }
 

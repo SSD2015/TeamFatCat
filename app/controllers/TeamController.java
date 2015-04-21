@@ -24,6 +24,8 @@ public class TeamController extends Controller {
         }
 
         User user = User.findByUsername(request().username());
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(team.render(user, userList, teamList, Form.form(Team.class)));
     }
 
