@@ -34,8 +34,12 @@ public class RateController extends Controller {
                     String isNoRate = form.get( "noRate"+ratecatList.get(i).getName() );
                     if( isNoRate != null )
                         rate.setScore( -1 );
-                    else
-                        rate.setScore( newScore );
+                    else {
+                        if (newScore > 5 || newScore < 0) {
+                            return redirect(routes.Application.toErrorPage());
+                        }
+                        rate.setScore(newScore);
+                    }
                     rate.setUser(user);
                     rate.setProject(project);
                     rate.setCategory(ratecatList.get(i));
@@ -47,8 +51,12 @@ public class RateController extends Controller {
                     String isNoRate = form.get( "noRate"+ratecatList.get(i).getName() );
                     if( isNoRate != null )
                         rate.setScore( -1 );
-                    else
-                        rate.setScore( newScore );
+                    else {
+                        if (newScore > 5 || newScore < 0) {
+                            return redirect(routes.Application.toErrorPage());
+                        }
+                        rate.setScore(newScore);
+                    }
                     rate.setTimestamp();
                     Ebean.update(rate);
                 }
@@ -66,6 +74,7 @@ public class RateController extends Controller {
         Project project = Project.findById(projectId);
         List<RateCategory> rateCategories = RateCategory.all();
 
+        response().setHeader("Cache-Control","no-cache");
         return ok(rate.render(user,project,rateCategories));
     }
 
@@ -74,6 +83,8 @@ public class RateController extends Controller {
         List<Rate> rateList = Rate.getAllRates();
         List<RateCategory> catList = RateCategory.all();
         User user = User.findByUsername(request().username());
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(result.render(user, rateList,catList));
     }
 
@@ -94,6 +105,8 @@ public class RateController extends Controller {
     public static Result toAddRateCatPage(){
         List<RateCategory> ratecatlist = RateCategory.all();
         User user = User.findByUsername(request().username());
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(addratecat.render(user, ratecatlist, Form.form(RateCategory.class)));
     }
 

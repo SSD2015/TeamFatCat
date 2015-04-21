@@ -24,6 +24,7 @@ public class Image extends Model {
 
     public static final String AVT = "Avatar";
     public static final String SCR = "Screenshot";
+    public static final String NUL = "Useless";
 
     private static Finder< Long, Image> find = new Finder< Long, Image>( Long.class, Image.class);
 

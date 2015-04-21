@@ -30,6 +30,7 @@ public class ProjectController extends Controller {
         }
 
         User user = User.findByUsername(request().username());
+        response().setHeader("Cache-Control","no-cache");
         return ok(addproject.render(user, projects, teams, Form.form(Project.class)));
     }
 
@@ -72,7 +73,7 @@ public class ProjectController extends Controller {
             avatarId = avatar.getId();
         }
         List<Image> screenshots = Image.findImagesByProject(projectId);
-
+        response().setHeader("Cache-Control","no-cache");
         return ok(views.html.project.render(user, project, members, avatarId, screenshots));
     }
 

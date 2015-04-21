@@ -17,6 +17,8 @@ public class UserController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddUserPage() {
         List<User> userList = User.getAllUsers();
+
+        response().setHeader("Cache-Control","no-cache");
         return ok(user.render(Form.form(User.class), userList, User.findByUsername(request().username())));
     }
 
@@ -25,6 +27,8 @@ public class UserController extends Controller {
         Form<User> userForm = Form.form(User.class).bindFromRequest();
         if (userForm.hasErrors()) {
             List<User> userList = User.getAllUsers();
+
+            response().setHeader("Cache-Control","no-cache");
             return badRequest(user.render(userForm, userList, User.findByUsername(request().username())));
         }
         User user = userForm.get();
