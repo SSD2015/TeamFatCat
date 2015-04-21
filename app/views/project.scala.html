@@ -111,6 +111,12 @@
                         </div>
                         <div class="col-sm-4">
                         @RateCategory.getAllCategories().map { cat =>
+                            <span class="badge">
+                                @if(Rate.getUniqueRate(user.getUsername, project, cat).getScore() == -1) {
+                                    Not rated
+                                } else {
+                                    @Rate.getUniqueRate(user.getUsername, project, cat).getScore()
+                                }</span>
                             @cat.getName()
                         <div class="progress" style="max-height: 10px ; max-width: 70%">
                             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.getUniqueRate(user.getUsername, project, cat).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.getUniqueRate(user.getUsername, project, cat).getPercentScore()%;">

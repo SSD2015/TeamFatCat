@@ -12,7 +12,7 @@
         </style>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
-        @*<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>*@
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     </head>
     <body>
 
@@ -70,49 +70,42 @@
             </div>
         </nav>
 
+       <div class="container">
+           <div class="row" style="margin-top: 100px; margin-bottom: 10px; padding: 25px;">
+               <div class="col-lg-12 text-center">
+                   <h3>Best Application</h3>
+                   <img src="@routes.Assets.at("/img/trophy-icon.png")" >
+                   <br>
+                   @Vote.getBestProject.map { project =>
+                       @project.getProjectName()
+                       <div class="progress">
+                           <div class="progress-bar" role="progressbar" aria-valuenow="@project.getPercentVoteScores()" aria-valuemin="0" aria-valuemax="100" style="width: @project.getPercentVoteScores%;">
+                               @project.getPercentVoteScores
+                           </div>
+                       </div>
+                   }
+               </div>
+           </div>
+           <div class="row" style="margin-top: 10px; margin-bottom: 20px; padding: 25px;">
+               @catList.map { cat =>
+                   <div class="col-lg-6 text-center" style="margin-top: 10px; margin-bottom: 10px; padding: 50px;">
+                       <h3>Best of @cat.getName()</h3>
+                       <img src="@routes.Assets.at("/img/trophy-icon.png")" >
+                       @cat.getBestFromCat.map { project =>
+                           <h5>@project.getProjectName()</h5>
+                           <p>@project.getPercentFromCat(cat)</p>
+                           <div class="progress">
+                               <div class="progress-bar" role="progressbar" aria-valuenow="@project.getPercentFromCat(cat)" aria-valuemin="0" aria-valuemax="100" style="width: @project.getPercentFromCat(cat)%;">
+                                   @project.getPercentFromCat(cat)%
+                               </div>
+                           </div>
+                       }
+                   </div>
+               }
 
-        <div class="container-fluid" style="background-color: #ffffff; margin-top: 100px; padding: 10px; padding-bottom: 30px;">
-            <div class="container">
-                @*<h2 class="text-center"><b>Project Score</b></h2>*@
-                    <!-- Chart -->
-                @*<div id="canvas-holder" style="margin-top: 20px;padding-bottom: 30px;padding-left: 370px">*@
-                    @*<canvas id="chart-area" width="500" height="500"/>*@
-                @*</div>*@
+           </div>
+       </div>
 
-                <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
-                    <h2 class="text-center"><b>Best of Category</b></h2>
-                    <h2></h2>
-            @catList.map { list =>
-                <h3>Best of @list.getName</h3>
-                <br>
-
-                <table class="table table-condensed">
-                    <tr class="warning">
-                        <th>ID</th>
-                        <th>Proejct</th>
-                        <th>Score</th>
-                    </tr>
-
-                    @for((item, index) <- list.getBestFromCat.zipWithIndex) {
-                        <tr>
-                            <td>@item.getId()
-                                @if(index == 0){
-                                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
-                                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
-                                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
-                                    }
-                            </td>
-                            <td>@item.getProjectName</td>
-
-                            <td>@item.getAvgFromCat(list)</td>
-                        </tr>
-                    }
-
-                </table>
-            }
-                </div>
-            </div>
-        </div>
         <script>
 
         var dataGen = function(){

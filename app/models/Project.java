@@ -67,27 +67,70 @@ public class Project extends Model{
         return find.byId(id);
     }
 
-    public double getAvgFromCat(RateCategory cat){
-        List<Rate> Vlist = Rate.getProjectAndCatRate(this,cat);
-        double total=0;
-        for(int i = 0 ; i < Vlist.size() ; i++){
-            if(Vlist.get(i).getScore() != -1) total += Vlist.get(i).getScore();
+    public double getToalVoteScores() {
+        List<Vote> voteList = Vote.getVoteFromProject(this);
+        double count = 0;
+        for (int i = 0 ; i < voteList.size() ; i++) {
+            if (voteList.get(i).getUser().getId() <= 42 && voteList.get(i).getUser().getId() >= 22) {
+                count++;
+            }
+        }
+
+        return voteList.size();
+    }
+
+    public double getPercentVoteScores() {
+        List<Project> projects = find.all();
+        double total = 0;
+        for(int i = 0 ; i < projects.size() ; i++) {
+            total += projects.get(i).getToalVoteScores();
+        }
+
+        double percent =  getToalVoteScores() / total * 10000;
+        percent = Math.round(percent);
+        percent = percent / 100;
+        return percent;
+    }
+
+    public double getAvgFromCat(RateCategory cat) {
+        List<Rate> rateList = Rate.getProjectAndCatRate(this,cat);
+        double total = 0;
+        int count = 0;
+        for(int i = 0 ; i < rateList.size() ; i++) {
+            if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 22) {
+                total += rateList.get(i).getScore();
+                count++;
+            }
         }
         
-        total = total/Vlist.size();
-        total = total*100;
+        total = total / count;
+        total = total * 100;
         total = Math.round(total);
-        total = total /100;
+        total = total / 100;
         return total;
     }
 
     public double getAvg(){
-        List<Rate> Vlist = Rate.getProjectRate(this);
+        List<Rate> rateList = Rate.getProjectRate(this);
         double total=0;
-        for(int i=0 ; i<Vlist.size() ; i++){
-            total += Vlist.get(i).getScore();
+        for(int i=0 ; i<rateList.size() ; i++){
+            total += rateList.get(i).getScore();
         }
-        return total/Vlist.size();
+        return total/rateList.size();
+    }
+
+    public double getPercentFromCat(RateCategory cat) {
+        List<Project> projects = find.all();
+        double totalScores = 0;
+        for(int i = 0 ; i < projects.size() ; i++) {
+           totalScores += projects.get(i).getAvgFromCat(cat);
+        }
+
+        double percent = getAvgFromCat(cat) / totalScores * 10000;
+        percent = Math.round(percent);
+        percent = percent / 100;
+
+        return percent;
     }
 
     public String validate() {

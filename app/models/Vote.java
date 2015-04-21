@@ -6,8 +6,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
@@ -74,6 +73,23 @@ public class Vote extends Model{
             return null;
         }
         return find.where().eq("user", user).findUnique().getProject();
+    }
+
+    public static List<Vote> getVoteFromProject(Project project) {
+        return find.where().eq("project_id", project.getId()).findList();
+    }
+
+    public static List<Project> getBestProject() {
+        List<Project> projects = Project.getAllProjects();
+
+        Collections.sort(projects, new Comparator<Project>() {
+            public int compare(Project o1, Project o2) {
+                if (o1.getToalVoteScores() == o2.getToalVoteScores())
+                    return 0;
+                return o1.getToalVoteScores() > o2.getToalVoteScores() ? -1 : 1;
+            }
+        });
+        return projects;
     }
 
     public static List<Vote> getAllVotes() {
