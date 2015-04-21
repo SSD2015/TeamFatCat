@@ -46,9 +46,13 @@ public class ImageController extends Controller {
         Http.MultipartFormData form = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart file = form.getFile("image");
 
-
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
+        Team team = Team.findById(project.getTeamId());
+
+        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+            return redirect(routes.ProjectListController.toProjectListPage());
+        }
 
         List<Image> images = Image.findImagesByProject(projectId);
 

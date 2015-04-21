@@ -34,8 +34,12 @@ public class RateController extends Controller {
                     String isNoRate = form.get( "noRate"+ratecatList.get(i).getName() );
                     if( isNoRate != null )
                         rate.setScore( -1 );
-                    else
-                        rate.setScore( newScore );
+                    else {
+                        if (newScore > 5 || newScore < 0) {
+                            return redirect(routes.Application.toErrorPage());
+                        }
+                        rate.setScore(newScore);
+                    }
                     rate.setUser(user);
                     rate.setProject(project);
                     rate.setCategory(ratecatList.get(i));
@@ -47,8 +51,12 @@ public class RateController extends Controller {
                     String isNoRate = form.get( "noRate"+ratecatList.get(i).getName() );
                     if( isNoRate != null )
                         rate.setScore( -1 );
-                    else
-                        rate.setScore( newScore );
+                    else {
+                        if (newScore > 5 || newScore < 0) {
+                            return redirect(routes.Application.toErrorPage());
+                        }
+                        rate.setScore(newScore);
+                    }
                     rate.setTimestamp();
                     Ebean.update(rate);
                 }
