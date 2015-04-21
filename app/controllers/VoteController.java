@@ -8,7 +8,7 @@ import models.*;
 
 public class VoteController extends Controller {
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(AdminSecured.class)
     public static Result vote(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);

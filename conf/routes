@@ -20,6 +20,8 @@ POST        /project                        controllers.ProjectController.rate()
 GET         /rate/project=:projectId        controllers.RateController.toRatePage(projectId: Long)
 POST        /rate                           controllers.RateController.rate(projectId: Long)
 
+GET         /rateclosed                     controllers.RateController.toRateClosedPage(id: Long)
+
 POST        /vote=:projectId                controllers.VoteController.vote(projectId: Long)
 #GET         /uploadimage                    controllers.ProjectController.toUploadPage()
 #POST        /uploadimage/upload             controllers.ProjectController.upload()

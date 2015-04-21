@@ -13,7 +13,7 @@ import java.util.*;
 
 public class RateController extends Controller {
 
-    @Security.Authenticated(Secured.class)
+    @Security.Authenticated(AdminSecured.class)
     public static Result rate(Long projectId) {
         DynamicForm form = Form.form().bindFromRequest();
         if (form.hasErrors()) {
@@ -70,12 +70,23 @@ public class RateController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result toRatePage(long projectId) {
+        return redirect(routes.RateController.toRateClosedPage(projectId));
+//        User user = User.findByUsername(request().username());
+//        Project project = Project.findById(projectId);
+//        List<RateCategory> rateCategories = RateCategory.all();
+//
+//        response().setHeader("Cache-Control","no-cache");
+//        return ok(rate.render(user,project,rateCategories));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result toRateClosedPage(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
         List<RateCategory> rateCategories = RateCategory.all();
 
         response().setHeader("Cache-Control","no-cache");
-        return ok(rate.render(user,project,rateCategories));
+        return ok(voteisnowclosed.render(user, project));
     }
 
     @Security.Authenticated(AdminSecured.class)
