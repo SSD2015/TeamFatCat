@@ -12,13 +12,13 @@ public class History extends Controller {
     public static Result toRateLog() {
         User user = User.findByUsername(request().username());
         response().setHeader("Cache-Control","no-cache");
-        return ok(rateLog.render(user, Rate.getAllRates()));
+        return ok(rateLog.render(user, Rate.findAll()));
     }
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toVoteLog() {
         User user = User.findByUsername(request().username());
         response().setHeader("Cache-Control","no-cache");
-        return ok(voteLog.render(user, Vote.getAllVotes()));
+        return ok(voteLog.render(user, Vote.findAll()));
     }
 }

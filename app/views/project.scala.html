@@ -61,7 +61,7 @@
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project List</a></li>
 
-                    <li class="active">@project.getProjectName()</li>
+                    <li class="active">@project.getName()</li>
                 </ol>
             </div>
         </nav>
@@ -78,9 +78,9 @@
 
                 <div class="col-md-3">
                     <h2>
-                        @project.getProjectName<br>
+                        @project.getName<br>
                     </h2>
-                        <i>by @Team.findById(project.getTeamId).getName()</i><br>
+                        <i>by @Team.findByProject(project).getName()</i><br>
                     <br>
                     <form action="@routes.ProjectController.rate()" method="post" class="form-horizontal" role="form">
                         <input type="hidden" value=@user.getId() name="uId">
@@ -92,7 +92,7 @@
 
 
                 <div class="col-md-3 pull-right text-right">
-                    @if(Team.findById(project.getId).isMember(user.getId) || user.getType == User.ADMIN) {
+                    @if(user.getType == User.ADMIN || user.checkProject(project)) {
                         <a href="@routes.ImageController.toEditProjectPage(project.getId)">
                             <button class="btn btn-default">
                                 Edit
@@ -105,21 +105,21 @@
 
             <div clas="container" style="padding: 20px; padding-top: 0px">
                 <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
-                    @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null) {
+                    @if(RateCategory.findAll().size() > 0 && Rate.findUnique(user, project, RateCategory.findAll().get(0)) != null) {
                         <div style="padding-left: 15px;">
                             <h5><i>Your last score rated for this project</i></h5>
                         </div>
                         <div class="col-sm-4">
-                        @RateCategory.getAllCategories().map { cat =>
+                        @RateCategory.findAll().map { category =>
                             <span class="badge">
-                                @if(Rate.getUniqueRate(user.getUsername, project, cat).getScore() == -1) {
+                                @if(Rate.findUnique(user, project, category).getScore() == -1) {
                                     Not rated
                                 } else {
-                                    @Rate.getUniqueRate(user.getUsername, project, cat).getScore()
+                                    @Rate.findUnique(user, project, category).getScore()
                                 }</span>
-                            @cat.getName()
+                            @category.getName()
                         <div class="progress" style="max-height: 10px ; max-width: 70%">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.getUniqueRate(user.getUsername, project, cat).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.getUniqueRate(user.getUsername, project, cat).getPercentScore()%;">
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.findUnique(user, project, category).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.findUnique(user, project, category).getPercentScore()%;">
                             <span class="sr-only">60%</span>
                         </div>
                         </div>

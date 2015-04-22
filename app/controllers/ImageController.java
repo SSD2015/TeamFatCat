@@ -1,10 +1,6 @@
 package controllers;
 
-import models.Image;
-import models.Project;
-import models.Team;
-import models.User;
-import play.data.Form;
+import models.*;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -19,9 +15,9 @@ public class ImageController extends Controller {
     public static Result toEditProjectPage(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
+        Team team = Team.findByProject(project);
 
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+        if (!user.checkTeam(team) && user.getType() != User.ADMIN) {
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
@@ -35,9 +31,9 @@ public class ImageController extends Controller {
     public static Result deleteImage(long projectId, long imageId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
+        Team team = Team.findByProject(project);
 
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+        if (!user.checkTeam(team) && (user.getType() != User.ADMIN)) {
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
@@ -70,9 +66,9 @@ public class ImageController extends Controller {
 
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
+        Team team = Team.findByProject(project);
 
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+        if (!user.checkTeam(team) && (user.getType() != User.ADMIN)) {
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
@@ -83,15 +79,6 @@ public class ImageController extends Controller {
         }
 
         File img = form.getFile("image").getFile();
-
-//        if (img != null) {
-//            File file = img;
-//            File newFile = new File(play.Play.application().path().toString() + "//public//uploads//"+ "_" + fileName);
-//            file.renameTo(newFile); //here you are moving photo to new directory
-//            System.out.println(newFile.getPath()); //this pa
-//        }
-//        Image.create(tag, form.get().file.getFile(), projectId);
-
 
         if (tag.equals(Image.AVT)) {
             Image image_a = Image.findByNameAndProject(Image.AVT, projectId);
@@ -109,19 +96,4 @@ public class ImageController extends Controller {
 
         return redirect(routes.ImageController.toEditProjectPage(projectId));
     }
-
-//    public static class Upload {
-//        public Http.MultipartFormData.FilePart file;
-//
-//        public String validate() {
-//
-//            file = form.getFile("image");
-//
-//            if (file == null) {
-//                return "No file";
-//            }
-//
-//            return null;
-//        }
-//    }
 }

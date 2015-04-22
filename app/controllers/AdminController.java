@@ -10,7 +10,9 @@ public class AdminController extends Controller{
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toAdminPage() {
-        response().setHeader("Cache-Control","no-cache");
+        response().setHeader("Cache-Control", "no-cache");
         return ok(admin.render(User.findByUsername(request().username())));
     }
+
+
 }

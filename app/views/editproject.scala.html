@@ -59,7 +59,7 @@
                 </div>
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project List</a></li>
-                    <li><a href="@routes.ProjectController.toProjectPage(project.getId)">@project.getProjectName()</a></li>
+                    <li><a href="@routes.ProjectController.toProjectPage(project.getId)">@project.getName()</a></li>
                     <li class="active">Rate</li>
                 </ol>
             </div>
@@ -67,6 +67,25 @@
 
         <div class="container">
             <div class="row" style="margin-top: 100px; margin-bottom: 20px; padding: 25px;">
+
+                @*<form action="@routes.ProjectController.editProject()" method="post" class="form-horizontal" role="form">*@
+
+                    @*<div class="form-group">*@
+
+                        @*<label class="col-sm-4 control-label">Project Name</label>*@
+                        @*<div class="col-sm-6">*@
+                            @*<input class="form-control" id="focusedInput" type="text" name="projectName"/>*@
+                        @*</div>*@
+                    @*</div>*@
+                    @*<div class="form-group">*@
+                        @*<label class="col-sm-4 control-label">Project Description</label>*@
+                        @*<div class="col-sm-6">*@
+                            @*<input class="form-control" id="focusedInput" type="text" name="projectDesc"/>*@
+                        @*</div>*@
+                    @*</div>*@
+
+                    @*<button class="btn btn-primary">Add Project</button>*@
+                @*</form>*@
 
                 <div class="col-lg-5" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
                     <div>

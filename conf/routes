@@ -4,8 +4,6 @@
 
 # Home page
 
-GET         /index                          controllers.Application.toIndexPage()
-
 GET         /                               controllers.Application.toLoginPage()
 POST        /                               controllers.Application.authenticate()
 

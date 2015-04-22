@@ -5,14 +5,11 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 @Entity
-@Table(name = "vote_category")
 public class RateCategory extends Model {
 
     @Id
@@ -24,13 +21,34 @@ public class RateCategory extends Model {
     private static Finder<Long, RateCategory> find = new Finder<Long, RateCategory>(
             Long.class, RateCategory.class);
 
-    public RateCategory(String name){
-        this.name = name;
-    }
-    public static List<RateCategory> all() {
+
+    public static List<RateCategory> findAll() {
         return find.all();
     }
 
+    public List<Project> getBestFromCat() {
+        List<Project> projects = Project.findAll();
+        final RateCategory currentCat = this;
+
+        Collections.sort(projects, new Comparator<Project>() {
+            public int compare(Project o1, Project o2) {
+                if (o1.getTotalScoresFromCat(currentCat) == o2.getTotalScoresFromCat(currentCat))
+                    return 0;
+                return o1.getTotalScoresFromCat(currentCat) > o2.getTotalScoresFromCat(currentCat) ? -1 : 1;
+            }
+        });
+        return projects;
+    }
+
+    public static RateCategory create(String name) {
+        RateCategory voteCat = new RateCategory(name);
+        voteCat.save();
+        return voteCat;
+    }
+
+    public RateCategory(String name){
+        this.name = name;
+    }
     public void setName(String name) {
         this.name = name;
     }
@@ -43,23 +61,12 @@ public class RateCategory extends Model {
         return id;
     }
 
-    public List<Project> getBestFromCat() {
-        List<Project> Plist = Project.getAllProjects();
-        List<Rate> Vlist = new ArrayList<Rate>();
-        final RateCategory currentCat = this;
-
-        Collections.sort(Plist, new Comparator<Project>() {
-            public int compare(Project o1, Project o2) {
-                if (o1.getAvgFromCat(currentCat) == o2.getAvgFromCat(currentCat))
-                    return 0;
-                return o1.getAvgFromCat(currentCat) > o2.getAvgFromCat(currentCat) ? -1 : 1;
-            }
-        });
-        return Plist;
-    }
-
-    public static List<RateCategory> getAllCategories() {
-        return find.all();
+    public boolean equals(RateCategory other) {
+        if (this.id == other.getId()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public String validate() {
@@ -79,11 +86,6 @@ public class RateCategory extends Model {
         }
 
         return null;
-    }
-    public static RateCategory create(String name) {
-        RateCategory votecat = new RateCategory(name);
-        votecat.save();
-        return votecat;
     }
 
 }

@@ -76,8 +76,11 @@
                    <h3>Best Application</h3>
                    <img src="@routes.Assets.at("/img/trophy-icon.png")" >
                    <br>
-                   @Vote.getBestProject.map { project =>
-                       @project.getProjectName()
+                   @Vote.findBestProject().map { project =>
+                       <h5>
+                           @project.getName()
+                       </h5>
+                       <p>@project.getTotalVoteScores</p>
                        <div class="progress">
                            <div class="progress-bar" role="progressbar" aria-valuenow="@project.getPercentVoteScores()" aria-valuemin="0" aria-valuemax="100" style="width: @project.getPercentVoteScores%;">
                                @project.getPercentVoteScores
@@ -86,14 +89,15 @@
                    }
                </div>
            </div>
+
            <div class="row" style="margin-top: 10px; margin-bottom: 20px; padding: 25px;">
                @catList.map { cat =>
                    <div class="col-lg-6 text-center" style="margin-top: 10px; margin-bottom: 10px; padding: 50px;">
                        <h3>Best of @cat.getName()</h3>
                        <img src="@routes.Assets.at("/img/trophy-icon.png")" >
                        @cat.getBestFromCat.map { project =>
-                           <h5>@project.getProjectName()</h5>
-                           <p>@project.getPercentFromCat(cat)</p>
+                           <h5>@project.getName()</h5>
+                           <p>@project.getTotalScoresFromCat(cat)</p>
                            <div class="progress">
                                <div class="progress-bar" role="progressbar" aria-valuenow="@project.getPercentFromCat(cat)" aria-valuemin="0" aria-valuemax="100" style="width: @project.getPercentFromCat(cat)%;">
                                    @project.getPercentFromCat(cat)%

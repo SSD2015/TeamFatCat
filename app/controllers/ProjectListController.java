@@ -23,7 +23,7 @@ public class ProjectListController extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result toProjectListPage() {
         User user = User.findByUsername(request().username());
-        List<Project> projects = Project.getAllProjects();
+        List<Project> projects = Project.findAll();
 
         response().setHeader("Cache-Control","no-cache");
         return ok(projectlist.render(user, projects));

@@ -1,50 +1,41 @@
 package controllers;
 
 import models.*;
+import play.data.DynamicForm;
 import play.mvc.*;
 import play.data.Form;
 import views.html.*;
 
-import play.mvc.Http.MultipartFormData;
-import play.mvc.Http.MultipartFormData.FilePart;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import java.io.File;
 
 public class ProjectController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddProjectPage() {
-        List<Team> teams = Team.getAllTeams();
-        List<Project> projects = Project.getAllProjects();
-        for( int i=0;i<projects.size();i++ ) {
-            long teamId = projects.get(i).getTeamId();
-            for( int j=0;j<teams.size();j++ ) {
-                if( teams.get(j).getId() == teamId ) {
-                    teams.remove(j);
-                    break;
-                }
-            }
-        }
+        List<Project> projects = Project.findAll();
+        List<Team> teamWithNoProject = Team.findTeamWithNoProject();
 
         User user = User.findByUsername(request().username());
         response().setHeader("Cache-Control","no-cache");
-        return ok(addproject.render(user, projects, teams, Form.form(Project.class)));
+        return ok(addproject.render(user, projects, teamWithNoProject, ""));
     }
 
     @Security.Authenticated(AdminSecured.class)
     public static Result addProject() {
-        Form<Project> projectForm = Form.form(Project.class).bindFromRequest();
-        if (projectForm.hasErrors()) {
+        DynamicForm form = new DynamicForm().bindFromRequest();
+        Project project = Project.create(form.get("name"), form.get("description"));
+
+        if (project == null) {
             User user = User.findByUsername(request().username());
-            List<Team> teamList = Team.getAllTeams();
-            List<Project> proList = Project.getAllProjects();
-            return badRequest(addproject.render(user, proList, teamList, projectForm));
+            List<Team> teams = Team.findTeamWithNoProject();
+            List<Project> projects = Project.findAll();
+            return badRequest(addproject.render(user, projects, teams, "Cannot create project"));
         }
-        Project project = projectForm.get();
-        project.save();
+
+        Team team = Team.findById(Long.parseLong(form.get("teamId")));
+        team.setProject(project);
+        team.update();
+
         return redirect(routes.ProjectController.toAddProjectPage());
     }
 
@@ -52,18 +43,9 @@ public class ProjectController extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result toProjectPage(Long projectId) {
         User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
-
-        long teamId = project.getTeamId();
-        Team team = Team.findById(teamId);
-        team.deleteNullMembers();
-
-        List<Long> teamMembers = team.getMemberList();
-        List<User> members = new ArrayList<User>();
-        for(int i = 0 ; i < teamMembers.size() ; i++) {
-            User member = User.findById(teamMembers.get(i));
-            members.add(member);
-        }
+        Project project_model = Project.findById(projectId);
+        Team team = Team.findByProject(project_model);
+        List<User> members = User.findByTeam(team);
 
         Image avatar = Image.findAvatar(projectId);
         long avatarId;
@@ -73,8 +55,9 @@ public class ProjectController extends Controller {
             avatarId = avatar.getId();
         }
         List<Image> screenshots = Image.findImagesByProject(projectId);
+
         response().setHeader("Cache-Control","no-cache");
-        return ok(views.html.project.render(user, project, members, avatarId, screenshots));
+        return ok(project.render(user, project_model, members, avatarId, screenshots));
     }
 
     @Security.Authenticated(Secured.class)

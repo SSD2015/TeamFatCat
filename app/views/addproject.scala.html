@@ -1,4 +1,4 @@
-@(user: User, projects: List[Project], teams: List[Team], form: Form[Project])
+@(user: User, projects: List[Project], teams: List[Team], message: String)
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -70,23 +70,19 @@
         <div class="row" style="margin-top: 150px;">
             <div class="col-sm-5 col-sm-offset-4 text-center">
                 <form action="@routes.ProjectController.addProject()" method="post" class="form-horizontal" role="form">
-                    @if(form.hasGlobalErrors) {
-                        <p class="error">
-                        @form.globalError.message
-                        </p>
-                    }
+                    <p>@message</p>
 
                     <div class="form-group">
 
                         <label class="col-sm-4 control-label">Project Name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="projectName"/>
+                            <input class="form-control" id="focusedInput" type="text" name="name"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Project Description</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="projectDesc"/>
+                            <input class="form-control" id="focusedInput" type="text" name="description"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -119,13 +115,18 @@
                         <th>Team ID</th>
                         <th>Team Name</th>
                     </tr>
-                    @projects.map { list =>
+                    @projects.map { project =>
                         <tr>
-                            <td>@list.getId()</td>
-                            <td>@list.getProjectName()</td>
-                            <td>@list.getBriefDesc()</td>
-                            <td>@Team.findById(list.getTeamId).getId()</td>
-                            <td>@Team.findById(list.getTeamId).getName()</td>
+                            <td>@project.getId()</td>
+                            <td>@project.getName()</td>
+                            <td>@project.getBriefDesc()</td>
+                            @if(Team.findByProject(project) != null) {
+                                <td>@Team.findByProject(project).getId()</td>
+                                <td>@Team.findByProject(project).getName()</td>
+                            } else {
+                                <td>No team</td>
+                                <td>No team</td>
+                            }
                         </tr>
                     }
                 </table>

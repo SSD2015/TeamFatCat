@@ -23,42 +23,22 @@ public class RateController extends Controller {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
 
-        List<RateCategory> ratecatList = RateCategory.all();
-        int size = ratecatList.size();
+        List<RateCategory> rateCategories = RateCategory.findAll();
+        int size = rateCategories.size();
         for (int i = 0 ; i < size ; i++) {
-            if (form.get(ratecatList.get(i).getName()) != null) {
-                Rate rate = Rate.getUniqueRate(request().username(), Project.findById(projectId),ratecatList.get(i));
-                if(rate == null) {
-                    rate = new Rate();
-                    int newScore = Integer.parseInt(form.get(ratecatList.get(i).getName()));
-                    String isNoRate = form.get( "noRate"+ratecatList.get(i).getName() );
-                    if( isNoRate != null )
-                        rate.setScore( -1 );
-                    else {
-                        if (newScore > 5 || newScore < 0) {
-                            return redirect(routes.Application.toErrorPage());
-                        }
-                        rate.setScore(newScore);
-                    }
-                    rate.setUser(user);
-                    rate.setProject(project);
-                    rate.setCategory(ratecatList.get(i));
-                    rate.setTimestamp();
-                    rate.save();
+            if (form.get(rateCategories.get(i).getName()) != null) {
+                boolean isNotRated = (form.get("noRate"+rateCategories.get(i).getName()) != null);
+
+                Rate rate = null;
+
+                if (isNotRated) {
+                    Rate.create(user, project, rateCategories.get(i), -1);
+                } else {
+                    Rate.create(user, project, rateCategories.get(i), Integer.parseInt(form.get(rateCategories.get(i).getName())));
                 }
-                else{
-                    int newScore = Integer.parseInt(form.get(ratecatList.get(i).getName()));
-                    String isNoRate = form.get( "noRate"+ratecatList.get(i).getName() );
-                    if( isNoRate != null )
-                        rate.setScore( -1 );
-                    else {
-                        if (newScore > 5 || newScore < 0) {
-                            return redirect(routes.Application.toErrorPage());
-                        }
-                        rate.setScore(newScore);
-                    }
-                    rate.setTimestamp();
-                    Ebean.update(rate);
+
+                if (rate == null) {
+                    return toBadRequestRatePage(project.getId());
                 }
             } else {
                 redirect(routes.Application.toErrorPage());
@@ -70,29 +50,39 @@ public class RateController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result toRatePage(long projectId) {
-        return redirect(routes.RateController.toRateClosedPage(projectId));
-//        User user = User.findByUsername(request().username());
-//        Project project = Project.findById(projectId);
-//        List<RateCategory> rateCategories = RateCategory.all();
-//
-//        response().setHeader("Cache-Control","no-cache");
-//        return ok(rate.render(user,project,rateCategories));
+        //return redirect(routes.RateController.toRateClosedPage(projectId));
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        List<RateCategory> rateCategories = RateCategory.findAll();
+
+        response().setHeader("Cache-Control","no-cache");
+        return ok(rate.render(user,project,rateCategories));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Status toBadRequestRatePage(long projectId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        List<RateCategory> rateCategories = RateCategory.findAll();
+
+        response().setHeader("Cache-Control","no-cache");
+        return badRequest(rate.render(user, project, rateCategories));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result toRateClosedPage(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        List<RateCategory> rateCategories = RateCategory.all();
+        List<RateCategory> rateCategories = RateCategory.findAll();
 
         response().setHeader("Cache-Control","no-cache");
         return ok(voteisnowclosed.render(user, project));
     }
 
-    @Security.Authenticated(AdminSecured.class)
+    @Security.Authenticated(Secured.class)
     public static Result toResultPage() {
-        List<Rate> rateList = Rate.getAllRates();
-        List<RateCategory> catList = RateCategory.all();
+        List<Rate> rateList = Rate.findAll();
+        List<RateCategory> catList = RateCategory.findAll();
         User user = User.findByUsername(request().username());
 
         response().setHeader("Cache-Control","no-cache");
@@ -104,7 +94,7 @@ public class RateController extends Controller {
         Form<RateCategory> rateCatForm = Form.form(RateCategory.class).bindFromRequest();
         if (rateCatForm.hasErrors()) {
             User user = User.findByUsername(request().username());
-            List<RateCategory> rateCatList = RateCategory.getAllCategories();
+            List<RateCategory> rateCatList = RateCategory.findAll();
             return badRequest(addratecat.render(user, rateCatList, rateCatForm));
         }
         RateCategory rateCat = rateCatForm.get();
@@ -114,7 +104,7 @@ public class RateController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddRateCatPage(){
-        List<RateCategory> ratecatlist = RateCategory.all();
+        List<RateCategory> ratecatlist = RateCategory.findAll();
         User user = User.findByUsername(request().username());
 
         response().setHeader("Cache-Control","no-cache");

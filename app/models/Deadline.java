@@ -35,13 +35,11 @@ public class Deadline extends Model {
 
     private static Finder<Long, Deadline> find = new Finder<Long, Deadline>(Long.class, Deadline.class);
 
-    public Deadline(int year, int month, int day, int hour, int min, int sec) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.hour = hour;
-        this.min = min;
-        this.sec = sec;
+    public static Deadline getDeadline() {
+        if (find.all().size() == 0) {
+            Deadline.create(2015, 4, 23, 10, 0, 0);
+        }
+        return find.all().get(0);
     }
 
     public static Deadline create(int year, int month, int day, int hour, int min, int sec) {
@@ -60,6 +58,15 @@ public class Deadline extends Model {
         deadline.setSec(sec);
         deadline.update();
         return deadline;
+    }
+
+    public Deadline(int year, int month, int day, int hour, int min, int sec) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.hour = hour;
+        this.min = min;
+        this.sec = sec;
     }
 
     public int getYear() {
@@ -114,10 +121,4 @@ public class Deadline extends Model {
         return this.id;
     }
 
-    public static Deadline getDeadline() {
-        if (find.all().size() == 0) {
-            Deadline.create(2015, 4, 21, 18, 0, 0);
-        }
-        return find.all().get(0);
-    }
 }

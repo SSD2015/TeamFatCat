@@ -142,4 +142,12 @@ public class Image extends Model {
     public static Image findByNameAndProject(String name, long projectId) {
         return find.where().eq("name", Image.AVT).eq("projectId", projectId).findUnique();
     }
+
+    public boolean equals(Image other) {
+        if (this.id == other.getId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
