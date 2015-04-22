@@ -26,6 +26,8 @@ POST        /vote=:projectId                controllers.VoteController.vote(proj
 #POST        /uploadimage/upload             controllers.ProjectController.upload()
 
 GET         /editproject=:projectId         controllers.ImageController.toEditProjectPage(projectId: Long)
+POST        /editprojectdesc                controllers.ProjectController.editProjectDesc(projectId: Long)
+POST        /editprojectname                controllers.ProjectController.editProjectName(projectId: Long)
 POST        /upload=:projectId              controllers.ImageController.upload(projectId: Long, tag: String)
 GET         /images=:id                     controllers.ImageController.getImage(id: Long)
 POST        /deleteimage                    controllers.ImageController.deleteImage(projectId : Long, imageId: Long)
