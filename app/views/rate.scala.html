@@ -91,7 +91,8 @@
                                         border-radius: 10px;
                                     }
                                 </style>
-                                @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null) {
+                                @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null
+                                        && Rate.getUniqueRate(user.getUsername, project, list).getScore() != -1) {
                                     <input id="ratestar" name="@list.getName()" value = "@Rate.getUniqueRate(user.getUsername, project, list).getScore()"
                                     type="number" class="rating" min=0 max=5 step=1 data-size="md" >
                                 } else{
