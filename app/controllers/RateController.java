@@ -110,5 +110,4 @@ public class RateController extends Controller {
         return ok(addratecat.render(user, ratecatlist, Form.form(RateCategory.class)));
     }
 
-
 }

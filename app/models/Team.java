@@ -69,15 +69,20 @@ public class Team extends Model {
         return users;
     }
 
-    public void removeMember( long id ) {
-        String[] list = this.members.split(",");
-        String newMember = "";
-        for (int i = 0 ; i < list.length ; i++) {
-            if (!list[i].equals(String.valueOf(id))) {
-                newMember += list[i];
+    public boolean removeMember( long id ) {
+        List<User> users = getMembers();
+        int bak = users.size();
+        for( int i=0; i<bak ;i++ ) {
+            if( users.get(i).getId() == id ) {
+                users.remove(i);
+                break;
             }
         }
-        this.members = newMember;
+        if( bak != users.size() ) {
+            setMembers( users );
+            return true;
+        }
+        return false;
     }
 
     public void setMembers( List<User> list ) {

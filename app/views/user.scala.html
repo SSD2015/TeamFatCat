@@ -142,6 +142,12 @@
                                 <td>@list.getFirstName()</td>
                                 <td>@list.getLastName()</td>
                                 <td>@list.getTypeName()</td>
+                                <td>
+                                    <form action="@routes.UserController.removeUser()" method="post" class="form-horizontal" role="form">
+                                        <input type="hidden" value=@list.getId() name="uId">
+                                        <button class="btn btn-danger">X</button>
+                                    </form>
+                                </td>
                             </tr>
                         }
                     </thead>

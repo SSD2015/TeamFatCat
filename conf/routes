@@ -37,6 +37,7 @@ POST        /admin/addratecat               controllers.RateController.addRateCa
 
 GET         /admin/user                     controllers.UserController.toAddUserPage()
 POST        /admin/user/add                 controllers.UserController.addUser()
+POST        /admin/user/remove              controllers.UserController.removeUser()
 #POST        /admin/user/clear               controllers.UserController.removeAllUsers()
 
 GET         /admin/team                     controllers.TeamController.toTeamPage()
