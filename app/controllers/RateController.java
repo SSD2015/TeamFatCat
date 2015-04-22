@@ -84,9 +84,9 @@ public class RateController extends Controller {
         List<Rate> rateList = Rate.getAllRates();
         List<RateCategory> catList = RateCategory.all();
         User user = User.findByUsername(request().username());
-
+        List<Project> projList = Project.getAllProjects();
         response().setHeader("Cache-Control","no-cache");
-        return ok(result.render(user, rateList,catList));
+        return ok(result.render(user, rateList,catList,projList));
     }
 
     @Security.Authenticated(AdminSecured.class)
