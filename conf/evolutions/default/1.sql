@@ -87,50 +87,23 @@ create index ix_vote_project_5 on vote (project_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
-
-drop table deadline;
-
-drop table image;
-
-drop table project;
-
-drop table rate;
-
-drop table vote_category;
-
-drop table team;
-
-drop table user;
-
-drop table vote;
-
-<<<<<<< HEAD
-
-# --- !Downs
-
--- SET FOREIGN_KEY_CHECKS=0;
---
--- drop table deadline;
---
--- drop table image;
---
--- drop table project;
---
--- drop table rate;
---
--- drop table vote_category;
---
--- drop table team;
---
--- drop table user;
---
--- drop table vote;
---
--- drop table vote_category;
---
--- SET FOREIGN_KEY_CHECKS=1;
-=======
-SET FOREIGN_KEY_CHECKS=1;
->>>>>>> 588441a98b4912eb7a71e5b54f134c3f65b466ca
+# SET FOREIGN_KEY_CHECKS=0;
+#
+# drop table deadline;
+#
+# drop table image;
+#
+# drop table project;
+#
+# drop table rate;
+#
+# drop table vote_category;
+#
+# drop table team;
+#
+# drop table user;
+#
+# drop table vote;
+#
+# SET FOREIGN_KEY_CHECKS=1;
 

@@ -110,5 +110,20 @@ public class RateController extends Controller {
         return ok(addratecat.render(user, ratecatlist, Form.form(RateCategory.class)));
     }
 
+    @Security.Authenticated(AdminSecured.class)
+    public static Result removeRateByCatId(){
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        RateCategory rateCat = RateCategory.findById(Long.parseLong(form.data().get("cId")));
+        List<Rate>  allRates = Rate.getAllRates();
+        for( Rate rate: allRates){
+            if(rateCat.getId() == rate.getCategory().getId()){
+                rate.delete();
+            }
+
+        }
+        rateCat.delete();
+        return redirect(routes.RateController.toAddRateCatPage());
+    }
+
 
 }

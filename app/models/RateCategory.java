@@ -43,6 +43,10 @@ public class RateCategory extends Model {
         return id;
     }
 
+    public static RateCategory findById(long id) {
+        return find.byId(id);
+    }
+
     public List<Project> getBestFromCat() {
         List<Project> Plist = Project.getAllProjects();
         List<Rate> Vlist = new ArrayList<Rate>();
