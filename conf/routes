@@ -19,6 +19,7 @@ POST        /project                        controllers.ProjectController.rate()
 
 GET         /rate/project=:projectId        controllers.RateController.toRatePage(projectId: Long)
 POST        /rate                           controllers.RateController.rate(projectId: Long)
+POST        /rate/removeRateCat             controllers.RateController.removeRateByCatId()
 
 POST        /vote=:projectId                controllers.VoteController.vote(projectId: Long)
 #GET         /uploadimage                    controllers.ProjectController.toUploadPage()
@@ -47,6 +48,7 @@ POST        /admin/team/removeMember        controllers.TeamController.removeMem
 
 GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
 POST        /admin/addproject               controllers.ProjectController.addProject()
+POST        /admin/addproject/remove        controllers.ProjectController.removeProjById()
 
 GET         /admin/result                   controllers.RateController.toResultPage()
 
