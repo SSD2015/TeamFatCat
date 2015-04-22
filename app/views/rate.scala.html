@@ -91,7 +91,12 @@
                                         border-radius: 10px;
                                     }
                                 </style>
-                                <input id="ratestar" name="@list.getName()" type="number" class="rating" min=0 max=5 step=1 data-size="md" >
+                                @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null) {
+                                    <input id="ratestar" name="@list.getName()" value = "@Rate.getUniqueRate(user.getUsername, project, list).getScore()"
+                                    type="number" class="rating" min=0 max=5 step=1 data-size="md" >
+                                } else{
+                                    <input id="ratestar" name="@list.getName()" type="number" class="rating" min=0 max=5 step=1 data-size="md" >
+                                }
                                 <input id="noRate@list.getName()" name="noRate@list.getName()" type="checkbox" value="isNoRate">Not Rated
 
                             </div>
