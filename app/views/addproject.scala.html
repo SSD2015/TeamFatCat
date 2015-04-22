@@ -1,4 +1,4 @@
-@(projects: List[Project], teams: List[Team])
+@(user: User, projects: List[Project], teams: List[Team], form: Form[Project])
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,6 +6,8 @@
     <title>User</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -13,30 +15,76 @@
     <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
+        <div class="container">
+
             <div class="navbar-header">
-                <a class="navbar-brand" href="/login">INDEX</a>
+                <a class="navbar-brand" href="/projectlist">eXceedvote</a>
             </div>
-            <div style="color: #f9f2f4;">
-                <h2>Add Project</h2>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <div class="navbar-text">
+                            <script src="@routes.Assets.at("js/countdown.js")"></script>
+                            <script>
+                            setcountdown(@Deadline.getDeadline().getYear(),
+                                @Deadline.getDeadline().getMonth(),
+                                @Deadline.getDeadline().getDay(),
+                                @Deadline.getDeadline().getHour(),
+                                @Deadline.getDeadline().getMin(),
+                                @Deadline.getDeadline().getSec());
+                            </script>
+                            <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
+                                <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
+                                    </layer>
+                            </ilayer>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @*<li><a href="#">Link</a></li>*@
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a>Hello, </a></li>
+                        <li><a><h4>@user.getFirstName() @user.getLastName()</h4></a></li>
+                        <li class="divider"></li>
+                        @if(user.getType() == User.ADMIN) {
+                            <li><a href="/admin">Admin</a></li>
+                        }
+                        <li><a href="@routes.Application.logout()">Log out</a></li>
+                    </ul>
+                </li>
+                </ul>
             </div>
+            <ol class="breadcrumb" style="background: #f0f0f0;">
+                <li><a href="/projectlist">Project List</a></li>
+                <li><a href="/admin">Admin</a></li>
+                <li class="active">Add Project</li>
+            </ol>
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="" style="width=100%; min-height: 100px;"></div>
-            <div class="col-sm-4 col-sm-offset-4 text-center">
+    <div class="container">
+        <div class="row" style="margin-top: 150px;">
+            <div class="col-sm-5 col-sm-offset-4 text-center">
                 <form action="@routes.ProjectController.addProject()" method="post" class="form-horizontal" role="form">
+                    @if(form.hasGlobalErrors) {
+                        <p class="error">
+                        @form.globalError.message
+                        </p>
+                    }
+
                     <div class="form-group">
 
-                        <label class="col-sm-4 control-label">Project name</label>
+                        <label class="col-sm-4 control-label">Project Name</label>
                         <div class="col-sm-6">
                             <input class="form-control" id="focusedInput" type="text" name="projectName"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">Project description</label>
+                        <label class="col-sm-4 control-label">Project Description</label>
                         <div class="col-sm-6">
                             <input class="form-control" id="focusedInput" type="text" name="projectDesc"/>
                         </div>
@@ -52,30 +100,37 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary">Add project</button>
+                    <button class="btn btn-primary">Add Project</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px;">
-        <h2>Project Lists</h2>
-        <table class="table table-hover">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>TeamId</th>
-            </tr>
-            @projects.map { list =>
-                <tr>
-                    <td>@list.getId()</td>
-                    <td>@list.getProjectName()</td>
-                    <td>@list.getBriefDesc()</td>
-                    <td>@list.getId()</td>
-                </tr>
-            }
-        </table>
+    <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
+        <div class="container">
+            <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
+                <h2 class="text-center"><b>Project Lists</b></h2>
+                <h2></h2>
+                <table class="table table-condensed">
+                    <tr class="warning">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Team ID</th>
+                        <th>Team Name</th>
+                    </tr>
+                    @projects.map { list =>
+                        <tr>
+                            <td>@list.getId()</td>
+                            <td>@list.getProjectName()</td>
+                            <td>@list.getBriefDesc()</td>
+                            <td>@Team.findById(list.getTeamId).getId()</td>
+                            <td>@Team.findById(list.getTeamId).getName()</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
     </div>
 
 </body>

@@ -1,15 +1,10 @@
-@(user: User, rateList: List[Rate], catList: List[RateCategory])
+@(user: User, voteList: List[Vote])
 <!DOCTYPE html>
 <html>
     <head lang="en">
         <meta charset="UTF-8">
-        <title>Result</title>
+        <title>Rate Log</title>
         <meta name="viewport" content="width=device-width">
-        <style>
-        #canvas-holder{
-            width:25%;
-        }
-        </style>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -18,7 +13,6 @@
 
         <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
-        <script src="@routes.Assets.at("js/Chart.js")"></script>
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -48,6 +42,8 @@
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+
+                        @*<li><a href="#">Link</a></li>*@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="dropdown-menu" role="menu">
@@ -63,93 +59,41 @@
                     </ul>
                 </div>
                 <ol class="breadcrumb" style="background: #f0f0f0;">
-                    <li><a href="/projectlist">Project list</a></li>
+                    <li><a href="/projectlist">Project List</a></li>
                     <li><a href="/admin">Admin</a></li>
-                    <li class="active">Result</li>
+                    <li class="active">Vote Log</li>
                 </ol>
             </div>
         </nav>
 
-       <div class="container">
-           <div class="row" style="margin-top: 100px; margin-bottom: 10px; padding: 25px;">
-               <div class="col-lg-12 text-center">
-                   <h3>Best Application</h3>
-                   <img src="@routes.Assets.at("/img/trophy-icon.png")" >
-                   <br>
-                   @Vote.getBestProject.map { project =>
-                       @project.getProjectName()
-                       <div class="progress">
-                           <div class="progress-bar" role="progressbar" aria-valuenow="@project.getPercentVoteScores()" aria-valuemin="0" aria-valuemax="100" style="width: @project.getPercentVoteScores%;">
-                               @project.getPercentVoteScores
-                           </div>
-                       </div>
-                   }
-               </div>
-           </div>
-           <div class="row" style="margin-top: 10px; margin-bottom: 20px; padding: 25px;">
-               @catList.map { cat =>
-                   <div class="col-lg-6 text-center" style="margin-top: 10px; margin-bottom: 10px; padding: 50px;">
-                       <h3>Best of @cat.getName()</h3>
-                       <img src="@routes.Assets.at("/img/trophy-icon.png")" >
-                       @cat.getBestFromCat.map { project =>
-                           <h5>@project.getProjectName()</h5>
-                           <p>@project.getPercentFromCat(cat)</p>
-                           <div class="progress">
-                               <div class="progress-bar" role="progressbar" aria-valuenow="@project.getPercentFromCat(cat)" aria-valuemin="0" aria-valuemax="100" style="width: @project.getPercentFromCat(cat)%;">
-                                   @project.getPercentFromCat(cat)%
-                               </div>
-                           </div>
-                       }
-                   </div>
-               }
 
-           </div>
-       </div>
 
-        <script>
+        <div class="container-fluid" style="background-color: #ffffff; margin-top: 100px; padding: 10px; padding-bottom: 30px;">
+            <div class="container">
+                <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
+                    <h2 class="text-center"><b>Vote Log</b></h2>
+                    <h2></h2>
+                    <table class="table table-condensed" id="usersList">
+                        <thead>
+                            <tr class="warning">
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Vote for</th>
+                                <th>Time</th>
+                            </tr>
+                            @voteList.map { list =>
+                                <tr>
+                                    <td>@list.getId()</td>
+                                    <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
+                                    <td>@list.getProject().getProjectName</td>
+                                    <td>@list.getTimestamp()</td>
+                                </tr>
+                            }
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        var dataGen = function(){
-
-        }
-        var doughnutData = [
-        {
-        value: 4,
-        color:"#F7464A",
-        highlight: "#FF5A5E",
-        label: "Manat"
-        },
-        {
-        value: 3.5,
-        color: "#46BFBD",
-        highlight: "#5AD3D1",
-        label: "Fatcat"
-        },
-        {
-        value: 5,
-        color: "#FDB45C",
-        highlight: "#FFC870",
-        label: "Saint4"
-        },
-        {
-        value: 3.5,
-        color: "#949FB1",
-        highlight: "#A8B3C5",
-        label: "2Big2Slim"
-        },
-        {
-        value: 4,
-        color: "#4D5360",
-        highlight: "#616774",
-        label: "Dark Grey"
-        }
-
-        ];
-
-        window.onload = function(){
-        var ctx = document.getElementById("chart-area").getContext("2d");
-        window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
-        };
-
-        </script>
     </body>
 </html>

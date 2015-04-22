@@ -1,4 +1,4 @@
-@(form: Form[User], userList: List[User])
+@(form: Form[User], userList: List[User], user: User)
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -6,34 +6,73 @@
     <title>User</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
 </head>
 <body>
 
     <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script type='text/javascript' src="@routes.Assets.at("js/user.js")"></script>
     <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="col-sm-1 navbar-header">
-                <a href="/login"><h2>LOGIN</h2></a>
-            </div>
-            <div class="col-sm-4" style="color: #f9f2f4;">
-                <h2>Register</h2>
-            </div>
-            <div class="col-sm-offset-1 navbar-right">
-                <h2>Logout</h2>
+        <div class="container">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/projectlist">eXceedvote</a>
             </div>
 
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <div class="navbar-text">
+                            <script src="@routes.Assets.at("js/countdown.js")"></script>
+                            <script>
+                            setcountdown(@Deadline.getDeadline().getYear(),
+                                @Deadline.getDeadline().getMonth(),
+                                @Deadline.getDeadline().getDay(),
+                                @Deadline.getDeadline().getHour(),
+                                @Deadline.getDeadline().getMin(),
+                                @Deadline.getDeadline().getSec());
+                            </script>
+                            <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
+                                <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
+                                    </layer>
+                            </ilayer>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @*<li><a href="#">Link</a></li>*@
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a>Hello, </a></li>
+                        <li><a><h4>@user.getFirstName() @user.getLastName()</h4></a></li>
+                        <li class="divider"></li>
+                        @if(user.getType() == User.ADMIN) {
+                            <li><a href="/admin">Admin</a></li>
+                        }
+                        <li><a href="@routes.Application.logout()">Log out</a></li>
+                    </ul>
+                </li>
+                </ul>
+            </div>
+            <ol class="breadcrumb" style="background: #f0f0f0;">
+                <li><a href="/projectlist">Main</a></li>
+                <li><a href="/admin">Admin</a></li>
+                <li class="active">Add User</li>
+            </ol>
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="" style="width=100%; min-height: 100px;"></div>
+    <div class="container">
+        <div class="row" style="margin-top: 150px;">
             <div class="col-sm-4 col-sm-offset-4 text-center">
-                <form action="@routes.Application.addUser()" method="post" class="form-horizontal" role="form">
-                    <h1>Register</h1>
+                <form action="@routes.UserController.addUser()" name="form" method="post" class="form-horizontal" role="form"
+                autocomplete="on">
+                    <h2><b>Register</b></h2>
                     @if(form.hasGlobalErrors) {
                         <p class="error">
                         @form.globalError.message
@@ -42,33 +81,35 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Username</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="username"/>
+                            <input class="form-control" id="focusedInput" type="text" name="username" required=""/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Password</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="password" name="password"/>
+                            <input class="form-control" id="focusedInput" type="password" name="password" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">First Name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="firstName"/>
+                            <input class="form-control" id="focusedInput" type="text" name="firstName" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Last Name</label>
                         <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="lastName"/>
+                            <input class="form-control" id="focusedInput" type="text" name="lastName" required/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-4 control-label">Type</label>
                         <div class="col-sm-6">
                             <select class="form-control" id="sel1" type="number" name="type">
-                                <option>1</option>
-                                <option>2</option>
+                                <option value="@User.STUDENT">Student</option>
+                                <option value="@User.ORGANIZER">Organizer</option>
+                                <option value="@User.INSTRUCTOR">Instructor</option>
+                                <option value="@User.ADMIN">Admin</option>
                             </select>
                         </div>
                     </div>
@@ -76,38 +117,39 @@
                 </form>
             </div>
         </div>
+    </div>
 
-        <div class="row" style="background-color: #d0e9c6; margin-top: 50px; padding: 50px; padding-bottom: 100px;">
-            <h2>User Lists</h2>
-            <table class="table table-hover" id="usersList">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Type</th>
-                    </tr>
-                    @userList.map { list =>
-                        <tr>
-                            <td>@list.getId()</td>
-                            <td>@list.getUsername()</td>
-                            <td>@list.getPassword()</td>
-                            <td>@list.getFirstName()</td>
-                            <td>@list.getLastName()</td>
-                            <td>@list.getType()</td>
+    <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
+        <div class="container">
+            <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
+                <h3 class="text-center"><b>User Lists</b></h3>
+                <h2></h2>
+                <table class="table table-condensed" id="usersList">
+                    <thead>
+                        <tr  class="warning">
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Type</th>
                         </tr>
-                    }
-                </thead>
-                <tbody>
+                        @userList.map { list =>
+                            <tr>
+                                <td>@list.getId()</td>
+                                <td>@list.getUsername()</td>
+                                <td>@list.getPassword()</td>
+                                <td>@list.getFirstName()</td>
+                                <td>@list.getLastName()</td>
+                                <td>@list.getTypeName()</td>
+                            </tr>
+                        }
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
-
-            @helper.form(routes.Application.clearUsers()) {
-                <button class="btn btn - danger">Clear all</button>
-            }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

@@ -2,12 +2,10 @@ package models;
 
 import play.db.ebean.Model;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.List;
 //import play.db.ebean.Model;
 //import java.sql.Timestamp;
 
@@ -19,6 +17,11 @@ public class Team extends Model {
 
     private String name;
     private String members;
+
+    public Team(String name, String members){
+        this.name = name;
+        this.members = members;
+    }
 
     public String getName(){
         return name;
@@ -41,13 +44,17 @@ public class Team extends Model {
 
     public Long getId() { return id; }
 
-    public List<Long> getMembersList() {
+    public List<Long> getMemberList() {
         List<Long> memberLists = new ArrayList<Long>();
-        if( this.members.length() <= 0 )
+        if(this.members == null || this.members.length() <= 0)
             return memberLists;
         String[] list = this.members.split(",");
         for (int i = 0; i < list.length ; i++ )
-            memberLists.add( Long.parseLong( list[i] ) );
+            try {
+                memberLists.add(Long.parseLong(list[i]));
+            } catch(Exception e) {
+
+            }
         return memberLists;
     }
 
@@ -55,22 +62,27 @@ public class Team extends Model {
         List<User> users = new ArrayList<User>();
         if (this.members == null)
             return users;
-        List<Long> list = this.getMembersList();
+        List<Long> list = this.getMemberList();
         for(int i = 0 ; i < list.size() ; i++) {
-            users.add(User.find.byId(list.get( i )));
+            users.add(User.findById(list.get(i)));
         }
         return users;
     }
 
-    public void removeMember( long id ) {
-        List<User> lists = this.getMembers();
-        List<User> newLists = new ArrayList<User>();
-        for( User u: lists ) {
-            if( u.getId() != id ) {
-                newLists.add(u);
+    public boolean removeMember( long id ) {
+        List<User> users = getMembers();
+        int bak = users.size();
+        for( int i=0; i<bak ;i++ ) {
+            if( users.get(i).getId() == id ) {
+                users.remove(i);
+                break;
             }
         }
-        this.setMembers( newLists );
+        if( bak != users.size() ) {
+            setMembers( users );
+            return true;
+        }
+        return false;
     }
 
     public void setMembers( List<User> list ) {
@@ -82,20 +94,50 @@ public class Team extends Model {
         for( int i = 1 ; i < list.size() ; i++ ) {
             this.members += "," + list.get(i).getId();
         }
-
     }
 
-    public void addMembers(User member) {
-        if(count() > 0) {
-            this.members += ",";
-        }
+    public boolean addMember(User member) {
         if(count() == 0) {
-            this.members = member.getId() + "";
+            this.members = String.valueOf(member.getId());
+        } else if (count() > 0) {
+            String[] membersId = members.split(",");
+            for (int i = 0 ; i < membersId.length ; i++) {
+                if (String.valueOf(member.getId()).equals(membersId[i])) {
+                    return false;
+                }
+            }
+
+            this.members += "," + member.getId();
         }
-        else
-            this.members += member.getId();
+
         this.update();
+
+        return true;
     }
+
+    public void deleteNullMembers() {
+        List<Long> list = getMemberList();
+        for (int i = 0 ; i < list.size() ; i++) {
+            if (User.findById(list.get(i)) == null) {
+                removeMember(list.get(i));
+            }
+        }
+    }
+
+    public static List<Team> getAllTeams() {
+        return find.all();
+    }
+
+    public static Team findById(long id) {
+        return find.byId(id);
+    }
+
+    public static Team findByName(String name) {
+        return find.where().eq("name", name).findUnique();
+    }
+
+    private static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
+
 
     public String validate() {
         List<Team> teamList = find.all();
@@ -103,17 +145,8 @@ public class Team extends Model {
             return "Team Name is required";
         }
 
-        char x;
-
-        for (int i = 0 ; i < this.name.length() ; i++) {
-            x = name.charAt(i);
-            if (!((x >= 'A' && x <= 'Z') || (x >= 'a' && x <= 'z') || (x >= '0' && x <= '9'))) {
-                return "Team Name should not contain special characters";
-            }
-        }
-
-        if (this.name.length() < 6 || this.name.length() > 20) {
-            return "Team Name should have 6-20 characters";
+        if (this.name.length() < 1 || this.name.length() > 20) {
+            return "Team name must not exceed 20 characters";
         }
 
         for (Team t: teamList) {
@@ -124,6 +157,24 @@ public class Team extends Model {
 
         return null;
     }
+    public static Team create(String name, String members) {
+        Team team = new Team(name, members);
+        team.save();
+        return team;
+    }
 
-    public static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
+    public boolean isMember(long userId) {
+        if (this.members == null || this.members.length() <= 0) {
+            return false;
+        }
+
+        String[] membersId = this.members.split(",");
+        for (int i = 0 ; i < membersId.length ; i++) {
+            if (String.valueOf(userId).equals(membersId[i])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

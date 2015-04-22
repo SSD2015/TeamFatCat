@@ -3,42 +3,62 @@
 # ~~~~
 
 # Home page
-GET         /                         controllers.Application.index()
 
-GET         /login                    controllers.Application.login()
-POST        /login                    controllers.Application.authenticate()
+GET         /index                          controllers.Application.toIndexPage()
 
-GET         /user                     controllers.Application.user()
-POST        /user                     controllers.Application.addUser()
-POST        /user/clear               controllers.Application.clearUsers()
+GET         /                               controllers.Application.toLoginPage()
+POST        /                               controllers.Application.authenticate()
+
+GET         /logout                         controllers.Application.logout()
+
+GET         /projectlist                    controllers.ProjectListController.toProjectListPage()
+POST        /projectlist                    controllers.ProjectListController.select()
+
+GET         /project=:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
+POST        /project                        controllers.ProjectController.rate()
+
+GET         /rate/project=:projectId        controllers.RateController.toRatePage(projectId: Long)
+POST        /rate                           controllers.RateController.rate(projectId: Long)
+
+# GET         /rateclosed                     controllers.RateController.toRateClosedPage(id: Long)
+
+POST        /vote=:projectId                controllers.VoteController.vote(projectId: Long)
+#GET         /uploadimage                    controllers.ProjectController.toUploadPage()
+#POST        /uploadimage/upload             controllers.ProjectController.upload()
+
+GET         /editproject=:projectId         controllers.ImageController.toEditProjectPage(projectId: Long)
+POST        /upload=:projectId              controllers.ImageController.upload(projectId: Long, tag: String)
+GET         /images=:id                     controllers.ImageController.getImage(id: Long)
+POST        /deleteimage                    controllers.ImageController.deleteImage(projectId : Long, imageId: Long)
+# admin
+
+GET         /admin                          controllers.AdminController.toAdminPage()
+
+GET         /admin/addratecat               controllers.RateController.toAddRateCatPage()
+POST        /admin/addratecat               controllers.RateController.addRateCat()
+
+GET         /admin/user                     controllers.UserController.toAddUserPage()
+POST        /admin/user/add                 controllers.UserController.addUser()
+#POST        /admin/user/clear               controllers.UserController.removeAllUsers()
+
+GET         /admin/team                     controllers.TeamController.toTeamPage()
+POST        /admin/team                     controllers.TeamController.addTeam()
+POST        /admin/team/members             controllers.TeamController.addMember()
+POST        /admin/team/removeMember        controllers.TeamController.removeMemberFromTeam()
+
+GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
+POST        /admin/addproject               controllers.ProjectController.addProject()
+
+GET         /admin/result                   controllers.RateController.toResultPage()
+
+GET         /admin/ratelog                  controllers.History.toRateLog()
+GET         /admin/votelog                  controllers.History.toVoteLog()
+# test
+
+GET         /test                           controllers.Application.toTestPage()
+GET         /testclock                      controllers.Application.toClockPage()
+
+GET         /error                          controllers.Application.toErrorPage()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file             controllers.Assets.at(path="/public", file)
-
-GET         /vote                     controllers.VoteController.vote( userId: Long, projectId: Long )
-POST        /vote                     controllers.VoteController.manageVote()
-
-GET         /project                  controllers.ProjectController.project(userId: Long, projectId: Long)
-POST        /project                  controllers.ProjectController.makeVote()
-
-GET         /result                   controllers.VoteController.result()
-
-GET         /addproject               controllers.ProjectController.addProjectPage()
-POST        /addproject               controllers.ProjectController.addProject()
-
-GET         /team                     controllers.Application.team()
-POST        /team                     controllers.Application.addTeam()
-
-POST        /team/members             controllers.Application.addMember()
-
-POST        /team/removeMember        controllers.Application.removeMemberFromTeam()
-
-GET         /projectlist              controllers.ProjectController.projectlist(userId: Long)
-POST        /projectlist              controllers.ProjectController.select()
-
-GET         /test                     controllers.Application.test()
-
-GET         /error                    controllers.Application.error()
-
-GET         /addvotecat               controllers.VoteController.addVoteCatPage()
-POST        /addvotecat               controllers.VoteController.addVoteCat()
+GET         /assets/*file                   controllers.Assets.at(path="/public", file)
