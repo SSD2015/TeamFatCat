@@ -70,7 +70,7 @@ public class Team extends Model {
     }
 
     public boolean checkProject(Project project) {
-        if (project.equals(this.project)) { return true; }
+        if (project == this.project) { return true; }
         return false;
     }
 
