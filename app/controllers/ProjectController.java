@@ -84,4 +84,21 @@ public class ProjectController extends Controller {
                 routes.RateController.toRatePage(Long.parseLong(form.data().get("pId")))
         );
     }
+    @Security.Authenticated(AdminSecured.class)
+    public static Result removeProjById() {
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        Project project = Project.findById(Long.parseLong(form.data().get("pId")));
+        List<Rate>  allRates = Rate.getAllRates();
+        for( Rate rate: allRates){
+            if(project.getId() == rate.getProject().getId()){
+                rate.delete();
+            }
+
+        }
+
+        project.delete();
+        return redirect(routes.ProjectController.toAddProjectPage());
+
+
+    }
 }

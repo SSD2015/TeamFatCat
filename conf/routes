@@ -47,6 +47,7 @@ POST        /admin/team/removeMember        controllers.TeamController.removeMem
 
 GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
 POST        /admin/addproject               controllers.ProjectController.addProject()
+POST        /admin/addproject/remove        controllers.ProjectController.removeProjById()
 
 GET         /admin/result                   controllers.RateController.toResultPage()
 
