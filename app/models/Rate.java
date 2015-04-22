@@ -49,19 +49,19 @@ public class Rate extends Model{
     }
 
     public static List<Rate> findByProject(Project project) {
-        return find.where().eq("project_id", project.getId()).findList();
+        return find.where().eq("project", project).findList();
     }
 
     public static List<Rate> findByRateCategory(RateCategory rateCategory) {
-        return find.where().eq("category_id", rateCategory.getId()).findList();
+        return find.where().eq("category", rateCategory).findList();
     }
 
     public static List<Rate> findByProjectRateCategory(Project project, RateCategory rateCategory){
-        return find.where().eq("project_id", project).eq("category_id", rateCategory.getId()).findList();
+        return find.where().eq("project", project).eq("category", rateCategory).findList();
     }
 
     public static Rate findUnique(User user, Project project, RateCategory rateCategory) {
-        return find.where().eq("user_id", user.getId()).eq("category_id", rateCategory.getId()).eq("project_id", project.getId()).findUnique();
+        return find.where().eq("user", user).eq("category", rateCategory).eq("project", project).findUnique();
     }
 
     public static Rate create(User user, Project project, RateCategory rateCategory, int score) {
