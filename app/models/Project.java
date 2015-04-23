@@ -71,7 +71,7 @@ public class Project extends Model{
         List<Vote> voteList = Vote.getVoteFromProject(this);
         double count = 0;
         for (int i = 0 ; i < voteList.size() ; i++) {
-            if (voteList.get(i).getUser().getId() <= 42 && voteList.get(i).getUser().getId() >= 22) {
+            if (voteList.get(i).getUser().getId() <= 42 && voteList.get(i).getUser().getId() >= 2) {
                 count++;
             }
         }
@@ -97,7 +97,7 @@ public class Project extends Model{
         double total = 0;
         int count = 0;
         for(int i = 0 ; i < rateList.size() ; i++) {
-            if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 22) {
+            if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 2) {
                 total += rateList.get(i).getScore();
                 count++;
             }

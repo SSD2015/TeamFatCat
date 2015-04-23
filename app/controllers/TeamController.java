@@ -2,6 +2,7 @@ package controllers;
 
 import models.Team;
 import models.User;
+import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -16,6 +17,7 @@ public class TeamController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toTeamPage() {
+        Logger.info("[ " + request().username() + " ] arrive at manage team page.");
         List<User> userList = User.getStudents();
         List<Team> teamList = Team.getAllTeams();
         for( int i=0; i<teamList.size();i++ ) {
@@ -36,10 +38,12 @@ public class TeamController extends Controller {
             User user = User.findByUsername(request().username());
             List<User> userList = User.getAllUsers();
             List<Team> teamList = Team.getAllTeams();
+            Logger.info("[ " + request().username() + " ] fail add team.");
             return badRequest(team.render(user, userList, teamList, teamForm));
         }
         Team team = teamForm.get();
         team.save();
+        Logger.info("[ " + request().username() + " ] success add team #" + team.getId());
         return redirect(routes.TeamController.toTeamPage());
     }
 
@@ -59,11 +63,15 @@ public class TeamController extends Controller {
         if(team != null & user != null){
             boolean success = team.addMember(user);
             if (!success) {
+                Logger.error("[ " + request().username() + " ] fail add member to team");
                 return redirect(routes.Application.toErrorPage());
             }
         } else {
+            Logger.error("[ " + request().username() + " ] fail add member to team");
             return redirect(routes.Application.toErrorPage());
         }
+
+        Logger.info("[ " + request().username() + " ] success add member #" + user.getId() + " to team #" + team.getId());
         return redirect(routes.TeamController.toTeamPage());
     }
 

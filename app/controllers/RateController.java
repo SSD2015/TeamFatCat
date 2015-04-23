@@ -60,43 +60,50 @@ public class RateController extends Controller {
                     rate.setTimestamp();
                     Ebean.update(rate);
                 }
+
+                Logger.info("[ " + request().username() + " ] has rate for project #" + project.getId() + ", category #" + ratecatList.get(i) + ", score = " + rate.getScore());
             } else {
+                Logger.error("[ " + request().username() + " ] fail to rate");
                 redirect(routes.Application.toErrorPage());
             }
         }
-
         return redirect(routes.ProjectController.toProjectPage(project.getId()));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result toRatePage(long projectId) {
-        return redirect(routes.RateController.toRateClosedPage(projectId));
-//        User user = User.findByUsername(request().username());
-//        Project project = Project.findById(projectId);
-//        List<RateCategory> rateCategories = RateCategory.all();
-//
-//        response().setHeader("Cache-Control","no-cache");
-//        return ok(rate.render(user,project,rateCategories));
-    }
+        //return redirect(routes.RateController.toRateClosedPage(projectId));
+        Logger.info("[ " + request().username() + " ] arrive at rate project #" + projectId + " page.");
 
-    @Security.Authenticated(Secured.class)
-    public static Result toRateClosedPage(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
         List<RateCategory> rateCategories = RateCategory.all();
 
         response().setHeader("Cache-Control","no-cache");
-        return ok(voteisnowclosed.render(user, project));
+        return ok(rate.render(user,project,rateCategories));
     }
+
+//    @Security.Authenticated(Secured.class)
+//    public static Result toRateClosedPage(long projectId) {
+//        Logger.info("[ " + request().username() + " ] arrive at rate is now closed page.");
+//
+//        User user = User.findByUsername(request().username());
+//        Project project = Project.findById(projectId);
+//        List<RateCategory> rateCategories = RateCategory.all();
+//
+//        response().setHeader("Cache-Control","no-cache");
+//        return ok(voteisnowclosed.render(user, project));
+//    }
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toResultPage() {
+        Logger.info("[ " + request().username() + " ] arrive at result page.");
         List<Rate> rateList = Rate.getAllRates();
         List<RateCategory> catList = RateCategory.all();
         User user = User.findByUsername(request().username());
 
-        response().setHeader("Cache-Control","no-cache");
-        return ok(result.render(user, rateList,catList));
+        response().setHeader("Cache-Control", "no-cache");
+        return ok(result.render(user, rateList, catList));
     }
 
     @Security.Authenticated(AdminSecured.class)
@@ -105,15 +112,18 @@ public class RateController extends Controller {
         if (rateCatForm.hasErrors()) {
             User user = User.findByUsername(request().username());
             List<RateCategory> rateCatList = RateCategory.getAllCategories();
+            Logger.error("[ " + request().username() + " ] fail to add rate cat.");
             return badRequest(addratecat.render(user, rateCatList, rateCatForm));
         }
         RateCategory rateCat = rateCatForm.get();
         rateCat.save();
+        Logger.info("[ " + request().username() + " ] success add rate cat #" + rateCat.getId());
         return redirect(routes.RateController.toAddRateCatPage());
     }
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddRateCatPage(){
+        Logger.info("[ " + request().username() + " ] arrive at add rate category page.");
         List<RateCategory> ratecatlist = RateCategory.all();
         User user = User.findByUsername(request().username());
 

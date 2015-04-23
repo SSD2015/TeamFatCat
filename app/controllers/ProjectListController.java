@@ -2,6 +2,7 @@ package controllers;
 
 import models.Project;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -22,6 +23,7 @@ public class ProjectListController extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectListPage() {
+        Logger.info("[ " + request().username() + " ] arrive at projectlist page.");
         User user = User.findByUsername(request().username());
         List<Project> projects = Project.getAllProjects();
 

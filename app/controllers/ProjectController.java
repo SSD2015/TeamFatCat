@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import play.Logger;
 import play.mvc.*;
 import play.data.Form;
 import views.html.*;
@@ -17,6 +18,7 @@ public class ProjectController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result toAddProjectPage() {
+        Logger.info("[ " + request().username() + " ] arrive at add project page.");
         List<Team> teams = Team.getAllTeams();
         List<Project> projects = Project.getAllProjects();
         for( int i=0;i<projects.size();i++ ) {
@@ -30,7 +32,7 @@ public class ProjectController extends Controller {
         }
 
         User user = User.findByUsername(request().username());
-        response().setHeader("Cache-Control","no-cache");
+        response().setHeader("Cache-Control", "no-cache");
         return ok(addproject.render(user, projects, teams, Form.form(Project.class)));
     }
 
@@ -41,16 +43,21 @@ public class ProjectController extends Controller {
             User user = User.findByUsername(request().username());
             List<Team> teamList = Team.getAllTeams();
             List<Project> proList = Project.getAllProjects();
+
+            Logger.error("[ " + request().username() + " ] fail to add project.");
             return badRequest(addproject.render(user, proList, teamList, projectForm));
         }
         Project project = projectForm.get();
         project.save();
+        Logger.info("[ " + request().username() + " ] success add project #" + project.getId());
         return redirect(routes.ProjectController.toAddProjectPage());
     }
 
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectPage(Long projectId) {
+        Logger.info("[ " + request().username() + " ] arrive at project #" + projectId + " page.");
+
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
 

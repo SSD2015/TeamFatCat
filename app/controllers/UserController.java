@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
@@ -28,24 +29,13 @@ public class UserController extends Controller {
         if (userForm.hasErrors()) {
             List<User> userList = User.getAllUsers();
 
-            response().setHeader("Cache-Control","no-cache");
+            Logger.error("[ " + request().username() + " ] fail to add user.");
+            response().setHeader("Cache-Control", "no-cache");
             return badRequest(user.render(userForm, userList, User.findByUsername(request().username())));
         }
         User user = userForm.get();
         user.save();
+        Logger.info("[ " + request().username() + " ] has add user [ #" + user.getId() + " ]");
         return redirect(routes.UserController.toAddUserPage());
     }
-
-//    @Security.Authenticated(AdminSecured.class)
-//    public static Result removeAllUsers() {
-//        List<User> users = Model.Finder(Long.class, User.class).all();
-//        for (int i = 0; i < users.size(); i++) {
-//            User user = User.findById(users.get(i).getId());
-//            if (user.getType() != User.ADMIN) {
-//                User.deleteById(users.get(i).getId());
-//            }
-//        }
-//
-//        return redirect(routes.UserController.toAddUserPage());
-//    }
 }
