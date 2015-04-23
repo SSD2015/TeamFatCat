@@ -127,6 +127,12 @@
                                 <td>No team</td>
                                 <td>No team</td>
                             }
+                            <td>
+                                <form action="@routes.ProjectController.removeProjectById()" method="post" class="form-horizontal" role="form">
+                                    <input type="hidden" value=@project.getId() name="pId">
+                                    <button class="btn btn-danger">X</button>
+                                </form>
+                            </td>
                         </tr>
                     }
                 </table>

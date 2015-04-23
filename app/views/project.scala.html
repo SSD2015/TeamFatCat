@@ -111,18 +111,21 @@
                         </div>
                         <div class="col-sm-4">
                         @RateCategory.findAll().map { category =>
-                            <span class="badge">
+                            @if(Rate.findUnique(user, project, category) != null) {
+                                <span class="badge">
                                 @if(Rate.findUnique(user, project, category).getScore() == -1) {
                                     Not rated
                                 } else {
                                     @Rate.findUnique(user, project, category).getScore()
-                                }</span>
-                            @category.getName()
-                        <div class="progress" style="max-height: 10px ; max-width: 70%">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.findUnique(user, project, category).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.findUnique(user, project, category).getPercentScore()%;">
-                            <span class="sr-only">60%</span>
-                        </div>
-                        </div>
+                                }
+                                </span>
+                                @category.getName()
+                                <div class="progress" style="max-height: 10px; max-width: 70%;">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.findUnique(user, project, category).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.findUnique(user, project, category).getPercentScore()%;">
+                                        <span class="sr-only">60%</span>
+                                    </div>
+                                </div>
+                            }
                         }
                         </div>
                     }

@@ -21,10 +21,11 @@ public class RateCategory extends Model {
     private static Finder<Long, RateCategory> find = new Finder<Long, RateCategory>(
             Long.class, RateCategory.class);
 
-
     public static List<RateCategory> findAll() {
         return find.all();
     }
+
+    public static RateCategory findById(long id) { return find.byId(id); }
 
     public List<Project> getBestFromCat() {
         List<Project> projects = Project.findAll();

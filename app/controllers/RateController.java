@@ -27,21 +27,19 @@ public class RateController extends Controller {
         int size = rateCategories.size();
         for (int i = 0 ; i < size ; i++) {
             if (form.get(rateCategories.get(i).getName()) != null) {
-                boolean isNotRated = (form.get("noRate"+rateCategories.get(i).getName()) != null);
+                boolean isNotRated = (form.get("noRate" + rateCategories.get(i).getName()) != null);
 
                 Rate rate = null;
 
                 if (isNotRated) {
-                    Rate.create(user, project, rateCategories.get(i), -1);
+                    rate = Rate.create(user, project, rateCategories.get(i), -1);
                 } else {
-                    Rate.create(user, project, rateCategories.get(i), Integer.parseInt(form.get(rateCategories.get(i).getName())));
+                    rate = Rate.create(user, project, rateCategories.get(i), Integer.parseInt(form.get(rateCategories.get(i).getName())));
                 }
 
                 if (rate == null) {
                     return toBadRequestRatePage(project.getId());
                 }
-            } else {
-                redirect(routes.Application.toErrorPage());
             }
         }
 
@@ -56,7 +54,7 @@ public class RateController extends Controller {
         List<RateCategory> rateCategories = RateCategory.findAll();
 
         response().setHeader("Cache-Control","no-cache");
-        return ok(rate.render(user,project,rateCategories));
+        return ok(rate.render(user, project, rateCategories));
     }
 
     @Security.Authenticated(Secured.class)
@@ -103,7 +101,21 @@ public class RateController extends Controller {
     }
 
     @Security.Authenticated(AdminSecured.class)
-    public static Result toAddRateCatPage(){
+    public static Result removeRateByCatId() {
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        RateCategory rateCat = RateCategory.findById(Long.parseLong(form.data().get("cId")));
+        List<Rate>  allRates = Rate.findAll();
+        for (Rate rate: allRates) {
+            if(rateCat.getId() == rate.getCategory().getId()){
+                rate.delete();
+            }
+        }
+        rateCat.delete();
+        return redirect(routes.RateController.toAddRateCatPage());
+    }
+
+    @Security.Authenticated(AdminSecured.class)
+    public static Result toAddRateCatPage() {
         List<RateCategory> ratecatlist = RateCategory.findAll();
         User user = User.findByUsername(request().username());
 

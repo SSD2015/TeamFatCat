@@ -39,6 +39,20 @@ public class ProjectController extends Controller {
         return redirect(routes.ProjectController.toAddProjectPage());
     }
 
+    @Security.Authenticated(AdminSecured.class)
+    public static Result removeProjectById() {
+        DynamicForm form = new DynamicForm().bindFromRequest();
+        Project project = Project.findById(Long.parseLong(form.data().get("projectId")));
+        List<Rate> allRates = Rate.findByProject(project);
+        for(Rate rate: allRates){
+            rate.delete();
+        }
+
+        Team.findByProject(project).setProject(null);
+        project.delete();
+        return redirect(routes.ProjectController.toAddProjectPage());
+    }
+
 
     @Security.Authenticated(Secured.class)
     public static Result toProjectPage(Long projectId) {

@@ -34,6 +34,7 @@ GET         /admin                          controllers.AdminController.toAdminP
 
 GET         /admin/addratecat               controllers.RateController.toAddRateCatPage()
 POST        /admin/addratecat               controllers.RateController.addRateCat()
+POST        /admin/removeratecat            controllers.RateController.removeRateByCatId()
 
 GET         /admin/user                     controllers.UserController.toAddUserPage()
 POST        /admin/user/add                 controllers.UserController.addUser()
@@ -46,6 +47,7 @@ POST        /admin/team/removeMember        controllers.TeamController.removeMem
 
 GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
 POST        /admin/addproject               controllers.ProjectController.addProject()
+POST        /admin/addproject/remove        controllers.ProjectController.removeProjectById()
 
 GET         /admin/result                   controllers.RateController.toResultPage()
 
