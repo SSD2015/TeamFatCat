@@ -109,7 +109,6 @@
                                 <option value="@User.STUDENT">Student</option>
                                 <option value="@User.ORGANIZER">Organizer</option>
                                 <option value="@User.INSTRUCTOR">Instructor</option>
-                                <option value="@User.ADMIN">Admin</option>
                             </select>
                         </div>
                     </div>
@@ -142,6 +141,14 @@
                                 <td>@list.getFirstName()</td>
                                 <td>@list.getLastName()</td>
                                 <td>@list.getTypeName()</td>
+                                <td>
+                                    @if(list.getType()!=User.ADMIN) {
+                                    <form action="@routes.UserController.removeUser()" method="post" class="form-horizontal" role="form">
+                                        <input type="hidden" value=@list.getId() name="uId">
+                                        <button class="btn btn-danger">X</button>
+                                    </form>
+                                    }
+                                </td>
                             </tr>
                         }
                     </thead>

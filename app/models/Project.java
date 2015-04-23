@@ -95,7 +95,6 @@ public class Project extends Model{
     public double getAvgFromCat(RateCategory cat) {
         List<Rate> rateList = Rate.getProjectAndCatRate(this,cat);
         double total = 0;
-        int count = 0;
         for(int i = 0 ; i < rateList.size() ; i++) {
             if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 2) {
                 total += rateList.get(i).getScore();
@@ -103,7 +102,7 @@ public class Project extends Model{
             }
         }
         
-        total = total / count;
+        total = total / rateList.size();
         total = total * 100;
         total = Math.round(total);
         total = total / 100;
@@ -116,7 +115,11 @@ public class Project extends Model{
         for(int i=0 ; i<rateList.size() ; i++){
             total += rateList.get(i).getScore();
         }
-        return total/rateList.size();
+        total = total / rateList.size();
+        total = total *100;
+        total = Math.round(total);
+        total = total /100;
+        return total;
     }
 
     public double getPercentFromCat(RateCategory cat) {

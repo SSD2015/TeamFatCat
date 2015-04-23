@@ -2,12 +2,13 @@ package controllers;
 
 import models.User;
 import play.Logger;
+import models.*;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.user;
+import views.html.*;
 
 import java.util.List;
 
@@ -38,4 +39,40 @@ public class UserController extends Controller {
         Logger.info("[ " + request().username() + " ] has add user [ #" + user.getId() + " ]");
         return redirect(routes.UserController.toAddUserPage());
     }
+
+    @Security.Authenticated(AdminSecured.class)
+    public static Result removeUser(){
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        User user = User.findById( Long.parseLong(form.data().get("uId")) );
+        List<Rate> allRates = Rate.getAllRates();
+        List<Team> allTeams = Team.getAllTeams();
+        for( Rate rate: allRates ) {
+            if( rate.getUser().getId() == user.getId() ) {
+                rate.delete();
+            }
+        }
+        for( Team team: allTeams ) {
+            if( team.removeMember( user.getId() ) ) {
+                team.update();
+                break;
+            }
+            team.update();
+        }
+        user.delete();
+        return redirect(routes.UserController.toAddUserPage());
+    }
+
+//    @Security.Authenticated(AdminSecured.class)
+//    public static Result removeAllUsers() {
+//        List<User> users = Model.Finder(Long.class, User.class).all();
+//        for (int i = 0; i < users.size(); i++) {
+//            User user = User.findById(users.get(i).getId());
+//            if (user.getType() != User.ADMIN) {
+//                User.deleteById(users.get(i).getId());
+//            }
+//        }
+//
+//        return redirect(routes.UserController.toAddUserPage());
+//    }
+
 }
