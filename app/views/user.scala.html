@@ -109,7 +109,6 @@
                                 <option value="@User.STUDENT">Student</option>
                                 <option value="@User.ORGANIZER">Organizer</option>
                                 <option value="@User.INSTRUCTOR">Instructor</option>
-                                <option value="@User.ADMIN">Admin</option>
                             </select>
                         </div>
                     </div>
@@ -134,20 +133,22 @@
                             <th>Lastname</th>
                             <th>Type</th>
                         </tr>
-                        @userList.map { list =>
+                        @userList.map { user =>
                             <tr>
-                                <td>@list.getId()</td>
-                                <td>@list.getUsername()</td>
-                                <td>@list.getPassword()</td>
-                                <td>@list.getFirstName()</td>
-                                <td>@list.getLastName()</td>
-                                <td>@list.getTypeName()</td>
-                                <td>
-                                    <form action="@routes.UserController.removeUser()" method="post" class="form-horizontal" role="form">
-                                    <input type="hidden" value=@list.getId() name="userId">
-                                    <button class="btn btn-danger">X</button>
-                                    </form>
-                                </td>
+                                <td>@user.getId()</td>
+                                <td>@user.getUsername()</td>
+                                <td>@user.getPassword()</td>
+                                <td>@user.getFirstName()</td>
+                                <td>@user.getLastName()</td>
+                                <td>@user.getTypeName()</td>
+                                @if(user.getType != User.ADMIN) {
+                                    <td>
+                                        <form action="@routes.UserController.removeUser()" method="post" class="form-horizontal" role="form">
+                                            <input type="hidden" value=@user.getId() name="userId">
+                                            <button class="btn btn-danger">X</button>
+                                        </form>
+                                    </td>
+                                }
                             </tr>
                         }
                     </thead>
