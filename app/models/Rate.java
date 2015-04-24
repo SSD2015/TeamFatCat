@@ -64,6 +64,27 @@ public class Rate extends Model{
         return find.where().eq("user_id", user.getId()).eq("category_id", rateCategory.getId()).eq("project_id", project.getId()).findUnique();
     }
 
+    public static void deleteByUser(User user) {
+        List<Rate> rates = findByUser(user);
+        for (Rate rate: rates) {
+            rate.delete();
+        }
+    }
+
+    public static void deleteByProject(Project project) {
+        List<Rate> rates = findByProject(project);
+        for (Rate rate: rates) {
+            rate.delete();
+        }
+    }
+
+    public static void deleteByRateCategory(RateCategory rateCategory) {
+        List<Rate> rates = findByRateCategory(rateCategory);
+        for (Rate rate: rates) {
+            rate.delete();
+        }
+    }
+
     public static Rate create(User user, Project project, RateCategory rateCategory, int score) {
         if (score > 5 || score < -1) { return null; }
 

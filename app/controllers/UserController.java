@@ -1,6 +1,7 @@
 package controllers;
 
-import models.User;
+import models.*;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
@@ -34,6 +35,18 @@ public class UserController extends Controller {
 
         User user = userForm.get();
         user.save();
+        return redirect(routes.UserController.toAddUserPage());
+    }
+
+    @Security.Authenticated(AdminSecured.class)
+    public static Result removeUser(){
+        DynamicForm form = new DynamicForm().bindFromRequest();
+        User user = User.findById(Long.parseLong(form.data().get("userId")));
+        Rate.deleteByUser(user);
+        Vote.deleteByUser(user);
+
+        user.delete();
+
         return redirect(routes.UserController.toAddUserPage());
     }
 }

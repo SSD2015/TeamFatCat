@@ -13,7 +13,7 @@ import java.util.*;
 
 public class RateController extends Controller {
 
-    @Security.Authenticated(AdminSecured.class)
+    @Security.Authenticated(Secured.class)
     public static Result rate(Long projectId) {
         DynamicForm form = Form.form().bindFromRequest();
         if (form.hasErrors()) {
@@ -101,16 +101,13 @@ public class RateController extends Controller {
     }
 
     @Security.Authenticated(AdminSecured.class)
-    public static Result removeRateByCatId() {
+    public static Result removeRateCategory() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-        RateCategory rateCat = RateCategory.findById(Long.parseLong(form.data().get("cId")));
-        List<Rate>  allRates = Rate.findAll();
-        for (Rate rate: allRates) {
-            if(rateCat.getId() == rate.getCategory().getId()){
-                rate.delete();
-            }
-        }
-        rateCat.delete();
+        RateCategory rateCategory = RateCategory.findById(Long.parseLong(form.data().get("cId")));
+
+        Rate.deleteByRateCategory(rateCategory);
+        rateCategory.delete();
+
         return redirect(routes.RateController.toAddRateCatPage());
     }
 

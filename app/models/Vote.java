@@ -38,7 +38,7 @@ public class Vote extends Model{
     }
 
     public static List<Vote> findByProject(Project project) {
-        return find.where().eq("project_id", project.getId()).findList();
+        return find.where().eq("project", project).findList();
     }
 
     public static List<Project> findBestProject() {
@@ -53,6 +53,20 @@ public class Vote extends Model{
         });
 
         return projects;
+    }
+
+    public static void deleteByUser(User user) {
+        List<Vote> votes = find.where().eq("user", user).findList();
+        for (Vote vote: votes) {
+            vote.delete();
+        }
+    }
+
+    public static void deleteByProject(Project project) {
+        List<Vote> votes = find.where().eq("project", project).findList();
+        for (Vote vote: votes) {
+            vote.delete();
+        }
     }
 
     public static Vote create(User user, Project project) {

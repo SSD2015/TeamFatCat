@@ -72,6 +72,12 @@ create table vote (
   constraint pk_vote primary key (id))
 ;
 
+create table vote_category (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  constraint pk_vote_category primary key (id))
+;
+
 alter table rate add constraint fk_rate_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
 create index ix_rate_user_1 on rate (user_id);
 alter table rate add constraint fk_rate_project_2 foreign key (project_id) references project (id) on delete restrict on update restrict;
@@ -108,6 +114,8 @@ drop table team;
 drop table user;
 
 drop table vote;
+
+drop table vote_category;
 
 SET FOREIGN_KEY_CHECKS=1;
 

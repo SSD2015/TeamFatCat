@@ -76,6 +76,10 @@ public class User extends Model {
         return find.where().eq("team_id", team.getId()).findList();
     }
 
+    public static void deleteById(long id) {
+        find.byId(id).delete();
+    }
+
     public static User authenticate(String username, String password) {
         User user = find.where().eq("username", username).findUnique();
         if (user != null && BCrypt.checkpw(password, user.password)) {
