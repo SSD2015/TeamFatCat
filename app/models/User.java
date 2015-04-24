@@ -73,7 +73,7 @@ public class User extends Model {
     }
 
     public static List<User> findByTeam(Team team) {
-        return find.where().eq("team_id", team.getId()).findList();
+        return find.where().eq("team", team).findList();
     }
 
     public static void deleteById(long id) {
