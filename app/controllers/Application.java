@@ -80,6 +80,57 @@ public class Application extends Controller {
 
     public static void defaultSetting() {
         User.create("admin99", "admin", "Auto", "Created", 99);
+
+        User.create("test01", "test", "test", "test", 1);
+        User.create("test02", "test", "test", "test", 1);
+        User.create("test03", "test", "test", "test", 1);
+        User.create("test04", "test", "test", "test", 1);
+        User.create("test05", "test", "test", "test", 1);
+        User.create("test06", "test", "test", "test", 1);
+
+        Team team1 = Team.create("team01");
+        Project project1 = Project.create("project01", "1");
+        team1.setProject(project1);
+        team1.update();
+        Team team2 = Team.create("team02");
+        Project project2 = Project.create("project02", "2");
+        team2.setProject(project2);
+        team2.update();
+        Team team3 = Team.create("team03");
+        Project project3 = Project.create("project03", "3");
+        team3.setProject(project3);
+        team3.update();
+        Team team4 = Team.create("team04");
+        Project project4 = Project.create("project04", "4");
+        team4.setProject(project4);
+        team4.update();
+        Team team5 = Team.create("team05");
+        Project project5 = Project.create("project05", "5");
+        team5.setProject(project5);
+        team5.update();
+        Team team6 = Team.create("team06");
+        Project project6 = Project.create("project06", "6");
+        team6.setProject(project6);
+        team6.update();
+
+        RateCategory.create("A");
+        RateCategory.create("B");
+        RateCategory.create("C");
+        RateCategory.create("D");
+        RateCategory.create("E");
+
+        List<User> users = User.findAll();
+        List<Project> projects = Project.findAll();
+        List<RateCategory> rateCategories = RateCategory.findAll();
+
+        for (User user: users) {
+            for (Project project: projects) {
+                for (RateCategory rateCategory: rateCategories) {
+                    Rate.create(user, project, rateCategory, (int)(Math.random()*6 - 1));
+                }
+            }
+        }
+
 //        //Division1
 //        //FATCAT
 //        User.create("b5610546257", "natchanon.ch", "Natchanon", "Charoensuk", 1);

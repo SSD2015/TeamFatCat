@@ -15,7 +15,7 @@ public class Vote extends Model{
     @Id
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="user_id", referencedColumnName="id")
     private User user;
 

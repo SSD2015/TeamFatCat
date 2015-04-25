@@ -37,6 +37,12 @@ public class User extends Model {
     @JoinColumn(name="team_id", referencedColumnName="id")
     private Team team;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private Vote vote;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Rate> rates;
+
     @Version
     Timestamp lastUpdate;
 

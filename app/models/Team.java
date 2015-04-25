@@ -19,6 +19,9 @@ public class Team extends Model {
     @JoinColumn(name="project_id", referencedColumnName="id")
     private Project project;
 
+    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH)
+    private List<User> users;
+
     private static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
 
     public static List<Team> findAll() {
@@ -36,7 +39,7 @@ public class Team extends Model {
     }
 
     public static Team findByProject(Project project) {
-        return find.where().eq("project_id", project.getId()).findUnique();
+        return find.where().eq("project", project).findUnique();
     }
 
     public Team(String name) {

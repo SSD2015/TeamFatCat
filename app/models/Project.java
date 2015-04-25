@@ -3,8 +3,10 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import java.util.List;
 
@@ -17,6 +19,9 @@ public class Project extends Model {
     @Constraints.Required
     private String name;
     private String description;
+
+    @OneToOne(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private Team team;
 
     private static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
 

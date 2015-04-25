@@ -3,8 +3,7 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -17,6 +16,9 @@ public class RateCategory extends Model {
 
     @Constraints.Required
     private String name;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    private Rate rate;
 
     private static Finder<Long, RateCategory> find = new Finder<Long, RateCategory>(
             Long.class, RateCategory.class);
