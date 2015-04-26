@@ -15,12 +15,12 @@ public class Team extends Model {
     @Constraints.Required
     private String name;
 
-    @OneToOne
-    @JoinColumn(name="project_id", referencedColumnName="id")
-    private Project project;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="project_id", referencedColumnName="id", nullable = true)
+    public Project project;
 
-    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH)
-    private List<User> users;
+    @OneToMany(mappedBy = "team")
+    public List<User> users;
 
     private static Finder<Long, Team> find = new Finder<Long, Team>(Long.class, Team.class);
 
@@ -50,6 +50,17 @@ public class Team extends Model {
         Team team = new Team(name);
         team.save();
         return team;
+    }
+
+    @Override
+    public void delete() {
+        for (User user: users) {
+            user.setTeam(null);
+            user.update();
+        }
+        this.update();
+
+        super.delete();
     }
 
     public void setName(String name) {

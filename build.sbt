@@ -14,5 +14,6 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   "org.mariadb.jdbc" % "mariadb-java-client" % "1.1.8",
+  "org.hibernate" % "hibernate-annotations" % "3.5.6-Final",
   "org.mindrot" % "jbcrypt" % "0.3m"
 )

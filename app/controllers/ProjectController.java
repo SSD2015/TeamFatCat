@@ -44,9 +44,6 @@ public class ProjectController extends Controller {
         DynamicForm form = new DynamicForm().bindFromRequest();
         Project project = Project.findById(Long.parseLong(form.data().get("projectId")));
 
-        Rate.deleteByProject(project);
-        Vote.deleteByProject(project);
-        Team.findByProject(project).setProject(null);
         project.delete();
 
         return redirect(routes.ProjectController.toAddProjectPage());

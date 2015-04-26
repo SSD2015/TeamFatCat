@@ -23,6 +23,10 @@ public class Vote extends Model{
     @JoinColumn(name="project_id", referencedColumnName="id")
     private Project project;
 
+    @ManyToOne
+    @JoinColumn(name="category_id", referencedColumnName = "id")
+    private VoteCategory category;
+
     @Version
     private Timestamp timestamp;
 
@@ -33,12 +37,25 @@ public class Vote extends Model{
     }
 
     //could return null outside
-    public static Vote findByUser(User user) {
-        return find.where().eq("user", user).findUnique();
+    public static List<Vote> findByUser(User user) {
+        return find.where().eq("user", user).findList();
     }
 
     public static List<Vote> findByProject(Project project) {
         return find.where().eq("project", project).findList();
+    }
+
+    public static List<Vote> findByVoteCategory(VoteCategory voteCategory) {
+        return find.where().eq("category", voteCategory).findList();
+    }
+
+
+    public static List<Vote> findByProjectRateCategory(Project project, VoteCategory voteCategory){
+        return find.where().eq("project", project).eq("category", voteCategory).findList();
+    }
+
+    public static Vote findUnique(User user, Project project, VoteCategory voteCategory) {
+        return find.where().eq("user", user).eq("category", voteCategory).eq("project", project).findUnique();
     }
 
     public static List<Project> findBestProject() {

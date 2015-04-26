@@ -18,7 +18,7 @@ public class RateCategory extends Model {
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
-    private Rate rate;
+    private List<Rate> rates;
 
     private static Finder<Long, RateCategory> find = new Finder<Long, RateCategory>(
             Long.class, RateCategory.class);

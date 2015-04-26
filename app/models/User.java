@@ -33,15 +33,15 @@ public class User extends Model {
     @Constraints.Required
     private int type;
 
-    @ManyToOne
-    @JoinColumn(name="team_id", referencedColumnName="id")
-    private Team team;
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name="team_id", referencedColumnName="id", nullable = true)
+    public Team team;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Vote vote;
+    public Vote vote;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Rate> rates;
+    public List<Rate> rates;
 
     @Version
     Timestamp lastUpdate;
@@ -139,6 +139,7 @@ public class User extends Model {
 
     public void setTeam(Team team) {
         this.team = team;
+        this.update();
     }
 
     public void setLastUpdate() {
@@ -175,6 +176,10 @@ public class User extends Model {
 
     public int getType() {
         return this.type;
+    }
+
+    public Team getTeam() {
+        return this.team;
     }
 
     public boolean checkTeam(Team team) {

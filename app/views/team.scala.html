@@ -131,7 +131,17 @@
                         <h2 class="text-center"><b>Team Lists</b></h2>
                         <h2></h2>
                         @teamList.map { team =>
+
+                            <form action="@routes.TeamController.removeTeam()" method="post" class="form-horizontal" role="form">
+                                <input type="hidden" value=@team.getId name="teamId">
+                                <button class="btn btn-danger">X</button>
+                            </form>
                             <h3>@team.getName() (ID: @team.getId())</h3>
+                            @if(team.getProject() != null) {
+                                <p>@team.getProject().getName()</p>
+                            } else {
+                                <p>no project</p>
+                            }
                             <table class="table table-condensed">
                                 <tr class="warning">
                                     <th>Username</th>

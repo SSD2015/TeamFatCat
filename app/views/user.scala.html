@@ -141,6 +141,13 @@
                                 <td>@user.getFirstName()</td>
                                 <td>@user.getLastName()</td>
                                 <td>@user.getTypeName()</td>
+                                <td>
+                                    @if(user.getTeam() != null) {
+                                        @user.getTeam().getName()
+                                    } else {
+                                        No team
+                                    }
+                                </td>
                                 @if(user.getType != User.ADMIN) {
                                     <td>
                                         <form action="@routes.UserController.removeUser()" method="post" class="form-horizontal" role="form">

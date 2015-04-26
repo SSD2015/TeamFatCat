@@ -105,7 +105,7 @@ public class RateController extends Controller {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
         RateCategory rateCategory = RateCategory.findById(Long.parseLong(form.data().get("cId")));
 
-        Rate.deleteByRateCategory(rateCategory);
+        //Rate.deleteByRateCategory(rateCategory);
         rateCategory.delete();
 
         return redirect(routes.RateController.toAddRateCatPage());

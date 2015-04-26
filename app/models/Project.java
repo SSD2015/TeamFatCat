@@ -3,10 +3,7 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -20,8 +17,11 @@ public class Project extends Model {
     private String name;
     private String description;
 
-    @OneToOne(mappedBy = "project", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "project", cascade = CascadeType.DETACH)
     private Team team;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<Rate> rates;
 
     private static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
 
@@ -47,6 +47,19 @@ public class Project extends Model {
         Project project = new Project(name, description);
         project.save();
         return project;
+    }
+
+    @Override
+    public void delete() {
+//        Rate.deleteByProject(this);
+//        Vote.deleteByProject(this);
+
+        Team team = Team.findByProject(this);
+        team.setProject(null);
+        team.update();
+        this.update();
+
+        super.delete();
     }
 
     public Project(String name) {

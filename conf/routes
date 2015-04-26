@@ -36,6 +36,10 @@ GET         /admin/addratecat               controllers.RateController.toAddRate
 POST        /admin/addratecat               controllers.RateController.addRateCat()
 POST        /admin/removeratecat            controllers.RateController.removeRateCategory()
 
+GET         /admin/addvotecat               controllers.VoteController.toAddVoteCatPage()
+POST        /admin/addvotecat               controllers.VoteController.addVoteCat()
+POST        /admin/removevotecat            controllers.VoteController.removeVoteCategory()
+
 GET         /admin/user                     controllers.UserController.toAddUserPage()
 POST        /admin/user/add                 controllers.UserController.addUser()
 POST        /admin/user/remove              controllers.UserController.removeUser()
@@ -43,6 +47,7 @@ POST        /admin/user/remove              controllers.UserController.removeUse
 
 GET         /admin/team                     controllers.TeamController.toTeamPage()
 POST        /admin/team                     controllers.TeamController.addTeam()
+POST        /admin/team/remove              controllers.TeamController.removeTeam()
 POST        /admin/team/members             controllers.TeamController.addMember()
 POST        /admin/team/removeMember        controllers.TeamController.removeMemberFromTeam()
 

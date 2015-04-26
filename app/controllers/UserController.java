@@ -42,8 +42,8 @@ public class UserController extends Controller {
     public static Result removeUser(){
         DynamicForm form = new DynamicForm().bindFromRequest();
         User user = User.findById(Long.parseLong(form.data().get("userId")));
-        Rate.deleteByUser(user);
-        Vote.deleteByUser(user);
+        //Rate.deleteByUser(user);
+        //Vote.deleteByUser(user);
 
         user.delete();
 
