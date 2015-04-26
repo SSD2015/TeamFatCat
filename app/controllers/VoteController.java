@@ -47,9 +47,12 @@ public class VoteController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result removeVoteCategory() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-        VoteCategory voteCategory = VoteCategory.findById(Long.parseLong(form.data().get("cId")));
 
-        voteCategory.delete();
+        try {
+            VoteCategory.findById(Long.parseLong(form.data().get("categoryId"))).delete();
+        } catch (NumberFormatException e) {
+
+        }
 
         return redirect(routes.VoteController.toAddVoteCatPage());
     }

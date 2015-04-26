@@ -103,10 +103,12 @@ public class RateController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result removeRateCategory() {
         Form<Object> form = Form.form(Object.class).bindFromRequest();
-        RateCategory rateCategory = RateCategory.findById(Long.parseLong(form.data().get("cId")));
 
-        //Rate.deleteByRateCategory(rateCategory);
-        rateCategory.delete();
+        try {
+            RateCategory.findById(Long.parseLong(form.data().get("categoryId"))).delete();
+        } catch (NumberFormatException e) {
+
+        }
 
         return redirect(routes.RateController.toAddRateCatPage());
     }

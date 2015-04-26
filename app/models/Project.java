@@ -51,9 +51,6 @@ public class Project extends Model {
 
     @Override
     public void delete() {
-//        Rate.deleteByProject(this);
-//        Vote.deleteByProject(this);
-
         Team team = Team.findByProject(this);
         team.setProject(null);
         team.update();

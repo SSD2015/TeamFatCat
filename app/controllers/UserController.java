@@ -41,11 +41,12 @@ public class UserController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result removeUser(){
         DynamicForm form = new DynamicForm().bindFromRequest();
-        User user = User.findById(Long.parseLong(form.data().get("userId")));
-        //Rate.deleteByUser(user);
-        //Vote.deleteByUser(user);
 
-        user.delete();
+        try {
+            User.findById(Long.parseLong(form.data().get("userId"))).delete();
+        } catch (NumberFormatException e) {
+
+        }
 
         return redirect(routes.UserController.toAddUserPage());
     }

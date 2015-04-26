@@ -42,9 +42,12 @@ public class ProjectController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result removeProjectById() {
         DynamicForm form = new DynamicForm().bindFromRequest();
-        Project project = Project.findById(Long.parseLong(form.data().get("projectId")));
 
-        project.delete();
+        try {
+            Project.findById(Long.parseLong(form.data().get("projectId"))).delete();
+        } catch (NumberFormatException e) {
+
+        }
 
         return redirect(routes.ProjectController.toAddProjectPage());
     }
