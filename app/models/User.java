@@ -113,10 +113,6 @@ public class User extends Model {
         this.type = type;
     }
 
-    public boolean checkPassword(String candidate) {
-        return BCrypt.checkpw(candidate, this.password);
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -181,6 +177,8 @@ public class User extends Model {
     public Team getTeam() {
         return this.team;
     }
+
+
 
     public boolean checkTeam(Team team) {
         if (team == this.team) { return true; }

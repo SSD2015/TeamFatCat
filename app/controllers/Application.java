@@ -14,6 +14,7 @@ import play.data.DynamicForm;
 import java.util.Date;
 import java.util.List;
 
+import util.Authenticator;
 import views.html.*;
 
 public class Application extends Controller {
@@ -59,10 +60,10 @@ public class Application extends Controller {
         String username = dy.get("username");
         String password = dy.get("password");
 
-        User user = User.findByUsername(username);
-        if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+        User user = Authenticator.getInstance().authenticate(username, password);
+        if (user != null) {
             session().clear();
-            session("username", username);
+            session("username", user.getUsername());
             return redirect(routes.ProjectListController.toProjectListPage());
         }
         else {
