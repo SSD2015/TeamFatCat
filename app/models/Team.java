@@ -158,9 +158,9 @@ public class Team extends Model {
         return null;
     }
     public static Team create(String name, String members) {
-        Team team = new Team(name, members);
-        team.save();
-        return team;
+            Team team = new Team(name, members);
+            team.save();
+            return team;
     }
 
     public boolean isMember(long userId) {

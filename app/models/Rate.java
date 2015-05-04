@@ -90,7 +90,7 @@ public class Rate extends Model{
     }
 
     public static List<Rate> getProjectAndCatRate(Project proj,RateCategory cat){
-        return Rate.find.where().eq("category",cat).eq("project",proj).findList();
+        return Rate.find.where().eq("category",cat).eq("project",proj).ne("score",-1).findList();
     }
 
     public static Rate getUniqueRate(String userName, Project project, RateCategory ratecat){
@@ -100,6 +100,6 @@ public class Rate extends Model{
     }
 
     public static List<Rate> getProjectRate(Project proj){
-        return Rate.find.where().eq("project",proj).findList();
+        return Rate.find.where().eq("project",proj).ne("score",-1).findList();
     }
 }

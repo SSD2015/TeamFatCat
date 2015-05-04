@@ -4,6 +4,7 @@ import models.Image;
 import models.Project;
 import models.Team;
 import models.User;
+import play.Logger;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -22,9 +23,11 @@ public class ImageController extends Controller {
         Team team = Team.findById(project.getTeamId());
 
         if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+            Logger.warn("[ " + request().username() + " ] try to access edit project [ #" + projectId + " ] page.");
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
+        Logger.info("[ " + request().username() + " ] arrive at edit project page.");
         List<Image> images = Image.findImagesByProject(projectId);
 
         response().setHeader("Cache-Control","no-cache");
@@ -38,14 +41,15 @@ public class ImageController extends Controller {
         Team team = Team.findById(project.getTeamId());
 
         if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+            Logger.warn("[ " + request().username() + " ] try to access delete image [ #" + imageId + " ] in edit project [ #" + projectId + " ] page.");
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
         Image image = Image.findById(imageId);
+        Logger.info("[ " + request().username() + " ] delete image [ #" + image.getId() + " ]");
+
         image.setName(Image.NUL);
         image.update();
-
-        List<Image> images = Image.findImagesByProject(projectId);
 
         return redirect(routes.ImageController.toEditProjectPage(projectId));
     }
@@ -55,9 +59,11 @@ public class ImageController extends Controller {
         Image image = Image.findById(imageId);
 
         if (image != null) {
+            Logger.info("[ " + request().username() + " ] get image [ #" + imageId + " ]");
             response().setHeader("Cache-Control","no-cache");
             return ok(image.getData()).as("image");
         } else {
+            Logger.error("[ " + request().username() + " ] request image [ #" + imageId + " ] - no image");
             flash("error", "File not found");
             return redirect(routes.Application.toErrorPage());
         }

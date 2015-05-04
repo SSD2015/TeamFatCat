@@ -126,6 +126,12 @@
                             <td>@list.getBriefDesc()</td>
                             <td>@Team.findById(list.getTeamId).getId()</td>
                             <td>@Team.findById(list.getTeamId).getName()</td>
+                            <td>
+                                <form action="@routes.ProjectController.removeProjById()" method="post" class="form-horizontal" role="form">
+                                    <input type="hidden" value=@list.getId() name="pId">
+                                    <button class="btn btn-danger">X</button>
+                                </form>
+                            </td>
                         </tr>
                     }
                 </table>

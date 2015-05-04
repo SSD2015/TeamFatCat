@@ -15,6 +15,7 @@
 
         <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
         <script type="text/javascript">
+
         </script>
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
@@ -80,29 +81,29 @@
                             @form.globalError.message
                             </p>
                         }
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Team</label>
-                        <div class="col-sm-6">
-                            <input class="form-control" id="focusedInput" type="text" name="name" />
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Team</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" id="focusedInput" type="text" name="name" />
+                            </div>
                         </div>
-                    </div>
-                    <button class="btn btn-primary">Create Team</button>
+                        <button class="btn btn-primary">Create Team</button>
                     </form>
 
-                </div>
-                @*<div class="" style="width=100%; min-height: 100px;"></div>*@
+                    </div>
+                    @*<div class="" style="width=100%; min-height: 100px;"></div>*@
 
 
-                <div class="col-sm-4 col-sm-offset-1 text-center" style="background-color: #ffffff;">
+                    <div class="col-sm-4 col-sm-offset-1 text-center" style="background-color: #ffffff;">
 
                     <form action="@routes.TeamController.addMember()" method="post" class="form-horizontal" role="form">
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Select Team</label>
                             <div class="col-sm-6">
                                 <select class="form-control" id="focusedInput" type="text" name="teamName">
-                                @teamList.map { list =>
-                                    <option>@list.getName</option>
-                                }
+                                    @teamList.map { list =>
+                                        <option>@list.getName</option>
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -111,52 +112,52 @@
                             <label class="col-sm-4 control-label">Select User</label>
                             <div class="col-sm-6">
                                 <select class="form-control" id="focusedInput" type="text" name="username">
-                                @studentList.map { list =>
-                                    <option>@list.getUsername</option>
-                                }
+                                    @studentList.map { list =>
+                                        <option>@list.getUsername</option>
+                                    }
                                 </select>
                             </div>
                         </div>
                         <button class="btn btn-primary">Add Member</button>
                     </form>
                 </div>
-            </div>
-        </div>
-
-
-        <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
-            <div class ="container">
-                <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
-                    <h2 class="text-center"><b>Team Lists</b></h2>
-                    <h2></h2>
-                    @teamList.map { list =>
-                        <h3>@list.getName() (ID: @list.getId())</h3>
-                        <table class="table table-condensed">
-                            <tr class="warning">
-                                <th>Username</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th></th>
-                            </tr>
-                            @list.getMembers().map { listlist =>
-                                <tr>
-                                    <td>@listlist.getUsername()</td>
-                                    <td>@listlist.getFirstName()</td>
-                                    <td>@listlist.getLastName()</td>
-                                    <td>
-                                        <form action="@routes.TeamController.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
-                                            <input type="hidden" value=@list.getId() name="tId">
-                                            <input type="hidden" value=@listlist.getId() name="uId">
-                                            <button class="btn btn-danger">X</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            }
-                        </table>
-                    }
                 </div>
             </div>
-        </div>
+
+
+            <div class="container-fluid" style="background-color: #ffffff; margin-top: 30px; padding: 10px; padding-bottom: 30px;">
+                <div class ="container">
+                    <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
+                        <h2 class="text-center"><b>Team Lists</b></h2>
+                        <h2></h2>
+                        @teamList.map { list =>
+                            <h3>@list.getName() (ID: @list.getId())</h3>
+                            <table class="table table-condensed">
+                                <tr class="warning">
+                                    <th>Username</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th></th>
+                                </tr>
+                                @list.getMembers().map { listlist =>
+                                    <tr>
+                                        <td>@listlist.getUsername()</td>
+                                        <td>@listlist.getFirstName()</td>
+                                        <td>@listlist.getLastName()</td>
+                                        <td>
+                                            <form action="@routes.TeamController.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
+                                                <input type="hidden" value=@list.getId() name="tId">
+                                                <input type="hidden" value=@listlist.getId() name="uId">
+                                                <button class="btn btn-danger">X</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
 
         </div>
     </body>

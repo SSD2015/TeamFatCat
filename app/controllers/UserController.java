@@ -1,12 +1,14 @@
 package controllers;
 
 import models.User;
+import play.Logger;
+import models.*;
 import play.data.Form;
 import play.db.ebean.Model;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.user;
+import views.html.*;
 
 import java.util.List;
 
@@ -28,11 +30,35 @@ public class UserController extends Controller {
         if (userForm.hasErrors()) {
             List<User> userList = User.getAllUsers();
 
-            response().setHeader("Cache-Control","no-cache");
+            Logger.error("[ " + request().username() + " ] fail to add user.");
+            response().setHeader("Cache-Control", "no-cache");
             return badRequest(user.render(userForm, userList, User.findByUsername(request().username())));
         }
         User user = userForm.get();
         user.save();
+        Logger.info("[ " + request().username() + " ] has add user [ #" + user.getId() + " ]");
+        return redirect(routes.UserController.toAddUserPage());
+    }
+
+    @Security.Authenticated(AdminSecured.class)
+    public static Result removeUser(){
+        Form<Object> form = Form.form(Object.class).bindFromRequest();
+        User user = User.findById( Long.parseLong(form.data().get("uId")) );
+        List<Rate> allRates = Rate.getAllRates();
+        List<Team> allTeams = Team.getAllTeams();
+        for( Rate rate: allRates ) {
+            if( rate.getUser().getId() == user.getId() ) {
+                rate.delete();
+            }
+        }
+        for( Team team: allTeams ) {
+            if( team.removeMember( user.getId() ) ) {
+                team.update();
+                break;
+            }
+            team.update();
+        }
+        user.delete();
         return redirect(routes.UserController.toAddUserPage());
     }
 
@@ -48,4 +74,5 @@ public class UserController extends Controller {
 //
 //        return redirect(routes.UserController.toAddUserPage());
 //    }
+
 }
