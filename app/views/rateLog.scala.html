@@ -77,26 +77,28 @@
                     <thead>
                         <tr class="warning">
                             <th>ID</th>
-                            <th>User</th>
+                            <th>Username</th>
+                            <th>Name</th>
                             <th>Project</th>
                             <th>Rate Category</th>
                             <th>Score</th>
                             <th>Time</th>
                         </tr>
-                        @rateList.map { list =>
+                        @rateList.map { rate =>
                             <tr>
-                                <td>@list.getId()</td>
-                                <td>@(list.getUser().getFirstName()+"  "+list.getUser().getLastName())</td>
-                                <td>@list.getProject().getProjectName</td>
-                                <td>@list.getCategory().getName()</td>
+                                <td>@rate.getId()</td>
+                                <td>@rate.getUser().getUsername</td>
+                                <td>@(rate.getUser().getFirstName()+"  "+rate.getUser().getLastName())</td>
+                                <td>@rate.getProject().getName</td>
+                                <td>@rate.getCategory().getName()</td>
                                 <td>
-                                @if(list.getScore() != -1) {
-                                    @list.getScore()
+                                @if(rate.getScore() != -1) {
+                                    @rate.getScore()
                                 } else {
                                     Not Rated
                                 }
                                 </td>
-                                <td>@list.getTimestamp()</td>
+                                <td>@rate.getTimestamp()</td>
                             </tr>
                         }
                     </thead>

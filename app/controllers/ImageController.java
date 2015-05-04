@@ -1,11 +1,6 @@
 package controllers;
 
-import models.Image;
-import models.Project;
-import models.Team;
-import models.User;
-import play.Logger;
-import play.data.Form;
+import models.*;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -20,14 +15,12 @@ public class ImageController extends Controller {
     public static Result toEditProjectPage(long projectId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
+        Team team = Team.findByProject(project);
 
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
-            Logger.warn("[ " + request().username() + " ] try to access edit project [ #" + projectId + " ] page.");
+        if (!user.checkTeam(team) && user.getType() != User.ADMIN) {
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
-        Logger.info("[ " + request().username() + " ] arrive at edit project page.");
         List<Image> images = Image.findImagesByProject(projectId);
 
         response().setHeader("Cache-Control","no-cache");
@@ -38,18 +31,17 @@ public class ImageController extends Controller {
     public static Result deleteImage(long projectId, long imageId) {
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
+        Team team = Team.findByProject(project);
 
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
-            Logger.warn("[ " + request().username() + " ] try to access delete image [ #" + imageId + " ] in edit project [ #" + projectId + " ] page.");
+        if (!user.checkTeam(team) && (user.getType() != User.ADMIN)) {
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
         Image image = Image.findById(imageId);
-        Logger.info("[ " + request().username() + " ] delete image [ #" + image.getId() + " ]");
-
         image.setName(Image.NUL);
         image.update();
+
+        List<Image> images = Image.findImagesByProject(projectId);
 
         return redirect(routes.ImageController.toEditProjectPage(projectId));
     }
@@ -59,11 +51,9 @@ public class ImageController extends Controller {
         Image image = Image.findById(imageId);
 
         if (image != null) {
-            Logger.info("[ " + request().username() + " ] get image [ #" + imageId + " ]");
             response().setHeader("Cache-Control","no-cache");
             return ok(image.getData()).as("image");
         } else {
-            Logger.error("[ " + request().username() + " ] request image [ #" + imageId + " ] - no image");
             flash("error", "File not found");
             return redirect(routes.Application.toErrorPage());
         }
@@ -76,9 +66,9 @@ public class ImageController extends Controller {
 
         User user = User.findByUsername(request().username());
         Project project = Project.findById(projectId);
-        Team team = Team.findById(project.getTeamId());
+        Team team = Team.findByProject(project);
 
-        if (!team.isMember(user.getId()) && (user.getType() != User.ADMIN)) {
+        if (!user.checkTeam(team) && (user.getType() != User.ADMIN)) {
             return redirect(routes.ProjectListController.toProjectListPage());
         }
 
@@ -89,15 +79,6 @@ public class ImageController extends Controller {
         }
 
         File img = form.getFile("image").getFile();
-
-//        if (img != null) {
-//            File file = img;
-//            File newFile = new File(play.Play.application().path().toString() + "//public//uploads//"+ "_" + fileName);
-//            file.renameTo(newFile); //here you are moving photo to new directory
-//            System.out.println(newFile.getPath()); //this pa
-//        }
-//        Image.create(tag, form.get().file.getFile(), projectId);
-
 
         if (tag.equals(Image.AVT)) {
             Image image_a = Image.findByNameAndProject(Image.AVT, projectId);
@@ -115,19 +96,4 @@ public class ImageController extends Controller {
 
         return redirect(routes.ImageController.toEditProjectPage(projectId));
     }
-
-//    public static class Upload {
-//        public Http.MultipartFormData.FilePart file;
-//
-//        public String validate() {
-//
-//            file = form.getFile("image");
-//
-//            if (file == null) {
-//                return "No file";
-//            }
-//
-//            return null;
-//        }
-//    }
 }

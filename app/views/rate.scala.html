@@ -64,7 +64,7 @@
 
                 <ol class="breadcrumb" style="background: #f0f0f0;">
                     <li><a href="/projectlist">Project List</a></li>
-                    <li><a href="@routes.ProjectController.toProjectPage(project.getId)">@project.getProjectName()</a></li>
+                    <li><a href="@routes.ProjectController.toProjectPage(project.getId)">@project.getName()</a></li>
                     <li class="active">Rate</li>
                 </ol>
             </div>
@@ -91,12 +91,10 @@
                                         border-radius: 10px;
                                     }
                                 </style>
-                                @if(Rate.getUniqueRate(user.getUsername, project, RateCategory.getAllCategories.get(0)) != null
-                                        && Rate.getUniqueRate(user.getUsername, project, list).getScore() != -1) {
-                                    <input id="ratestar" name="@list.getName()" value = "@Rate.getUniqueRate(user.getUsername, project, list).getScore()"
-                                    type="number" class="rating" min=0 max=5 step=1 data-size="md" >
-                                } else{
-                                    <input id="ratestar" name="@list.getName()" type="number" class="rating" min=0 max=5 step=1 data-size="md" >
+                                @if(Rate.findUnique(user, project, RateCategory.findAll().get(0)) != null && Rate.findUnique(user, project, list).getScore() != -1) {
+                                    <input id="ratestar" name="@list.getName()" value = "@Rate.findUnique(user, project, list).getScore()" type="number" class="rating" min=0 max=5 step=1 data-size="md">
+                                } else {
+                                    <input id="ratestar" name="@list.getName()" type="number" class="rating" min=0 max=5 step=1 data-size="md">
                                 }
                                 <input id="noRate@list.getName()" name="noRate@list.getName()" type="checkbox" value="isNoRate">Not Rated
 

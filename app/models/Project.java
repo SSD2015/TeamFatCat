@@ -1,65 +1,31 @@
 package models;
 
+import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.util.List;
 
 @Entity
-public class Project extends Model{
+public class Project extends Model {
+
     @Id
     private long id;
 
-    private String projectName;
-    private String projectDesc;
+    @Constraints.Required
+    private String name;
+    private String description;
 
-    private long teamId;
+    @OneToOne(mappedBy = "project", cascade = CascadeType.DETACH)
+    private Team team;
 
-    // Finder will help us easily query data from database.
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<Rate> rates;
+
     private static Finder<Long, Project> find = new Finder<Long, Project>(Long.class, Project.class);
 
-
-    public Project(String projectName, String projectDesc, long teamId){
-        this.projectName = projectName;
-        this.projectDesc = projectDesc;
-        this.teamId = teamId;
-    }
-
-    //Project Name
-    //set
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-    //get
-    public String getProjectName(){
-        return this.projectName;
-    }
-
-    //Project Desc
-    //set
-    public void setProjectDesc(String description){
-        this.projectDesc = description;
-    }
-    public void setTeamId(long id){
-        this.teamId = id;
-    }
-    //get
-    public String getProjectDesc() { return this.projectDesc; }
-    public String getBriefDesc() {
-        if (this.projectDesc == null) {
-            return "IT'S NULL SUS!";
-        }
-        if( this.projectDesc.length()>20 )
-            return this.projectDesc.substring(0,21)+"..";
-        return this.projectDesc;
-    }
-
-    public long getId() { return id; }
-    public long getTeamId() { return teamId; }
-
-    public static List<Project> getAllProjects() {
+    public static List<Project> findAll() {
         return find.all();
     }
 
@@ -67,58 +33,121 @@ public class Project extends Model{
         return find.byId(id);
     }
 
-    public double getToalVoteScores() {
-        List<Vote> voteList = Vote.getVoteFromProject(this);
-        double count = 0;
+    public static Project findByName(String name) {
+        return find.where().eq("name", name).findUnique();
+    }
+
+    public static Project create(String name) {
+        Project project = new Project(name);
+        project.save();
+        return project;
+    }
+
+    public static Project create(String name, String description) {
+        Project project = new Project(name, description);
+        project.save();
+        return project;
+    }
+
+    @Override
+    public void delete() {
+        Team team = Team.findByProject(this);
+        team.setProject(null);
+        team.update();
+        this.update();
+
+        super.delete();
+    }
+
+    public Project(String name) {
+        this.name = name;
+    }
+
+    public Project(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getBriefDesc() {
+        if (this.description == null) {
+            return "";
+        }
+        if( this.description.length()>20 )
+            return this.description.substring(0,21)+"..";
+        return this.description;
+    }
+
+    public boolean equals(Project other) {
+        if (this.id == other.getId()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //==========================================================================================
+    // NOT CLEAN
+    //==========================================================================================
+    public int getTotalVoteScores() {
+        List<Vote> voteList = Vote.findByProject(this);
+        int count = 0;
         for (int i = 0 ; i < voteList.size() ; i++) {
-            if (voteList.get(i).getUser().getId() <= 42 && voteList.get(i).getUser().getId() >= 2) {
+            if (voteList.get(i).getUser().getId() <= 42 && voteList.get(i).getUser().getId() >= 22) {
                 count++;
             }
         }
 
-        return voteList.size();
+        return count;
     }
 
     public double getPercentVoteScores() {
         List<Project> projects = find.all();
         double total = 0;
         for(int i = 0 ; i < projects.size() ; i++) {
-            total += projects.get(i).getToalVoteScores();
+            total += projects.get(i).getTotalVoteScores();
         }
 
-        double percent =  getToalVoteScores() / total * 10000;
+        double percent =  getTotalVoteScores() / total * 10000;
         percent = Math.round(percent);
         percent = percent / 100;
         return percent;
     }
 
-    public double getAvgFromCat(RateCategory cat) {
-        List<Rate> rateList = Rate.getProjectAndCatRate(this,cat);
+    public double getTotalScoresFromCat(RateCategory cat) {
+        List<Rate> rateList = Rate.findByProjectRateCategory(this,cat);
         double total = 0;
+        //int count = 0;
         for(int i = 0 ; i < rateList.size() ; i++) {
-            if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 2) {
+            if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 22) {
                 total += rateList.get(i).getScore();
-                count++;
+                //count++;
             }
         }
         
-        total = total / rateList.size();
-        total = total * 100;
-        total = Math.round(total);
-        total = total / 100;
-        return total;
-    }
-
-    public double getAvg(){
-        List<Rate> rateList = Rate.getProjectRate(this);
-        double total=0;
-        for(int i=0 ; i<rateList.size() ; i++){
-            total += rateList.get(i).getScore();
-        }
-        total = total / rateList.size();
-        total = total *100;
-        total = Math.round(total);
-        total = total /100;
+//        total = total / count;
+//        total = total * 100;
+//        total = Math.round(total);
+//        total = total / 100;
         return total;
     }
 
@@ -126,10 +155,10 @@ public class Project extends Model{
         List<Project> projects = find.all();
         double totalScores = 0;
         for(int i = 0 ; i < projects.size() ; i++) {
-           totalScores += projects.get(i).getAvgFromCat(cat);
+           totalScores += projects.get(i).getTotalScoresFromCat(cat);
         }
 
-        double percent = getAvgFromCat(cat) / totalScores * 10000;
+        double percent = getTotalScoresFromCat(cat) / totalScores * 10000;
         percent = Math.round(percent);
         percent = percent / 100;
 
@@ -137,35 +166,27 @@ public class Project extends Model{
     }
 
     public String validate() {
-        List<Project> proList = find.all();
-        if (this.projectName == null) {
+        if (this.name == null) {
             return "Project Name is required";
         }
 
-        if (this.projectName.length() < 1 || this.projectName.length() > 20 ) {
+        if (this.name.length() < 1 || this.name.length() > 20 ) {
             return "Project name must not exceed 20 characters";
         }
 
-        if (this.projectDesc.length() < 1 ) {
+        if (this.description.length() < 1 ) {
             return "Description is required";
         }
 
-        if (this.projectDesc.length() > 300){
+        if (this.description.length() > 300){
             return "Maxmimum size is 300 characters";
         }
 
-        for (Project t: proList) {
-            if ((this.projectName).toLowerCase().equals(t.getProjectName().toLowerCase())) {
-                return "This name is already used";
-            }
+        if (find.where().eq("name", this.name).findUnique() != null) {
+            return "This name has already used";
         }
 
         return null;
-    }
-    public static Project create(String projectName, String projectDesc, long teamId) {
-        Project project = new Project(projectName, projectDesc,teamId);
-        project.save();
-        return project;
     }
 
     public long getAvatarId() {

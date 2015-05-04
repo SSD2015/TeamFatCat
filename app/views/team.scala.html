@@ -130,8 +130,18 @@
                     <div class="row" style="background-color: #E8E8E8; margin-top: 20px; padding: 30px;">
                         <h2 class="text-center"><b>Team Lists</b></h2>
                         <h2></h2>
-                        @teamList.map { list =>
-                            <h3>@list.getName() (ID: @list.getId())</h3>
+                        @teamList.map { team =>
+
+                            <form action="@routes.TeamController.removeTeam()" method="post" class="form-horizontal" role="form">
+                                <input type="hidden" value=@team.getId name="teamId">
+                                <button class="btn btn-danger">X</button>
+                            </form>
+                            <h3>@team.getName() (ID: @team.getId())</h3>
+                            @if(team.getProject() != null) {
+                                <p>@team.getProject().getName()</p>
+                            } else {
+                                <p>no project</p>
+                            }
                             <table class="table table-condensed">
                                 <tr class="warning">
                                     <th>Username</th>
@@ -139,15 +149,14 @@
                                     <th>Last Name</th>
                                     <th></th>
                                 </tr>
-                                @list.getMembers().map { listlist =>
+                                @User.findByTeam(team).map { user =>
                                     <tr>
-                                        <td>@listlist.getUsername()</td>
-                                        <td>@listlist.getFirstName()</td>
-                                        <td>@listlist.getLastName()</td>
+                                        <td>@user.getUsername()</td>
+                                        <td>@user.getFirstName()</td>
+                                        <td>@user.getLastName()</td>
                                         <td>
                                             <form action="@routes.TeamController.removeMemberFromTeam()" method="post" class="form-horizontal" role="form">
-                                                <input type="hidden" value=@list.getId() name="tId">
-                                                <input type="hidden" value=@listlist.getId() name="uId">
+                                                <input type="hidden" value=@user.getUsername() name="username">
                                                 <button class="btn btn-danger">X</button>
                                             </form>
                                         </td>

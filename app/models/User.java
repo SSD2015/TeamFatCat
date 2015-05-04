@@ -4,14 +4,18 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 public class User extends Model {
+
+    public static final int ADMIN = 99;
+    public static final int STUDENT = 1;
+    public static final int ORGANIZER = 2;
+    public static final int INSTRUCTOR = 3;
 
     @Id
     private long id;
@@ -21,31 +25,74 @@ public class User extends Model {
     @Constraints.Required
     private String password;
 
+    @Constraints.Required
     private String firstName;
+    @Constraints.Required
     private String lastName;
 
+    @Constraints.Required
     private int type;
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name="team_id", referencedColumnName="id", nullable = true)
+    public Team team;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
+    public Vote vote;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    public List<Rate> rates;
 
     @Version
     Timestamp lastUpdate;
 
-    public static final int ADMIN = 99;
-    public static final int STUDENT = 1;
-    public static final int ORGANIZER = 2;
-    public static final int INSTRUCTOR = 3;
-
     private static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 
-    public static List<User> all() {
+    public static List<User> findAll() {
         return find.all();
     }
 
-    private User(String username, String password, String firstName, String lastName, int type) {
-        this.username = username;
-        setPassword(password);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.type = type;
+    public static List<User> findAdmin() {
+        return find.where().eq("type", User.ADMIN).findList();
+    }
+
+    public static List<User> findStudent() {
+        return find.where().eq("type", User.STUDENT).findList();
+    }
+
+    public static List<User> findOrganizer() {
+        return find.where().eq("type", User.ORGANIZER).findList();
+    }
+
+    public static List<User> findInstructor() {
+        return find.where().eq("type", User.INSTRUCTOR).findList();
+    }
+
+    public static List<User> findStudentNotInTeam() { return find.where().eq("type", User.STUDENT).eq("team", null).findList(); }
+
+    public static User findById(long id) {
+        return find.byId(id);
+    }
+
+    public static User findByUsername(String username) {
+        return find.where().eq("username", username).findUnique();
+    }
+
+    public static List<User> findByTeam(Team team) {
+        return find.where().eq("team", team).findList();
+    }
+
+    public static void deleteById(long id) {
+        find.byId(id).delete();
+    }
+
+    public static User authenticate(String username, String password) {
+        User user = find.where().eq("username", username).findUnique();
+        if (user != null && BCrypt.checkpw(password, user.password)) {
+            return user;
+        }
+
+        return null;
     }
 
     public static User create(String username, String password, String firstName, String lastName, int type) {
@@ -57,16 +104,13 @@ public class User extends Model {
 
         return null;
     }
-//	public static void delete(String username) {
-//		find.ref(username).delete();
-//	}
 
-    public void clearAll() {
-        find.all().clear();
-    }
-
-    public boolean checkPassword(String candidate) {
-        return BCrypt.checkpw(candidate, this.password);
+    private User(String username, String password, String firstName, String lastName, int type) {
+        this.username = username;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.type = type;
     }
 
     public void setUsername(String username) {
@@ -89,6 +133,15 @@ public class User extends Model {
         this.type = type;
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+        this.update();
+    }
+
+    public void setLastUpdate() {
+        this.lastUpdate = new Timestamp((new Date()).getTime());
+    }
+
     public long getId(){ return id; }
 
     public String getFirstName() { return firstName; }
@@ -101,10 +154,6 @@ public class User extends Model {
 
     public String getPassword() {
         return this.password;
-    }
-
-    public int getType() {
-        return this.type;
     }
 
     public String getTypeName() {
@@ -121,49 +170,34 @@ public class User extends Model {
         }
     }
 
-    public Timestamp getLastUpdate() {
-        return lastUpdate;
+    public int getType() {
+        return this.type;
     }
 
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public Team getTeam() {
+        return this.team;
     }
 
-    public static List<User> getAllUsers() {
-        return find.all();
+
+
+    public boolean checkTeam(Team team) {
+        if (team == this.team) { return true; }
+
+        return false;
     }
 
-    public static void deleteById(long id) {
-        find.ref(id).delete();
+    public boolean checkProject(Project project) {
+        if (this.team != null) { return team.checkProject(project); }
+
+        return false;
     }
 
-    public static User findByUsername(String username) {
-        return find.where().eq("username", username).findUnique();
-    }
-
-    public static User findById(long id) {
-        return find.byId(id);
-    }
-
-    public static User authenticate(String username, String password) {
-        User user = find.where().eq("username", username).findUnique();
-        if (user != null && BCrypt.checkpw(password, user.password)) {
-            return user;
+    public boolean equals(User other) {
+        if (this.id == other.getId()) {
+            return true;
+        } else {
+            return false;
         }
-
-        return null;
-    }
-
-    public static List<User> getStudents() {
-        List<User> studentList = find.all();
-        for (int i = 0 ; i < studentList.size() ; i++) {
-            if (studentList.get(i).getType() != STUDENT) {
-                studentList.remove(i);
-                i--;
-            }
-        }
-
-        return studentList;
     }
 
     public String validate() {

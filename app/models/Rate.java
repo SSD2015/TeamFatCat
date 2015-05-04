@@ -16,54 +16,120 @@ public class Rate extends Model{
     @Id
     private Long id;
 
-    @Constraints.Required
-    private int score;
-
     @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName="id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name="project_id", referencedColumnName="id")
+    private Project project;
+
+    @ManyToOne
     @JoinColumn(name="category_id", referencedColumnName="id")
     private RateCategory category;
 
-    @ManyToOne
-    @JoinColumn(name="project_id", referencedColumnName="id")
-    private Project project;
+    @Constraints.Required
+    private int score;
 
     @Version
     private Timestamp timestamp;
 
-    // Finder will help us easily query data from database.
     private static Finder<Long, Rate> find = new Finder<Long, Rate>(Long.class, Rate.class);
 
-    public static List<Rate> getAllRates() {
+    public static List<Rate> findAll() {
         return find.all();
+    }
+
+    public static Rate findById(long id) {
+        return find.byId(id);
+    }
+
+    public static List<Rate> findByUser(User user) {
+        return find.where().eq("user", user).findList();
+    }
+
+    public static List<Rate> findByProject(Project project) {
+        return find.where().eq("project", project).findList();
+    }
+
+    public static List<Rate> findByRateCategory(RateCategory rateCategory) {
+        return find.where().eq("category", rateCategory).findList();
+    }
+
+    public static List<Rate> findByProjectRateCategory(Project project, RateCategory rateCategory){
+        return find.where().eq("project", project).eq("category", rateCategory).findList();
+    }
+
+    public static Rate findUnique(User user, Project project, RateCategory rateCategory) {
+        return find.where().eq("user", user).eq("category", rateCategory).eq("project", project).findUnique();
+    }
+
+    public static void deleteByUser(User user) {
+        List<Rate> rates = findByUser(user);
+        for (Rate rate: rates) {
+            rate.delete();
+        }
+    }
+
+    public static void deleteByProject(Project project) {
+        List<Rate> rates = findByProject(project);
+        for (Rate rate: rates) {
+            rate.delete();
+        }
+    }
+
+    public static void deleteByRateCategory(RateCategory rateCategory) {
+        List<Rate> rates = findByRateCategory(rateCategory);
+        for (Rate rate: rates) {
+            rate.delete();
+        }
+    }
+
+    public static Rate create(User user, Project project, RateCategory rateCategory, int score) {
+        if (score > 5 || score < -1) { return null; }
+
+        Rate rate = findUnique(user, project, rateCategory);
+        if (rate == null) {
+            rate = new Rate(user, project, rateCategory, score);
+        } else {
+            rate.setScore(score);
+        }
+
+        return rate;
+    }
+
+    private Rate(User user, Project project, RateCategory rateCategory, int score) {
+        this.user = user;
+        this.project = project;
+        this.category = rateCategory;
+        this.score = score;
+        this.timestamp = new Timestamp((new Date()).getTime());
+        this.save();
     }
 
     public void setScore(int score) {
         this.score = score;
+        this.updateTimestamp();
+        this.update();
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setCategory(RateCategory category) {
-        this.category = category;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public void setTimestamp() {
+    public void updateTimestamp() {
         timestamp = new Timestamp((new Date()).getTime());
     }
 
     public Long getId() {
         return id;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public RateCategory getCategory() { return category; }
 
     public int getScore() {
         return score;
@@ -73,33 +139,15 @@ public class Rate extends Model{
         return score*20;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public RateCategory getCategory() {
-        return category;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
     public String getTimestamp() {
         return this.timestamp.toString();
     }
 
-    public static List<Rate> getProjectAndCatRate(Project proj,RateCategory cat){
-        return Rate.find.where().eq("category",cat).eq("project",proj).ne("score",-1).findList();
-    }
-
-    public static Rate getUniqueRate(String userName, Project project, RateCategory ratecat){
-        User user = User.findByUsername(userName);
-        Rate rate = Rate.find.where().eq("category",ratecat).eq("project",project).eq("user",user).findUnique();
-        return rate;
-    }
-
-    public static List<Rate> getProjectRate(Project proj){
-        return Rate.find.where().eq("project",proj).ne("score",-1).findList();
+    public boolean equals(Rate other) {
+        if (this.id == other.getId()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
