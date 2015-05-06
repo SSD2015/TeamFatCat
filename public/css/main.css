@@ -4,3 +4,13 @@ h1, h2, h3, h4, h5, h6 {
 p, div {
     font-family: 'Open Sans', sans-serif;
 }
+
+.card-vote {
+    color: #fff;
+    background-color: #afd9ee;
+    border-radius: 10px;
+    min-height: 150pt;
+    margin-top: 25pt;
+    padding: 15pt;
+    box-shadow: 3px 3px 10px #eee;
+}

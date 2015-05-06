@@ -72,36 +72,40 @@
 
                     <div class="btn-group-vertical" role="group" style="width: 100%;">
                         @voteCategories.map { voteCategory =>
-                            <a href="@routes.VoteController.toVotePage(voteCategory.getId)" style="text-decoration: none;"><div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
-                                <div class="col-lg-9">
-                                    <div style="min-height: 38px;">
-                                        <h2>
-                                        @voteCategory.getName()
-                                        </h2>
+                            <a href="@routes.VoteController.toVotePage(voteCategory.getId)">
+                                <div class="card-vote">
+                                    <div class="col-lg-9">
+                                        <div style="min-height: 38px;">
+                                            <h2>
+                                            @voteCategory.getName()
+                                            </h2>
+                                        </div>
                                     </div>
                                 </div>
-                            </div></a>
+                            </a>
                         }
 
                         @projects.map { project =>
-                            <a href="@routes.ProjectController.toProjectPage(project.getId)" style="text-decoration: none;"><div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
-                                <div class="col-lg-3">
-                                    @if(project.getAvatarId() == -1) {
-                                        <img src="@routes.Assets.at("/img/noimage.png")" style="width:150px;height:150px">
-                                    } else {
-                                        <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
-                                    }
-                                </div>
-                                <div class="col-lg-9">
-                                    <div style="min-height: 38px;">
-                                        <h2>
-                                            @project.getName()
-                                        </h2>
+                            <a href="@routes.ProjectController.toProjectPage(project.getId)" style="text-decoration: none;">
+                                <div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
+                                    <div class="col-lg-3">
+                                        @if(project.getAvatarId() == -1) {
+                                            <img src="@routes.Assets.at("/img/noimage.png")" style="width:150px;height:150px">
+                                        } else {
+                                            <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
+                                        }
                                     </div>
-                                    <i>by @Team.findByProject(project).getName()</i><br>
-                                    Description: @project.getDescription()<br>
+                                    <div class="col-lg-9">
+                                        <div style="min-height: 38px;">
+                                            <h2>
+                                                @project.getName()
+                                            </h2>
+                                        </div>
+                                        <i>by @Team.findByProject(project).getName()</i><br>
+                                        Description: @project.getDescription()<br>
+                                    </div>
                                 </div>
-                            </div></a>
+                            </a>
                         }
                     </div>
                 </div>
