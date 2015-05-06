@@ -42,19 +42,12 @@
 
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
-
-                        @*<li><a href="#">Link</a></li>*@
-                        @*<li class="dropdown">*@
-                        @*<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>*@
-                        @*<ul class="dropdown-menu" role="menu">*@
                     <li><div class="navbar-text" style="padding-left: 15px;">Hello, @user.getFirstName() @user.getLastName()</div></li>
                     <li class="divider"></li>
                         @if(user.getType() == User.ADMIN) {
                             <li><a href="/admin">Admin</a></li>
                         }
                     <li><a href="@routes.Application.logout()">Log out</a></li>
-                        @*</ul>*@
-                        @*</li>*@
                     </ul>
                 </div>
                 <ol class="breadcrumb" style="background: #f0f0f0;">
@@ -68,24 +61,44 @@
         <div class="container">
             <div class="row" style="margin-top: 100px; margin-bottom: 20px; padding: 25px;">
 
-                @*<form action="@routes.ProjectController.editProject()" method="post" class="form-horizontal" role="form">*@
+                <h1 style = "text-align: center; margin-bottom: 30px;">Project @project.getName's Edit Page</h1>
+                <div class="col-lg-5" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
+                    <div>
+                        <h2>Change Name:</h2>
+                        <p>For input new @project.getName's name:</p>
+                        <form action="@routes.ProjectController.editProjectName(project.getId)" name="form" method="post" role="form">
+                            <div class="form-group">
+                                <label for="Pname">Name:</label>
+                                <input type="text" class="form-control" name="projectName" value="@project.getName()">
+                            </div>
+                            <button class="btn btn-default" type="submit">Update Name!</button>
+                        </form>
+                    </div>
 
-                    @*<div class="form-group">*@
+                    <div style = "margin-bottom: 20px;">
+                        <h3>Current Name:</h3>
+                        @project.getName
+                    </div>
+                </div>
 
-                        @*<label class="col-sm-4 control-label">Project Name</label>*@
-                        @*<div class="col-sm-6">*@
-                            @*<input class="form-control" id="focusedInput" type="text" name="projectName"/>*@
-                        @*</div>*@
-                    @*</div>*@
-                    @*<div class="form-group">*@
-                        @*<label class="col-sm-4 control-label">Project Description</label>*@
-                        @*<div class="col-sm-6">*@
-                            @*<input class="form-control" id="focusedInput" type="text" name="projectDesc"/>*@
-                        @*</div>*@
-                    @*</div>*@
+                <div class="col-lg-6" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
+                    <div>
+                        <h2>Change Description:</h2>
+                        <p>For input new @project.getName's description:</p>
+                        <form action="@routes.ProjectController.editProjectDescription(project.getId)" name="form" method="post" role="form">
+                            <div class="form-group">
+                                <label for="desc">Description:</label>
+                                <textarea class="form-control" rows="5" name="projectDescription">@project.getDescription()</textarea>
+                            </div>
+                            <button class="btn btn-default" type="submit">Update Description!</button>
+                        </form>
+                    </div>
 
-                    @*<button class="btn btn-primary">Add Project</button>*@
-                @*</form>*@
+                    <div style = "margin-bottom: 20px;">
+                        <h3>Current Description:</h3>
+                        @project.getDescription
+                    </div>
+                </div>
 
                 <div class="col-lg-5" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
                     <div>

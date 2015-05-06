@@ -69,7 +69,7 @@ public class ProjectController extends Controller {
         }
         List<Image> screenshots = Image.findImagesByProject(projectId);
 
-        response().setHeader("Cache-Control","no-cache");
+        response().setHeader("Cache-Control", "no-cache");
         return ok(project.render(user, project_model, members, avatarId, screenshots));
     }
 
@@ -79,5 +79,62 @@ public class ProjectController extends Controller {
         return redirect(
                 routes.RateController.toRatePage(Long.parseLong(form.data().get("pId")))
         );
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static  Result editProjectDescription(Long projectId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        if (project == null) {
+            return redirect(routes.ProjectListController.toProjectListPage());
+        }
+
+        Team team = Team.findByProject(project);
+        if (!user.checkTeam(team) && user.getType() != User.ADMIN) {
+            return redirect(routes.ProjectListController.toProjectListPage());
+        }
+
+        DynamicForm form = Form.form().bindFromRequest();
+        String description = form.get("projectDescription");
+        if (description == null || description.length() < 1) {
+            description = "";
+        }
+
+        project.setDescription(description);
+        project.update();
+        return redirect(routes.ImageController.toEditProjectPage(projectId));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static  Result editProjectName(Long projectId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        if (project == null) {
+            return redirect(routes.ProjectListController.toProjectListPage());
+        }
+
+        Team team = Team.findByProject(project);
+        if (!user.checkTeam(team) && user.getType() != User.ADMIN) {
+            return redirect(routes.ProjectListController.toProjectListPage());
+        }
+
+        DynamicForm form = Form.form().bindFromRequest();
+        String name = form.get("projectName");
+        if (name == null || name.length() < 1) {
+            List<Image> images = Image.findImagesByProject(projectId);
+            return badRequest(editproject.render(user, project, images));
+        }
+
+        List<Project> projects = Project.findAll();
+        for (Project p: projects) {
+            if (name.equals(p.getName())) {
+                List<Image> images = Image.findImagesByProject(projectId);
+                return badRequest(editproject.render(user, project, images));
+            }
+        }
+
+        project.setName(name);
+        project.update();
+        return redirect(routes.ImageController.toEditProjectPage(projectId));
     }
 }

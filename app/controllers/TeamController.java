@@ -50,6 +50,19 @@ public class TeamController extends Controller {
     }
 
     @Security.Authenticated(AdminSecured.class)
+    public static Result removeTeam() {
+        DynamicForm form = new DynamicForm().bindFromRequest();
+
+        try {
+            Team.findById(Long.parseLong(form.get("teamId"))).delete();
+        } catch (NumberFormatException e) {
+
+        }
+
+        return redirect(routes.TeamController.toTeamPage());
+    }
+
+    @Security.Authenticated(AdminSecured.class)
     public static Result addMember() {
         DynamicForm form = Form.form().bindFromRequest();
         if (form.hasErrors()) {
@@ -68,19 +81,6 @@ public class TeamController extends Controller {
         }
 
         return toBadRequestTeamPage();
-    }
-
-    @Security.Authenticated(AdminSecured.class)
-    public static Result removeTeam() {
-        DynamicForm form = new DynamicForm().bindFromRequest();
-
-        try {
-            Team.findById(Long.parseLong(form.get("teamId"))).delete();
-        } catch (NumberFormatException e) {
-
-        }
-
-        return redirect(routes.TeamController.toTeamPage());
     }
 
     @Security.Authenticated(AdminSecured.class)

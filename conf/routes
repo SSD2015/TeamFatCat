@@ -21,14 +21,16 @@ POST        /rate                           controllers.RateController.rate(proj
 GET         /rateclosed                     controllers.RateController.toRateClosedPage(id: Long)
 
 POST        /vote=:projectId                controllers.VoteController.vote(projectId: Long)
-#GET         /uploadimage                    controllers.ProjectController.toUploadPage()
-#POST        /uploadimage/upload             controllers.ProjectController.upload()
 
 GET         /editproject=:projectId         controllers.ImageController.toEditProjectPage(projectId: Long)
 POST        /upload=:projectId              controllers.ImageController.upload(projectId: Long, tag: String)
 GET         /images=:id                     controllers.ImageController.getImage(id: Long)
-POST        /deleteimage                    controllers.ImageController.deleteImage(projectId : Long, imageId: Long)
-# admin
+POST        /deleteimage                    controllers.ImageController.deleteImage(projectId: Long, imageId: Long)
+
+POST        /editproject=:id/editName       controllers.ProjectController.editProjectName(id: Long)
+POST        /editproject=:id/editDesc       controllers.ProjectController.editProjectDescription(id: Long)
+
+# Admin
 
 GET         /admin                          controllers.AdminController.toAdminPage()
 
@@ -43,7 +45,6 @@ POST        /admin/removevotecat            controllers.VoteController.removeVot
 GET         /admin/user                     controllers.UserController.toAddUserPage()
 POST        /admin/user/add                 controllers.UserController.addUser()
 POST        /admin/user/remove              controllers.UserController.removeUser()
-#POST        /admin/user/clear               controllers.UserController.removeAllUsers()
 
 GET         /admin/team                     controllers.TeamController.toTeamPage()
 POST        /admin/team                     controllers.TeamController.addTeam()
@@ -59,7 +60,15 @@ GET         /admin/result                   controllers.RateController.toResultP
 
 GET         /admin/ratelog                  controllers.History.toRateLog()
 GET         /admin/votelog                  controllers.History.toVoteLog()
-# test
+
+# Mobile
+
+GET         /json/projects                  controllers.ProjectListController.projectsJson()
+#GET         /json/project=:$id<[0-9]+>        controllers.ProjectController.projectJson(id: Long)
+#GET         /json/voteCategories              controllers.VoteController.voteCategoriesJson()
+#GET         /json/rateCategories              controllers.RateController.rateCategoriesJson()
+
+# Test
 
 GET         /test                           controllers.Application.toTestPage()
 GET         /testclock                      controllers.Application.toClockPage()

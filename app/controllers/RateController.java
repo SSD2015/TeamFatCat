@@ -14,6 +14,37 @@ import java.util.*;
 public class RateController extends Controller {
 
     @Security.Authenticated(Secured.class)
+    public static Result toRatePage(long projectId) {
+        //return redirect(routes.RateController.toRateClosedPage(projectId));
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        List<RateCategory> rateCategories = RateCategory.findAll();
+
+        response().setHeader("Cache-Control","no-cache");
+        return ok(rate.render(user, project, rateCategories));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Status toBadRequestRatePage(long projectId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        List<RateCategory> rateCategories = RateCategory.findAll();
+
+        response().setHeader("Cache-Control","no-cache");
+        return badRequest(rate.render(user, project, rateCategories));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result toRateClosedPage(long projectId) {
+        User user = User.findByUsername(request().username());
+        Project project = Project.findById(projectId);
+        List<RateCategory> rateCategories = RateCategory.findAll();
+
+        response().setHeader("Cache-Control","no-cache");
+        return ok(voteisnowclosed.render(user, project));
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result rate(Long projectId) {
         DynamicForm form = Form.form().bindFromRequest();
         if (form.hasErrors()) {
@@ -46,45 +77,13 @@ public class RateController extends Controller {
         return redirect(routes.ProjectController.toProjectPage(project.getId()));
     }
 
-    @Security.Authenticated(Secured.class)
-    public static Result toRatePage(long projectId) {
-        //return redirect(routes.RateController.toRateClosedPage(projectId));
-        User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
-        List<RateCategory> rateCategories = RateCategory.findAll();
-
-        response().setHeader("Cache-Control","no-cache");
-        return ok(rate.render(user, project, rateCategories));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Status toBadRequestRatePage(long projectId) {
-        User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
-        List<RateCategory> rateCategories = RateCategory.findAll();
-
-        response().setHeader("Cache-Control","no-cache");
-        return badRequest(rate.render(user, project, rateCategories));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Result toRateClosedPage(long projectId) {
-        User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
-        List<RateCategory> rateCategories = RateCategory.findAll();
-
-        response().setHeader("Cache-Control","no-cache");
-        return ok(voteisnowclosed.render(user, project));
-    }
-
-    @Security.Authenticated(Secured.class)
-    public static Result toResultPage() {
-        List<Rate> rateList = Rate.findAll();
-        List<RateCategory> catList = RateCategory.findAll();
+    @Security.Authenticated(AdminSecured.class)
+    public static Result toAddRateCatPage() {
+        List<RateCategory> ratecatlist = RateCategory.findAll();
         User user = User.findByUsername(request().username());
 
-        response().setHeader("Cache-Control","no-cache");
-        return ok(result.render(user, rateList,catList));
+        response().setHeader("Cache-Control", "no-cache");
+        return ok(addratecat.render(user, ratecatlist, Form.form(RateCategory.class)));
     }
 
     @Security.Authenticated(AdminSecured.class)
@@ -113,14 +112,13 @@ public class RateController extends Controller {
         return redirect(routes.RateController.toAddRateCatPage());
     }
 
-    @Security.Authenticated(AdminSecured.class)
-    public static Result toAddRateCatPage() {
-        List<RateCategory> ratecatlist = RateCategory.findAll();
+    @Security.Authenticated(Secured.class)
+    public static Result toResultPage() {
+        List<Rate> rateList = Rate.findAll();
+        List<RateCategory> catList = RateCategory.findAll();
         User user = User.findByUsername(request().username());
 
         response().setHeader("Cache-Control","no-cache");
-        return ok(addratecat.render(user, ratecatlist, Form.form(RateCategory.class)));
+        return ok(result.render(user, rateList, catList));
     }
-
-
 }

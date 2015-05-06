@@ -7,8 +7,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.projectlist;
-
 import java.util.List;
+import static play.libs.Json.toJson;
 
 public class ProjectListController extends Controller {
 
@@ -29,4 +29,9 @@ public class ProjectListController extends Controller {
         return ok(projectlist.render(user, projects));
     }
 
+    @Security.Authenticated(AdminSecured.class)
+    public static Result projectsJson() {
+        List<Project> projects = Project.findAll();
+        return ok(toJson(projects));
+    }
 }

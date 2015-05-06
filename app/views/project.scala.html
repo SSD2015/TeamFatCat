@@ -104,67 +104,78 @@
 
 
             <div clas="container" style="padding: 20px; padding-top: 0px">
-                <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
-                    @if(RateCategory.findAll().size() > 0 && Rate.findUnique(user, project, RateCategory.findAll().get(0)) != null) {
-                        <div style="padding-left: 15px;">
-                            <h5><i>Your last score rated for this project</i></h5>
-                        </div>
-                        <div class="col-sm-4">
-                        @RateCategory.findAll().map { category =>
-                            @if(Rate.findUnique(user, project, category) != null) {
-                                <span class="badge">
-                                @if(Rate.findUnique(user, project, category).getScore() == -1) {
-                                    Not rated
-                                } else {
-                                    @Rate.findUnique(user, project, category).getScore()
-                                }
-                                </span>
-                                @category.getName()
-                                <div class="progress" style="max-height: 10px; max-width: 70%;">
-                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.findUnique(user, project, category).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.findUnique(user, project, category).getPercentScore()%;">
-                                        <span class="sr-only">60%</span>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        </div>
-                    }
-                <div class="col-sm-8">
-                    <div id="slider">
-                        @screenshots.map { image =>
-                            @if(image != null && image.getName != Image.AVT && image.getName != Image.NUL) {
-                                <img src="@routes.ImageController.getImage(image.getId)" alt=@image.getName() style="width:auto;height:200px;">
-                            }
-                        }
-                    </div>
-                    <script src="ideal-image-slider.js"></script>
-                    <script>
-                        new IdealImageSlider.Slider('#slider');
-                        slider.start();
-                    </script>
-
-                </div>
-                </div>
-
-                <div class="panel panel-default" style="max-width: 50%;">
-                    <div class="panel-heading">Team Members</div>
-
-                    <table class="table">
-                        <tr>
-                            <th>Student ID</th>
-                            <th>Name</th>
-                        </tr>
-                        @members.map { list =>
-                            <tr>
-                                <td>@list.getUsername()</td>
-                                <td>@list.getFirstName() @list.getLastName()</td>
-                            </tr>
-                        }
-                    </table>
-                </div>
+                <h2>Description: </h2>
+                @project.getDescription()
             </div>
 
-        </div>
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab1" data-toggle="tab">Screenshots</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Team Member</a></li>
+                    @if(Rate.findUnique(user, project, RateCategory.findAll().get(0)) != null) {
+                        <li><a href="#tab3" data-toggle="tab">Rated Score</a></li>
+                    }
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab1">
+                        <div class="col-sm-8" style="margin-bottom: 50px">
+                            <div id="slider" style="padding-left: 50px">
+                            @screenshots.map { image =>
+                                @if(image != null && image.getName != Image.AVT && image.getName != Image.NUL) {
+                                    <img src="@routes.ImageController.getImage(image.getId)" alt=@image.getName() style="width:auto;height:400px;">
+                                    }
+                            }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div class="panel panel-default" style="max-width: 50%;margin-bottom: 20px;margin-top: 30px">
+                            <div class="panel-heading">Team Members</div>
 
+                            <table class="table">
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                </tr>
+                                @members.map { member =>
+                                    <tr>
+                                        <td>@member.getUsername()</td>
+                                        <td>@member.getFirstName() @member.getLastName()</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab3">
+                        <div class="row" style="margin-top: 25px; margin-bottom: 25px;">
+                        @if(RateCategory.findAll().size() > 0 && Rate.findUnique(user, project, RateCategory.findAll().get(0)) != null) {
+                            <div style="padding-left: 15px;">
+                                <h5><i>Your last score rated for this project</i></h5>
+                            </div>
+                            <div class="col-sm-4">
+                            @RateCategory.findAll().map { category =>
+                                @if(Rate.findUnique(user, project, category) != null) {
+                                    <span class="badge">
+                                    @if(Rate.findUnique(user, project, category).getScore() == -1) {
+                                        Not rated
+                                    } else {
+                                        @Rate.findUnique(user, project, category).getScore()
+                                    }
+                                    </span>
+                                    @category.getName()
+                                    <div class="progress" style="max-height: 10px; max-width: 70%;">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="@Rate.findUnique(user, project, category).getScore()" aria-valuemin="0" aria-valuemax="5" style="width: @Rate.findUnique(user, project, category).getPercentScore()%;">
+                                            <span class="sr-only">60%</span>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            </div>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
