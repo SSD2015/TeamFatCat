@@ -62,6 +62,8 @@ GET         /admin/result                    controllers.RateController.toResult
 GET         /admin/ratelog                   controllers.History.toRateLog()
 GET         /admin/votelog                   controllers.History.toVoteLog()
 
+GET         /admin/adddeadline               controllers.AdminController.toDeadlinePage()
+POST        /admin/adddeadline/add          controllers.AdminController.editDeadline()
 # Mobile
 
 GET         /json/projects                   controllers.ProjectListController.projectsJson()
