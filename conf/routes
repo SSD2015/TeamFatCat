@@ -4,76 +4,77 @@
 
 # Home page
 
-GET         /                               controllers.Application.toLoginPage()
-POST        /                               controllers.Application.authenticate()
+GET         /                                controllers.Application.toLoginPage()
+POST        /                                controllers.Application.authenticate()
 
-GET         /logout                         controllers.Application.logout()
+GET         /logout                          controllers.Application.logout()
 
-GET         /projectlist                    controllers.ProjectListController.toProjectListPage()
-POST        /projectlist                    controllers.ProjectListController.select()
+GET         /projectlist                     controllers.ProjectListController.toProjectListPage()
+POST        /projectlist                     controllers.ProjectListController.select()
 
-GET         /project=:projectId             controllers.ProjectController.toProjectPage(projectId: Long)
-POST        /project                        controllers.ProjectController.rate()
+GET         /project=:projectId              controllers.ProjectController.toProjectPage(projectId: Long)
+POST        /project                         controllers.ProjectController.rate()
 
-GET         /rate/project=:projectId        controllers.RateController.toRatePage(projectId: Long)
-POST        /rate                           controllers.RateController.rate(projectId: Long)
+GET         /rate/project=:projectId         controllers.RateController.toRatePage(projectId: Long)
+POST        /rate                            controllers.RateController.rate(projectId: Long)
 
-GET         /rateclosed                     controllers.RateController.toRateClosedPage(id: Long)
+GET         /rateclosed                      controllers.RateController.toRateClosedPage(id: Long)
 
-POST        /vote=:projectId                controllers.VoteController.vote(projectId: Long)
+GET         /vote=:categoryId                controllers.VoteController.toVotePage(categoryId: Long)
+POST        /vote=:categoryId                controllers.VoteController.vote(categoryId: Long)
 
-GET         /editproject=:projectId         controllers.ImageController.toEditProjectPage(projectId: Long)
-POST        /upload=:projectId              controllers.ImageController.upload(projectId: Long, tag: String)
-GET         /images=:id                     controllers.ImageController.getImage(id: Long)
-POST        /deleteimage                    controllers.ImageController.deleteImage(projectId: Long, imageId: Long)
+GET         /editproject=:projectId          controllers.ImageController.toEditProjectPage(projectId: Long)
+POST        /upload=:projectId               controllers.ImageController.upload(projectId: Long, tag: String)
+GET         /images=:id                      controllers.ImageController.getImage(id: Long)
+POST        /deleteimage                     controllers.ImageController.deleteImage(projectId: Long, imageId: Long)
 
-POST        /editproject=:id/editName       controllers.ProjectController.editProjectName(id: Long)
-POST        /editproject=:id/editDesc       controllers.ProjectController.editProjectDescription(id: Long)
+POST        /editproject=:id/editName        controllers.ProjectController.editProjectName(id: Long)
+POST        /editproject=:id/editDesc        controllers.ProjectController.editProjectDescription(id: Long)
 
 # Admin
 
-GET         /admin                          controllers.AdminController.toAdminPage()
+GET         /admin                           controllers.AdminController.toAdminPage()
 
-GET         /admin/addratecat               controllers.RateController.toAddRateCatPage()
-POST        /admin/addratecat               controllers.RateController.addRateCat()
-POST        /admin/removeratecat            controllers.RateController.removeRateCategory()
+GET         /admin/addratecat                controllers.RateController.toAddRateCatPage()
+POST        /admin/addratecat                controllers.RateController.addRateCat()
+POST        /admin/removeratecat             controllers.RateController.removeRateCategory()
 
-GET         /admin/addvotecat               controllers.VoteController.toAddVoteCatPage()
-POST        /admin/addvotecat               controllers.VoteController.addVoteCat()
-POST        /admin/removevotecat            controllers.VoteController.removeVoteCategory()
+GET         /admin/addvotecat                controllers.VoteController.toAddVoteCatPage()
+POST        /admin/addvotecat                controllers.VoteController.addVoteCat()
+POST        /admin/removevotecat             controllers.VoteController.removeVoteCategory()
 
-GET         /admin/user                     controllers.UserController.toAddUserPage()
-POST        /admin/user/add                 controllers.UserController.addUser()
-POST        /admin/user/remove              controllers.UserController.removeUser()
+GET         /admin/user                      controllers.UserController.toAddUserPage()
+POST        /admin/user/add                  controllers.UserController.addUser()
+POST        /admin/user/remove               controllers.UserController.removeUser()
 
-GET         /admin/team                     controllers.TeamController.toTeamPage()
-POST        /admin/team                     controllers.TeamController.addTeam()
-POST        /admin/team/remove              controllers.TeamController.removeTeam()
-POST        /admin/team/members             controllers.TeamController.addMember()
-POST        /admin/team/removeMember        controllers.TeamController.removeMemberFromTeam()
+GET         /admin/team                      controllers.TeamController.toTeamPage()
+POST        /admin/team                      controllers.TeamController.addTeam()
+POST        /admin/team/remove               controllers.TeamController.removeTeam()
+POST        /admin/team/members              controllers.TeamController.addMember()
+POST        /admin/team/removeMember         controllers.TeamController.removeMemberFromTeam()
 
-GET         /admin/addproject               controllers.ProjectController.toAddProjectPage()
-POST        /admin/addproject               controllers.ProjectController.addProject()
-POST        /admin/addproject/remove        controllers.ProjectController.removeProjectById()
+GET         /admin/addproject                controllers.ProjectController.toAddProjectPage()
+POST        /admin/addproject                controllers.ProjectController.addProject()
+POST        /admin/addproject/remove         controllers.ProjectController.removeProjectById()
 
-GET         /admin/result                   controllers.RateController.toResultPage()
+GET         /admin/result                    controllers.RateController.toResultPage()
 
-GET         /admin/ratelog                  controllers.History.toRateLog()
-GET         /admin/votelog                  controllers.History.toVoteLog()
+GET         /admin/ratelog                   controllers.History.toRateLog()
+GET         /admin/votelog                   controllers.History.toVoteLog()
 
 # Mobile
 
-GET         /json/projects                  controllers.ProjectListController.projectsJson()
+GET         /json/projects                   controllers.ProjectListController.projectsJson()
 #GET         /json/project=:$id<[0-9]+>        controllers.ProjectController.projectJson(id: Long)
 #GET         /json/voteCategories              controllers.VoteController.voteCategoriesJson()
 #GET         /json/rateCategories              controllers.RateController.rateCategoriesJson()
 
 # Test
 
-GET         /test                           controllers.Application.toTestPage()
-GET         /testclock                      controllers.Application.toClockPage()
+GET         /test                            controllers.Application.toTestPage()
+GET         /testclock                       controllers.Application.toClockPage()
 
-GET         /error                          controllers.Application.toErrorPage()
+GET         /error                           controllers.Application.toErrorPage()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                   controllers.Assets.at(path="/public", file)
+GET         /assets/*file                    controllers.Assets.at(path="/public", file)

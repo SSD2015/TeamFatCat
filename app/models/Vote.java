@@ -86,10 +86,10 @@ public class Vote extends Model{
         }
     }
 
-    public static Vote create(User user, Project project) {
+    public static Vote create(User user, VoteCategory voteCategory, Project project) {
         Vote vote = find.where().eq("user", user).findUnique();
         if (vote == null) {
-            vote = new Vote(user, project);
+            vote = new Vote(user, voteCategory, project);
         } else {
             vote.setProject(project);
             vote.updateTimestamp();
@@ -99,8 +99,9 @@ public class Vote extends Model{
         return vote;
     }
 
-    private Vote(User user, Project project) {
+    private Vote(User user, VoteCategory voteCategory, Project project) {
         this.user = user;
+        this.category = voteCategory;
         this.project = project;
         this.timestamp = new Timestamp((new Date()).getTime());
         this.save();

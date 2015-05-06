@@ -1,23 +1,36 @@
 package controllers;
 
+import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Result;
 import play.mvc.Controller;
 import play.mvc.Security;
 
 import models.*;
-import views.html.addvotecat;
+import views.html.*;
 
 import java.util.List;
 
 public class VoteController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
-    public static Result vote(long projectId) {
+    public static Result vote(long voteCategoryId) {
         User user = User.findByUsername(request().username());
-        Project project = Project.findById(projectId);
+        VoteCategory voteCategory = VoteCategory.findById(voteCategoryId);
 
-        Vote.create(user, project);
+        DynamicForm form = new DynamicForm().bindFromRequest();
+        Project project;
+        try {
+            project = Project.findById(Long.parseLong(form.get("project")));
+        } catch (NumberFormatException e) {
+            return badRequest(vote.render(user, voteCategory, Project.findAll()));
+        }
+
+        if (project == null) {
+            return badRequest(vote.render(user, voteCategory, Project.findAll()));
+        }
+
+        Vote.create(user, voteCategory, project);
 
         return redirect(routes.ProjectListController.toProjectListPage());
     }
@@ -56,4 +69,15 @@ public class VoteController extends Controller {
 
         return redirect(routes.VoteController.toAddVoteCatPage());
     }
+
+    @Security.Authenticated(Secured.class)
+    public static Result toVotePage(long voteCategoryId) {
+        User user = User.findByUsername(request().username());
+        VoteCategory voteCategory = VoteCategory.findById(voteCategoryId);
+        List<Project> projects = Project.findAll();
+
+        response().setHeader("Cache-Control", "no-cache");
+        return ok(vote.render(user, voteCategory, projects));
+    }
+
 }

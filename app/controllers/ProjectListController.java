@@ -2,6 +2,7 @@ package controllers;
 
 import models.Project;
 import models.User;
+import models.VoteCategory;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -24,9 +25,10 @@ public class ProjectListController extends Controller {
     public static Result toProjectListPage() {
         User user = User.findByUsername(request().username());
         List<Project> projects = Project.findAll();
+        List<VoteCategory> voteCategories = VoteCategory.findAll();
 
         response().setHeader("Cache-Control","no-cache");
-        return ok(projectlist.render(user, projects));
+        return ok(projectlist.render(user, projects, voteCategories));
     }
 
     @Security.Authenticated(AdminSecured.class)
