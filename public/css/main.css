@@ -138,3 +138,7 @@ body {
 #ratestar, .rating-stars {
     font-family: 'Glyphicons Halflings' !important;
 }
+
+.flt {
+    float: left !important;
+}

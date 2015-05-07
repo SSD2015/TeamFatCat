@@ -111,7 +111,7 @@
                                         <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 tab-pic text-center" style="background-color: #eee">
                                         @if(user.getSelectProjectFromVoteCategory(voteCategory) != null) {
                                             @if(user.getSelectProjectFromVoteCategory(voteCategory).getAvatarId != -1) {
-                                                <img src="@routes.ImageController.getImage(Image.findAvatarId(user.getSelectProjectFromVoteCategory(voteCategory).getId))" alt="@user.getSelectProjectFromVoteCategory(voteCategory).getId" style="width: auto; height: 130px;">
+                                                    <img src="@routes.ImageController.getImage(Image.findAvatarId(user.getSelectProjectFromVoteCategory(voteCategory).getAvatarId))" alt="@user.getSelectProjectFromVoteCategory(voteCategory).getId" style="width: auto; height: 130px;">
                                                 }
                                         }
                                         </div>

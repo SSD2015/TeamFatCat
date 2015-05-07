@@ -49,7 +49,7 @@ public class Vote extends Model{
         return find.where().eq("category", voteCategory).findList();
     }
 
-    public static List<Vote> findByProjectVoteAndCategory(Project project, VoteCategory voteCategory){
+    public static List<Vote> findByProjectAndVoteCategory(Project project, VoteCategory voteCategory){
         return find.where().eq("project", project).eq("category", voteCategory).findList();
     }
 
@@ -61,14 +61,14 @@ public class Vote extends Model{
         return find.where().eq("user", user).eq("category", voteCategory).eq("project", project).findUnique();
     }
 
-    public static List<Project> findBestProject() {
+    public static List<Project> findBestProject(final VoteCategory voteCategory) {
         List<Project> projects = Project.findAll();
 
         Collections.sort(projects, new Comparator<Project>() {
             public int compare(Project o1, Project o2) {
-                if (o1.getTotalVoteScores() == o2.getTotalVoteScores())
+                if (o1.getTotalVoteScores(voteCategory) == o2.getTotalVoteScores(voteCategory))
                     return 0;
-                return o1.getTotalVoteScores() > o2.getTotalVoteScores() ? -1 : 1;
+                return o1.getTotalVoteScores(voteCategory) > o2.getTotalVoteScores(voteCategory) ? -1 : 1;
             }
         });
 
@@ -90,7 +90,7 @@ public class Vote extends Model{
     }
 
     public static Vote create(User user, VoteCategory voteCategory, Project project) {
-        Vote vote = find.where().eq("user", user).findUnique();
+        Vote vote = find.where().eq("user", user).eq("category", voteCategory).findUnique();
         if (vote == null) {
             vote = new Vote(user, voteCategory, project);
         } else {

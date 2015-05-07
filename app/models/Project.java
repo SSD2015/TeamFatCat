@@ -108,8 +108,8 @@ public class Project extends Model {
     //==========================================================================================
     // NOT CLEAN
     //==========================================================================================
-    public int getTotalVoteScores() {
-        List<Vote> voteList = Vote.findByProject(this);
+    public int getTotalVoteScores(VoteCategory voteCategory) {
+        List<Vote> voteList = Vote.findByProjectAndVoteCategory(this, voteCategory);
         int count = 0;
         for (int i = 0 ; i < voteList.size() ; i++) {
             if (voteList.get(i).getUser().getId() <= 42 && voteList.get(i).getUser().getId() >= 22) {
@@ -120,14 +120,14 @@ public class Project extends Model {
         return count;
     }
 
-    public double getPercentVoteScores() {
+    public double getPercentVoteScores(VoteCategory voteCategory) {
         List<Project> projects = find.all();
         double total = 0;
         for(int i = 0 ; i < projects.size() ; i++) {
-            total += projects.get(i).getTotalVoteScores();
+            total += projects.get(i).getTotalVoteScores(voteCategory);
         }
 
-        double percent =  getTotalVoteScores() / total * 10000;
+        double percent =  getTotalVoteScores(voteCategory) / total * 10000;
         percent = Math.round(percent);
         percent = percent / 100;
         return percent;
@@ -136,18 +136,12 @@ public class Project extends Model {
     public double getTotalScoresFromCat(RateCategory cat) {
         List<Rate> rateList = Rate.findByProjectRateCategory(this,cat);
         double total = 0;
-        //int count = 0;
         for(int i = 0 ; i < rateList.size() ; i++) {
             if (rateList.get(i).getScore() != -1 ) {
                 total += rateList.get(i).getScore();
-                //count++;
             }
         }
-        
-//        total = total / count;
-//        total = total * 100;
-//        total = Math.round(total);
-//        total = total / 100;
+
         return total;
     }
 

@@ -116,9 +116,10 @@ public class RateController extends Controller {
     public static Result toResultPage() {
         List<Rate> rateList = Rate.findAll();
         List<RateCategory> catList = RateCategory.findAll();
+        List<VoteCategory> voteCategories = VoteCategory.findAll();
         User user = User.findByUsername(request().username());
 
         response().setHeader("Cache-Control","no-cache");
-        return ok(result.render(user, rateList, catList));
+        return ok(result.render(user, rateList, catList, voteCategories));
     }
 }
