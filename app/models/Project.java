@@ -138,7 +138,7 @@ public class Project extends Model {
         double total = 0;
         //int count = 0;
         for(int i = 0 ; i < rateList.size() ; i++) {
-            if (rateList.get(i).getScore() != -1 && rateList.get(i).getUser().getId() <= 42 && rateList.get(i).getUser().getId() >= 22) {
+            if (rateList.get(i).getScore() != -1 ) {
                 total += rateList.get(i).getScore();
                 //count++;
             }

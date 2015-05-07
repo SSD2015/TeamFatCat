@@ -8,11 +8,19 @@
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-
+        <link rel="stylesheet" href="@routes.Assets.at("css/ideal-image-slider.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("css/normalize.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("css/default.css")">
+        <style media="screen">
+        #slider {
+        margi: 50px auto;
+        }
+        </style>
     </head>
     <body>
         <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
+        <script src="@routes.Assets.at("js/ideal-image-slider.min.js")"></script>
 
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
@@ -92,7 +100,13 @@
                                 </button>
                             </a>
                         }
+                        <form action="@routes.ProjectController.rate()" method="post" class="form-horizontal" role="form">
+                            <input type="hidden" value=@user.getId() name="uId">
+                            <input type="hidden" value=@project.getId() name="pId">
+                            <button class="btn btn-default">Rate</button>
+                        </form>
                         </div>
+
 
                         <div class="">
                             <h2>
@@ -100,14 +114,25 @@
                             </h2>
                             <i>by @Team.findByProject(project).getName()</i><br>
                             <br>
-                            <form action="@routes.ProjectController.rate()" method="post" class="form-horizontal" role="form">
-                                <input type="hidden" value=@user.getId() name="uId">
-                                <input type="hidden" value=@project.getId() name="pId">
-                                <button class="btn btn-default">Rate</button>
-                            </form>
+
                         </div>
 
-                        <div class="">
+                        <div style="width: 100%">
+                            <div id="slider" style="width=100%; margin-left: -15px; margin-right: -15px">
+                            @screenshots.map { image =>
+                                @if(image != null && image.getName != Image.AVT && image.getName != Image.NUL) {
+                                    @*<img src="@routes.ImageController.getImage(image.getId)" alt=@image.getName() style="width:auto;height:400px;">*@
+                                    <img src="@routes.ImageController.getImage(image.getId)"  alt="Slide" />
+                                }
+                            }
+                            </div>
+                            <script>
+                            var slider = new IdealImageSlider.Slider('#slider');
+                            slider.start();
+                            </script>
+                        </div>
+
+                        <div style="margin-bottom: 10px; margin-top: 10px">
                             <h4>Description: </h4>
                             @project.getDescription()
                         </div>
@@ -162,6 +187,11 @@
                                         </div>
                                     }
                                     </div>
+                                    <form action="@routes.ProjectController.rate()" method="post" class="form-horizontal" role="form">
+                                        <input type="hidden" value=@user.getId() name="uId">
+                                        <input type="hidden" value=@project.getId() name="pId">
+                                        <button class="btn btn-default">Rate</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

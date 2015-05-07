@@ -100,25 +100,25 @@ create index ix_vote_category_8 on vote (category_id);
 
 # --- !Downs
 
-SET FOREIGN_KEY_CHECKS=0;
-
-drop table deadline;
-
-drop table image;
-
-drop table project;
-
-drop table rate;
-
-drop table rate_category;
-
-drop table team;
-
-drop table user;
-
-drop table vote;
-
-drop table vote_category;
-
-SET FOREIGN_KEY_CHECKS=1;
+# SET FOREIGN_KEY_CHECKS=0;
+#
+# drop table deadline;
+#
+# drop table image;
+#
+# drop table project;
+#
+# drop table rate;
+#
+# drop table rate_category;
+#
+# drop table team;
+#
+# drop table user;
+#
+# drop table vote;
+#
+# drop table vote_category;
+#
+# SET FOREIGN_KEY_CHECKS=1;
 
