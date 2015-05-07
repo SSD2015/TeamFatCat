@@ -15,7 +15,7 @@ public class Vote extends Model{
     @Id
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="user_id", referencedColumnName="id")
     private User user;
 
@@ -49,9 +49,12 @@ public class Vote extends Model{
         return find.where().eq("category", voteCategory).findList();
     }
 
-
-    public static List<Vote> findByProjectRateCategory(Project project, VoteCategory voteCategory){
+    public static List<Vote> findByProjectVoteAndCategory(Project project, VoteCategory voteCategory){
         return find.where().eq("project", project).eq("category", voteCategory).findList();
+    }
+
+    public static Vote findByUserAndVoteCategory(User user, VoteCategory voteCategory) {
+        return find.where().eq("user", user).eq("category", voteCategory).findUnique();
     }
 
     public static Vote findUnique(User user, Project project, VoteCategory voteCategory) {

@@ -1,3 +1,5 @@
+/*http://colllor.com/78e3b0*/
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
 }
@@ -5,12 +7,134 @@ p, div {
     font-family: 'Open Sans', sans-serif;
 }
 
-.card-vote {
-    color: #fff;
-    background-color: #afd9ee;
-    border-radius: 10px;
-    min-height: 150pt;
-    margin-top: 25pt;
-    padding: 15pt;
-    box-shadow: 3px 3px 10px #eee;
+.login-card {
+    color: #111;
+    background-color: #eee;
+    border-radius: 8px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0px 2px 3px #222;
+}
+
+.card {
+    color: #111;
+    background-color: #eee;
+    border-radius: 8px;
+    height: 130px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0px 2px 3px #222;
+    width: 100%;
+}
+
+.card:hover {
+    background-color: #fefefe;
+    /*box-shadow: 0px 0px 5px #fefefe;*/
+}
+
+.tab-pic {
+    /*border-right: 2px solid;*/
+    /*border-left: 2px solid;*/
+    /*border-color: #888;*/
+    box-shadow: 0px 1px 2px #333;
+    padding: 0px;
+}
+
+.project-list-btn {
+    background-color: #92F2D8;
+    border: 0px;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    border-color: #03110A;
+}
+
+.project-list-btn:hover {
+    background-color: #DBFBF2;
+}
+
+.project-card {
+    color: #111;
+    background-color: #eee;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 0px;
+    box-shadow: 0px 2px 3px #222;
+}
+
+.edit-project-card {
+    border-style: dashed;
+    border-radius: 20px;
+    border-color: #e0e0e0;
+    margin: 10px;
+    padding: 15px;
+}
+
+.vote-card {
+    color: #111;
+    background-color: #eee;
+    border-radius: 8px;
+    padding: 25px;
+    margin: 0px;
+    box-shadow: 0px 2px 3px #222;
+    width: 100%;
+}
+
+.vote {
+    background-color: #94D1C1;
+}
+
+body {
+    background-color: #333;
+    color: #EEFCF5;
+}
+
+.row {
+    display: table;
+}
+
+[class*="col-"] {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+}
+
+.timer {
+    font-size: larger;
+}
+
+.navbar {
+    background-color: #111;
+    border-color: #000;
+}
+
+.navbar-brand, .navbar-text, .navbar-collapse, .nav-text {
+    color: #EEFCF5 !important;
+}
+
+.nav-text:hover {
+    color: #9DBEAE;
+}
+
+.nav-text {
+    padding: 5px;
+}
+
+.nav-hov {
+    padding: 5px;
+}
+
+.nav-hov:hover {
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    background-color: #78e3c7;
+}
+
+.breadcrumb {
+    background-color: #A5B6AE;
+    color: #EEFCF5;
+}
+
+#ratestar, .rating-stars {
+    font-family: 'Glyphicons Halflings' !important;
 }

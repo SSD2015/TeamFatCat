@@ -2,7 +2,8 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta charset=utf-8">
+        <meta name="viewport" content="width=device-width">
         <title>ExceedVote - Project</title>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
@@ -15,70 +16,111 @@
 
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
-
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/projectlist">eXceedvote</a>
-                    <div class="navbar-text">
+                    <a class="navbar-brand" href="/projectlist"><span class="glyphicon glyphicon-home"></span></a>
+                    <div class="timer navbar-text text-center">
                         <script src="@routes.Assets.at("js/countdown.js")"></script>
                         <script>
-                        setcountdown(@Deadline.getDeadline().getYear(),
-                            @Deadline.getDeadline().getMonth(),
-                            @Deadline.getDeadline().getDay(),
-                            @Deadline.getDeadline().getHour(),
-                            @Deadline.getDeadline().getMin(),
-                            @Deadline.getDeadline().getSec());
-                        </script>
+                            setcountdown(@Deadline.getDeadline().getYear()
+                            , @Deadline.getDeadline().getMonth()
+                            , @Deadline.getDeadline().getDay()
+                            , @Deadline.getDeadline().getHour()
+                            , @Deadline.getDeadline().getMin()
+                            , @Deadline.getDeadline().getSec());
+                            </script>
                         <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
                             <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
-                                    </layer>
+                            </layer>
                         </ilayer>
                     </div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right nav-text">
 
-                        @*<li><a href="#">Link</a></li>*@
-                        @*<li class="dropdown">*@
-                            @*<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>*@
-                            @*<ul class="dropdown-menu" role="menu">*@
-                                <li><div class="navbar-text" style="padding-left: 15px;">Hello, @user.getFirstName() @user.getLastName()</div></li>
-                                <li class="divider"></li>
-                                @if(user.getType() == User.ADMIN) {
-                                    <li><a href="/admin">Admin</a></li>
-                                }
-                                <li><a href="@routes.RateController.toResultPage()">Result</a></li>
-                                <li><a href="@routes.Application.logout()">Log out</a></li>
-                            @*</ul>*@
-                        @*</li>*@
+                        <li>
+                            <a>
+                                <div class="nav-text">
+                                    Hello, @user.getFirstName() @user.getLastName() <span class="glyphicon glyphicon-user"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="nav-text" href="@routes.RateController.toResultPage()">
+                                <div class="nav-hov">
+                                    Result <span class="glyphicon glyphicon-bookmark"></span>
+                                </div>
+                            </a>
+                        </li>
+                        @if(user.getType() == User.ADMIN) {
+                            <li>
+                                <a class="nav-text" href="/admin">
+                                    <div class="nav-hov">
+                                        Admin <span class="glyphicon glyphicon-cog"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a class="nav-text" href="@routes.Application.logout()">
+                                <div class="nav-hov">
+                                    Log out <span class="glyphicon glyphicon-off"></span>
+                                </div>
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
-                <ol class="breadcrumb" style="background: #f0f0f0;">
-                    <li class="active">Project List</li>
-                </ol>
             </div>
         </nav>
 
         <div class="container">
-            <div class="row">
-                <div class="" style="width: 100%; min-height: 100px;"></div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg-8">
+            <div class="col-lg-12" style="height:80px;"></div>
 
-                    <div class="btn-group-vertical" role="group" style="width: 100%;">
+            @*<div class="row">*@
+                @*<div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">*@
+                    @*<div class="btn-group btn-group-justified" role="group">*@
+                        @*<div class="btn-group" role="group">*@
+                            @*<button type="button" class="btn btn-default project-list-btn">All</button>*@
+                        @*</div>*@
+                        @*<div class="btn-group" role="group">*@
+                            @*<button type="button" class="btn btn-default project-list-btn">Vote</button>*@
+                        @*</div>*@
+                        @*<div class="btn-group" role="group">*@
+                            @*<button type="button" class="btn btn-default project-list-btn">Rate</button>*@
+                        @*</div>*@
+                    @*</div>*@
+                @*</div>*@
+            @*</div>*@
+
+            <div class="row">
+                <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+
+                    <div class="btn-group-vertical" role="group" style="width:100%;">
                         @voteCategories.map { voteCategory =>
                             <a href="@routes.VoteController.toVotePage(voteCategory.getId)">
-                                <div class="card-vote">
-                                    <div class="col-lg-9">
-                                        <div style="min-height: 38px;">
-                                            <h2>
-                                            @voteCategory.getName()
-                                            </h2>
+                                <div class="card vote">
+                                    <div class="row" style="width: 100%; height: 100%;">
+                                        <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1"></div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 tab-pic text-center" style="background-color: #eee">
+                                        @if(user.getSelectProjectFromVoteCategory(voteCategory) != null) {
+                                            @if(user.getSelectProjectFromVoteCategory(voteCategory).getAvatarId != -1) {
+                                                <img src="@routes.ImageController.getImage(Image.findAvatarId(user.getSelectProjectFromVoteCategory(voteCategory).getId))" alt="@user.getSelectProjectFromVoteCategory(voteCategory).getId" style="width: auto; height: 130px;">
+                                                }
+                                        }
+                                        </div>
+                                        <div class="col-sm-9 col-md-9 col-lg-9 col-xs-9">
+                                            <div>
+                                                <h2>
+                                                @voteCategory.getName()
+                                                </h2>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -86,32 +128,33 @@
                         }
 
                         @projects.map { project =>
-                            <a href="@routes.ProjectController.toProjectPage(project.getId)" style="text-decoration: none;">
-                                <div style="background: #afd9ee; width: 100%; min-height: 150pt; margin-top: 25pt; padding: 15pt; color: #fff">
-                                    <div class="col-lg-3">
+                            <a href="@routes.ProjectController.toProjectPage(project.getId)">
+                                <div class="card">
+                                    <div class="row" style="width: 100%; height: 100%;">
+                                        <div class="col-sm-1 col-md-1 col-lg-1 col-xs-1"></div>
+                                        <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 tab-pic text-center" style="background-color: #7d99e4">
                                         @if(project.getAvatarId() == -1) {
-                                            <img src="@routes.Assets.at("/img/noimage.png")" style="width:150px;height:150px">
+                                            <img src="@routes.Assets.at("/img/noimage.png")" style="height: auto; width: 130px">
                                         } else {
-                                            <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width:150px;height:150px">
-                                        }
-                                    </div>
-                                    <div class="col-lg-9">
-                                        <div style="min-height: 38px;">
-                                            <h2>
-                                                @project.getName()
-                                            </h2>
+                                            <img src="@routes.ImageController.getImage(Image.findAvatarId(project.getId))" alt="@project.getId" style="width: auto; height: 130px;">
+                                            }
                                         </div>
-                                        <i>by @Team.findByProject(project).getName()</i><br>
-                                        Description: @project.getDescription()<br>
+                                        <div class="col-sm-9 col-md-9 col-lg-9 col-xs-9">
+                                            <div>
+                                                <h2>
+                                                @project.getName()
+                                                </h2>
+                                            </div>
+                                            <i>by @Team.findByProject(project).getName()</i><br>
+                                            Description: @project.getDescription()<br>
+                                        </div>
                                     </div>
                                 </div>
                             </a>
                         }
                     </div>
                 </div>
-                <div class="col-lg-2"></div>
             </div>
         </div>
-
     </body>
 </html>

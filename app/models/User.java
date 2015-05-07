@@ -37,8 +37,8 @@ public class User extends Model {
     @JoinColumn(name="team_id", referencedColumnName="id", nullable = true)
     public Team team;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE)
-    public Vote vote;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    public List<Vote> votes;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     public List<Rate> rates;
@@ -178,8 +178,6 @@ public class User extends Model {
         return this.team;
     }
 
-
-
     public boolean checkTeam(Team team) {
         if (team == this.team) { return true; }
 
@@ -190,6 +188,18 @@ public class User extends Model {
         if (this.team != null) { return team.checkProject(project); }
 
         return false;
+    }
+
+    public Project getSelectProjectFromVoteCategory(VoteCategory voteCategory) {
+        if (voteCategory == null) {
+            return null;
+        }
+        Vote vote = Vote.findByUserAndVoteCategory(this, voteCategory);
+        if (vote != null) {
+            return vote.getProject();
+        }
+
+        return null;
     }
 
     public boolean equals(User other) {

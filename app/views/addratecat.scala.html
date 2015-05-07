@@ -1,68 +1,81 @@
 @(user: User, ratecatlist: List[RateCategory], form: Form[RateCategory])
 <!DOCTYPE html>
-<html>
-    <head lang="en">
-        <meta charset="UTF-8">
-        <title>Add Rate Category</title>
+<html lang="en">
+    <head>
+        <meta charset=utf-8">
         <meta name="viewport" content="width=device-width">
+        <title>ExceedVote - Project</title>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
     </head>
     <body>
-
         <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="@routes.Assets.at("js/bootstrap.min.js")"></script>
 
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
-
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/projectlist">eXceedvote</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/projectlist"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                    <div class="timer navbar-text text-center">
+                        <script src="@routes.Assets.at("js/countdown.js")"></script>
+                        <script>
+                            setcountdown(@Deadline.getDeadline().getYear()
+                            , @Deadline.getDeadline().getMonth()
+                            , @Deadline.getDeadline().getDay()
+                            , @Deadline.getDeadline().getHour()
+                            , @Deadline.getDeadline().getMin()
+                            , @Deadline.getDeadline().getSec());
+                            </script>
+                        <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
+                            <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
+                            </layer>
+                        </ilayer>
+                    </div>
                 </div>
 
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right nav-text">
+
                         <li>
-                            <div class="navbar-text">
-                                <script src="@routes.Assets.at("js/countdown.js")"></script>
-                                <script>
-                                setcountdown(@Deadline.getDeadline().getYear(),
-                                    @Deadline.getDeadline().getMonth(),
-                                    @Deadline.getDeadline().getDay(),
-                                    @Deadline.getDeadline().getHour(),
-                                    @Deadline.getDeadline().getMin(),
-                                    @Deadline.getDeadline().getSec());
-                                </script>
-                                <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
-                                    <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
-                                    </layer>
-                                </ilayer>
-                            </div>
+                            <a>
+                                <div class="nav-text">
+                                    Hello, @user.getFirstName() @user.getLastName() <span class="glyphicon glyphicon-user"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="nav-text" href="@routes.RateController.toResultPage()">
+                                <div class="nav-hov">
+                                    Result <span class="glyphicon glyphicon-bookmark"></span>
+                                </div>
+                            </a>
+                        </li>
+                        @if(user.getType() == User.ADMIN) {
+                            <li>
+                                <a class="nav-text" href="/admin">
+                                    <div class="nav-hov">
+                                        Admin <span class="glyphicon glyphicon-cog"></span>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+                        <li>
+                            <a class="nav-text" href="@routes.Application.logout()">
+                                <div class="nav-hov">
+                                    Log out <span class="glyphicon glyphicon-off"></span>
+                                </div>
+                            </a>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-
-                        @*<li><a href="#">Link</a></li>*@
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a>Hello, </a></li>
-                            <li><a><h4>@user.getFirstName() @user.getLastName()</h4></a></li>
-                            <li class="divider"></li>
-                            @if(user.getType() == User.ADMIN) {
-                                <li><a href="/admin">Admin</a></li>
-                            }
-                            <li><a href="@routes.Application.logout()">Log out</a></li>
-                        </ul>
-                    </li>
-                    </ul>
                 </div>
-                <ol class="breadcrumb" style="background: #f0f0f0;">
-                    <li><a href="/projectlist">Project List</a></li>
-                    <li><a href="/admin">Admin</a></li>
-                    <li class="active">Add Rate Category</li>
-                </ol>
             </div>
         </nav>
 

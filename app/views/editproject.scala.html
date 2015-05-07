@@ -1,8 +1,9 @@
 @(user: User, project: Project, images: List[Image])
-<!doctype html>
+
 <html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta charset=utf-8">
+        <meta name="viewport" content="width=device-width">
         <title>ExceedVote - Project</title>
         <link rel="stylesheet" href="@routes.Assets.at("css/bootstrap.min.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/main.css")">
@@ -15,92 +16,81 @@
 
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
-
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/projectlist">eXceedvote</a>
-                    <div class="navbar-text">
+                    <a class="navbar-brand" href="/projectlist"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                    <div class="timer navbar-text text-center">
                         <script src="@routes.Assets.at("js/countdown.js")"></script>
                         <script>
-                        setcountdown(@Deadline.getDeadline().getYear(),
-                            @Deadline.getDeadline().getMonth(),
-                            @Deadline.getDeadline().getDay(),
-                            @Deadline.getDeadline().getHour(),
-                            @Deadline.getDeadline().getMin(),
-                            @Deadline.getDeadline().getSec());
-                        </script>
+                            setcountdown(@Deadline.getDeadline().getYear()
+                            , @Deadline.getDeadline().getMonth()
+                            , @Deadline.getDeadline().getDay()
+                            , @Deadline.getDeadline().getHour()
+                            , @Deadline.getDeadline().getMin()
+                            , @Deadline.getDeadline().getSec());
+                            </script>
                         <ilayer id="countdownnsmain" width=&{countdownwidth}; height=&{countdownheight}; visibility=hide width="100px">
                             <layer id="countdownnssub" width=&{countdownwidth}; height=&{countdownheight}; left=0 top=0>
-                                    </layer>
+                            </layer>
                         </ilayer>
                     </div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="myNavbar">
-                    <ul class="nav navbar-nav navbar-right">
-                    <li><div class="navbar-text" style="padding-left: 15px;">Hello, @user.getFirstName() @user.getLastName()</div></li>
-                    <li class="divider"></li>
+                    <ul class="nav navbar-nav navbar-right nav-text">
+
+                        <li>
+                            <a>
+                                <div class="nav-text">
+                                    Hello, @user.getFirstName() @user.getLastName() <span class="glyphicon glyphicon-user"></span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="nav-text" href="@routes.RateController.toResultPage()">
+                                <div class="nav-hov">
+                                    Result <span class="glyphicon glyphicon-bookmark"></span>
+                                </div>
+                            </a>
+                        </li>
                         @if(user.getType() == User.ADMIN) {
-                            <li><a href="/admin">Admin</a></li>
+                            <li>
+                                <a class="nav-text" href="/admin">
+                                    <div class="nav-hov">
+                                        Admin <span class="glyphicon glyphicon-cog"></span>
+                                    </div>
+                                </a>
+                            </li>
                         }
-                    <li><a href="@routes.Application.logout()">Log out</a></li>
+                        <li>
+                            <a class="nav-text" href="@routes.Application.logout()">
+                                <div class="nav-hov">
+                                    Log out <span class="glyphicon glyphicon-off"></span>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                <ol class="breadcrumb" style="background: #f0f0f0;">
-                    <li><a href="/projectlist">Project List</a></li>
-                    <li><a href="@routes.ProjectController.toProjectPage(project.getId)">@project.getName()</a></li>
-                    <li class="active">Rate</li>
-                </ol>
             </div>
         </nav>
 
         <div class="container">
-            <div class="row" style="margin-top: 100px; margin-bottom: 20px; padding: 25px;">
+            <div style="height: 80px;"></div>
+            <div class="row center-block text-center">
 
-                <h1 style = "text-align: center; margin-bottom: 30px;">Project @project.getName's Edit Page</h1>
-                <div class="col-lg-5" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
-                    <div>
-                        <h2>Change Name:</h2>
-                        <p>For input new @project.getName's name:</p>
-                        <form action="@routes.ProjectController.editProjectName(project.getId)" name="form" method="post" role="form">
-                            <div class="form-group">
-                                <label for="Pname">Name:</label>
-                                <input type="text" class="form-control" name="projectName" value="@project.getName()">
-                            </div>
-                            <button class="btn btn-default" type="submit">Update Name!</button>
-                        </form>
-                    </div>
-
-                    <div style = "margin-bottom: 20px;">
-                        <h3>Current Name:</h3>
-                        @project.getName
-                    </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="width: 100%">
+                    <h1>Project @project.getName's Edit Page</h1>
                 </div>
+            </div>
 
-                <div class="col-lg-6" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
-                    <div>
-                        <h2>Change Description:</h2>
-                        <p>For input new @project.getName's description:</p>
-                        <form action="@routes.ProjectController.editProjectDescription(project.getId)" name="form" method="post" role="form">
-                            <div class="form-group">
-                                <label for="desc">Description:</label>
-                                <textarea class="form-control" rows="5" name="projectDescription">@project.getDescription()</textarea>
-                            </div>
-                            <button class="btn btn-default" type="submit">Update Description!</button>
-                        </form>
-                    </div>
+            <div class="row center-block text-center">
 
-                    <div style = "margin-bottom: 20px;">
-                        <h3>Current Description:</h3>
-                        @project.getDescription
-                    </div>
-                </div>
-
-                <div class="col-lg-5" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px; margin-bottom: 20px;">
+                <div class="edit-project-card">
                     <div>
                         <h2>Change Avatar:</h2>
                         @helper.form(action = routes.ImageController.upload(project.getId(), Image.AVT), 'enctype -> "multipart/form-data") {
@@ -119,8 +109,47 @@
                     </div>
                 </div>
 
+                <div class="edit-project-card">
+                    <div>
+                        <h2>Change Name:</h2>
+                        <p>For input new @project.getName's name:</p>
+                        <form action="@routes.ProjectController.editProjectName(project.getId)" name="form" method="post" role="form">
+                            <div class="form-group">
+                                <label for="Pname">Name:</label>
+                                <input type="text" class="form-control" name="projectName" value="@project.getName()">
+                            </div>
+                            <button class="btn btn-default" type="submit">Update Name!</button>
+                        </form>
+                    </div>
 
-                <div class="col-lg-6" style="border-style: dashed; border-radius: 20px; border-color: #e0e0e0; margin-left: 10px; margin-right: 10px;">
+                    <div>
+                        <h3>Current Name:</h3>
+                        @project.getName
+                    </div>
+                </div>
+
+                <div class="edit-project-card">
+                    <div>
+                        <h2>Change Description:</h2>
+                        <p>For input new @project.getName's description:</p>
+                        <form action="@routes.ProjectController.editProjectDescription(project.getId)" name="form" method="post" role="form">
+                            <div class="form-group">
+                                <label for="desc">Description:</label>
+                                <textarea class="form-control" rows="5" name="projectDescription">@project.getDescription()</textarea>
+                            </div>
+                            <button class="btn btn-default" type="submit">Update Description!</button>
+                        </form>
+                    </div>
+
+                    <div style = "margin-bottom: 20px;">
+                        <h3>Current Description:</h3>
+                        @project.getDescription
+                    </div>
+                </div>
+
+
+
+                <div class="edit-project-card">
                     <div>
                         <h2>Upload screenshot:</h2>
                         @helper.form(action = routes.ImageController.upload(project.getId(), Image.SCR), 'enctype -> "multipart/form-data") {
@@ -128,33 +157,31 @@
                             <button class="btn btn-default" type="submit">Upload image!</button>
                         }
                     </div>
-
-                    <div class="row-fluid" style="padding-right: 50px">
+                    <div>
                         <h3>Images in Database:</h3>
                         <ul class="thumbnails text-center">
-                            @for(image <- images) {
-                                @if(image != null && image.getName != Image.AVT && image.getName != Image.NUL) {
-                                    <lo class="span4">
-                                        <div class="thumbnail" style="padding-right: 20px">
-                                            <img src="@routes.ImageController.getImage(image.getId())" width="200px" height="auto">
-                                            <div class="caption">
-                                                <h4>@image.getName()</h4>
-                                                <form method="post" action="@routes.ImageController.deleteImage(project.getId, image.getId())">
-                                                    <button class="btn btn-default">
-                                                        Remove
-                                                    </button>
-                                                </form>
-                                            </div>
+                        @for(image <- images) {
+                            @if(image != null && image.getName != Image.AVT && image.getName != Image.NUL) {
+                                <lo class="span4">
+                                    <div class="thumbnail" style="padding-right: 20px">
+                                        <img src="@routes.ImageController.getImage(image.getId())" width="200px" height="auto">
+                                        <div class="caption">
+                                            <h4>@image.getName()</h4>
+                                            <form method="post" action="@routes.ImageController.deleteImage(project.getId, image.getId())">
+                                                <button class="btn btn-default">
+                                                    Remove
+                                                </button>
+                                            </form>
                                         </div>
-                                    </lo>
-                                }
+                                    </div>
+                                </lo>
                             }
+                        }
                         </ul>
                     </div>
                 </div>
-
             </div>
+            <div style="height: 80px;"></div>
         </div>
-
     </body>
 </html>

@@ -82,7 +82,7 @@ function countdown() {
         }
         else if (document.all||document.getElementById) {
             //crosscount.innerHTML=opentags+dday+ " days "+dhour+":"+dmin+":"+dsec+" "+occasion+closetags;
-            crosscount.innerHTML=dhour+" hr "+dmin+" min "+dsec+" sec left"+occasion+closetags;
+            crosscount.innerHTML=dday+ ":" + dhour+":"+dmin+":"+dsec+" "+occasion+closetags;
         }
 
     }
